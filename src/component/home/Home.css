@@ -1,0 +1,110 @@
+ 
+ 
+.section-home .content h1{
+ font-weight: 700;
+font-style: Bold;
+font-size: 48px;
+ letter-spacing: 0%;
+ 
+}
+.section-home .content h1 span{
+    color: #00694B;
+}
+.section-home .content p{
+ font-weight: 400;
+font-style: Regular;
+font-size: 21px;
+ text-align: center;
+    color: #0D0D0DA6;
+    
+}
+
+.section-about .title-1 ,.TopEmployers .title-1{
+    
+
+opacity: 1;
+padding-top: 8px;
+padding-right: 16px;
+padding-bottom: 8px;
+padding-left: 16px;
+gap: 10px;
+border-radius: 12px;
+ }
+.section-about .title-2 h1,.TopEmployers .title-2 h1{
+ 
+font-weight: 600;
+font-style: SemiBold;
+font-size: 28px;
+  letter-spacing: -1%;
+ color: #1C2628;
+
+ }
+.item1,.item2,.item3{
+ 
+ 
+    
+    
+ border-bottom: 1px solid rgb(221, 219, 219);
+  
+
+}
+
+.item1 p,.item2 p,.item3 p{
+font-weight: 400;
+
+font-size: 16px;
+ margin-bottom: 10px;
+text-align: center;
+
+}
+.item1 h2,.item1 h2 ,.item3 h2{
+ font-weight: 600;
+ font-size: 24px;
+ line-height: 100%;
+letter-spacing: -1%;
+text-align: center;
+
+
+}
+.section-about .title-2 h1{
+ font-weight: 600;
+ font-size: 28px;
+  text-align: center;
+
+}
+
+.model {
+ font-weight: 400;
+ font-size: 16px;
+
+line-height: 100%;
+padding: 5px 0;
+letter-spacing: 0%;
+text-align: justify;
+
+}
+ 
+.logos  img{
+    width: 147.5;
+height: 47.83783721923828;
+min-width: 140px;
+min-height: 45.41px;
+ opacity: 1;
+gap: 10px;
+
+}
+
+.Proven .cards .card{
+    width: 303;
+height: 156;
+min-width: 200px;
+ opacity: 1;
+padding-top: 40px;
+padding-right: 24px;
+padding-bottom: 40px;
+padding-left: 24px;
+gap: 12px;
+border-radius: 16px;
+border-width: 1px;
+
+}
