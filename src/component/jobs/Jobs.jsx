@@ -125,8 +125,7 @@ function Jobs() {
       employmentTypesQuery,
       categoriesQuery,
     );
-  }, [
-    currentPage,
+  }, [ currentPage,
     searchQuery,
     countryQuery,
     professionalLicenseQuery,
@@ -136,8 +135,7 @@ function Jobs() {
     experiencesQuery,
     categoriesQuery,
     availabilitiesQuery,
-    employmentTypesQuery,
-  ]);
+    employmentTypesQuery,]);
 
   const handleApplyFilter = (e) => {
     if (e.key === "Enter" || e.type === "click") {
@@ -148,50 +146,49 @@ function Jobs() {
         country: selectedCountryId,
         professional_license: prfessionalLicense,
       };
-
+ 
       // salry
       if (minSalary) params.min_salary = minSalary;
-      if (maxSalary) params.max_salary = maxSalary;
+    if (maxSalary) params.max_salary = maxSalary;
       // salry
 
+
       if (domin.length) params["domain[]"] = domin.join(",");
-      if (role_categories.length)
-        params["role_categories[]"] = role_categories.join(",");
-      if (seniority_levels.length)
-        params["seniority_levels[]"] = seniority_levels.join(",");
+      if (role_categories.length)params["role_categories[]"] = role_categories.join(",");
+      if (seniority_levels.length)params["seniority_levels[]"] = seniority_levels.join(",");
       if (experiences.length) params["experiences"] = experiences;
       if (categories.length) params["categories[]"] = categories.join(",");
-      if (availabilities.length)
-        params["availabilities"] = availabilities.join(",");
-      if (employment_types.length)
-        params["employment_types[]"] = employment_types.join(",");
+      if (availabilities.length)params["availabilities"] = availabilities.join(",");
+      if (employment_types.length)params["employment_types[]"] = employment_types.join(",");
 
       setSearchParams(params);
     }
   };
 
-  const handleReset = () => {
-    setChecked({});
-    setTerm("");
-    setSelectedCountryId("");
-    setSelectedCountry("By country");
-    setProfessionalLicense("");
-    setCategories([]);
-    setSeniority_levels([]);
-    setRoleCategories([]);
-    setDomin([]);
-    setExperiences([]);
-    setAvailabilities([]);
-    setemployment_types([]);
-    setMinSalary("");
-    setMaxSalary("");
-    setSearchParams({});
-    setCurrentPage(1);
+  
+const handleReset = () => {
+  setChecked({});
+  setTerm("");
+  setSelectedCountryId("");
+  setSelectedCountry("By country"); 
+  setProfessionalLicense("");
+  setCategories([]);
+  setSeniority_levels([]); 
+  setRoleCategories([]);   
+  setDomin([]);
+  setExperiences([]);
+  setAvailabilities([]);
+  setemployment_types([]);
+  setMinSalary("");
+  setMaxSalary("");
+  setSearchParams({});
+  setCurrentPage(1);
 
-    document
-      .querySelectorAll('input[type="radio"]')
-      .forEach((r) => (r.checked = false));
-  };
+   document.querySelectorAll('input[type="radio"]').forEach((r) => r.checked = false);
+};
+
+
+
 
   async function fetchdatacountry() {
     try {
@@ -244,61 +241,62 @@ function Jobs() {
   const toggleCheck = (key) =>
     setChecked((prev) => ({ ...prev, [key]: !prev[key] }));
 
-  // {api jobs left}
 
-  const [fetchDataleft, setfetchdataleft] = useState(null);
 
-  const [availabilitiess, setavailabilitiess] = useState(null);
-  const [categoriess, setcategoriess] = useState(null);
-  const [domains, setdomains] = useState(null);
-  const [experiencess, setexperiencess] = useState(null);
-  const [rolecategories, setrolecategories] = useState(null);
-  const [senioritylevels, setsenioritylevels] = useState(null);
-  const [employertypes, setemployertypes] = useState(null);
 
-  async function fetchdataleft(url, setter) {
-    try {
-      const response = await fetch(url);
-      const data = await response.json();
-      setter(data);
-    } catch (error) {
-      console.error("Error:", error);
-    }
-  }
+// {api jobs left}
 
-  useEffect(() => {
-    const baseurl = "https://admin.joocare.com/api";
-    fetchdataleft(
-      `${baseurl}/availabilities?pagination=on&limit_per_page=10&page=1`,
-      setavailabilitiess,
-    );
-    fetchdataleft(
-      `${baseurl}/categories?pagination=on&limit_per_page=10&page=1`,
-      setcategoriess,
-    );
-    fetchdataleft(
-      `${baseurl}/domains?pagination=on&limit_per_page=10&page=1`,
-      setdomains,
-    );
-    fetchdataleft(
-      `${baseurl}/experiences?pagination=on&limit_per_page=10&page=1`,
-      setexperiencess,
-    );
-    fetchdataleft(
-      `${baseurl}/role-categories?pagination=on&limit_per_page=10&page=1`,
-      setrolecategories,
-    );
-    fetchdataleft(
-      `${baseurl}/seniority-levels?pagination=on&limit_per_page=10&page=1`,
-      setsenioritylevels,
-    );
-    fetchdataleft(
-      `${baseurl}employer-types/?pagination=on&limit_per_page=10&page=1`,
-      setemployertypes,
-    );
+ 
+const [fetchDataleft, setfetchdataleft] = useState(null);
+
+const [availabilitiess, setavailabilitiess] = useState(null);
+const [categoriess, setcategoriess] = useState(null);
+const [domains, setdomains] = useState(null);
+const [experiencess, setexperiencess] = useState(null);
+const [rolecategories, setrolecategories] = useState(null);
+const [senioritylevels, setsenioritylevels] = useState(null);
+const [employertypes, setemployertypes] = useState(null);
+ 
+
+ async function fetchdataleft(url ,setter) {
+ 
+   try {
+     const response = await fetch(url);
+     const data = await response.json();
+setter(data)
+      
+   } catch (error) {
+     console.error("Error:", error);
+   }
+ }
+
+ useEffect(() => {
+     const baseurl = 'https://admin.joocare.com/api'
+     fetchdataleft(`${baseurl}/availabilities?pagination=on&limit_per_page=10&page=1`,setavailabilitiess)
+     fetchdataleft(`${baseurl}/categories?pagination=on&limit_per_page=10&page=1`,setcategoriess)
+     fetchdataleft(`${baseurl}/domains?pagination=on&limit_per_page=10&page=1`,setdomains)
+     fetchdataleft(`${baseurl}/experiences?pagination=on&limit_per_page=10&page=1`,setexperiencess)
+     fetchdataleft(`${baseurl}/role-categories?pagination=on&limit_per_page=10&page=1`,setrolecategories)
+     fetchdataleft(`${baseurl}/seniority-levels?pagination=on&limit_per_page=10&page=1`,setsenioritylevels)
+     fetchdataleft(`${baseurl}employer-types/?pagination=on&limit_per_page=10&page=1`,setemployertypes)
   }, []);
 
-  // {api jobs left}
+ 
+
+
+
+
+// {api jobs left}
+
+
+
+
+
+
+
+
+
+
 
   return (
     <>
@@ -919,6 +917,7 @@ function Jobs() {
                               </p>
                             </div>
                           </div>
+                          
                         </div>
                         <div className="info flex flex-wrap items-center gap-[12px] text-[14px] mb-[16px]">
                           <div className="flex items-center gap-1">

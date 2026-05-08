@@ -49,14 +49,15 @@ import cont2 from "../../../public/imge/Container (1).png";
 import robothand from "../../../public/imge/robot(3).png";
 import Footer from "../footer/Footer";
 import { Link, Links, NavLink, useSearchParams } from "react-router-dom";
-
+ 
 function Home() {
-  const [searchdata, setsearchdata] = useState(null);
+
+const [searchdata, setsearchdata] = useState(null);
   const [homeData, setHomeData] = useState(null);
   const [openIndex, setOpenIndex] = useState(null);
   const [showAll, setShowAll] = useState(false);
   const [showSuggestions, setShowSuggestions] = useState(false);
-
+  
   const suggestionsRef = useRef(null);
   const swiperRef = useRef(null);
 
@@ -69,10 +70,11 @@ function Home() {
   const [selectedCategory, setSelectedCategory] = useState("By Category");
   const [selectedCategoryId, setSelectedCategoryId] = useState("");
 
-  const dropdownStyle =
-    "flex items-center gap-2.5 bg-white text-gray-400 px-5 py-3 rounded-full cursor-pointer hover:bg-gray-50 transition min-w-[140px]";
+ 
 
-  const FaqItem = ({ item }) => (
+  const dropdownStyle = "flex items-center gap-2.5 bg-white text-gray-400 px-5 py-3 rounded-full cursor-pointer hover:bg-gray-50 transition min-w-[140px]";
+
+   const FaqItem = ({ item }) => (
     <div className="bg-[#0D0D0D0D] border-[1px] border-[#0D0D0D14] rounded-[16px] mb-4">
       <button
         onClick={() => setOpenIndex(openIndex === item.id ? null : item.id)}
@@ -85,11 +87,7 @@ function Home() {
           animate={{ rotate: openIndex === item.id ? 180 : 0 }}
           className="shrink-0 ml-4 w-[32px] h-[32px] rounded-full bg-black flex items-center justify-center"
         >
-          {openIndex === item.id ? (
-            <HiMinus className="text-white" />
-          ) : (
-            <HiPlus className="text-white" />
-          )}
+          {openIndex === item.id ? <HiMinus className="text-white" /> : <HiPlus className="text-white" />}
         </motion.div>
       </button>
       <AnimatePresence>
@@ -100,9 +98,7 @@ function Home() {
             exit={{ height: 0, opacity: 0 }}
             className="overflow-hidden"
           >
-            <p className="px-4 pb-4 text-[16px] text-[#0D0D0DA6]">
-              {item.answer}
-            </p>
+            <p className="px-4 pb-4 text-[16px] text-[#0D0D0DA6]">{item.answer}</p>
           </motion.div>
         )}
       </AnimatePresence>
@@ -112,9 +108,7 @@ function Home() {
   // --- 3. API Functions ---
   async function fetchdatasearch(searchStr = "") {
     try {
-      const res = await fetch(
-        `https://admin.joocare.com/api/searches?pagination=on&limit_per_page=10&page=1&lang=ar&search=${searchStr}`,
-      );
+      const res = await fetch(`https://admin.joocare.com/api/searches?pagination=on&limit_per_page=10&page=1&lang=ar&search=${searchStr}`);
       const dataa = await res.json();
       setsearchdata(dataa);
     } catch (error) {
@@ -122,16 +116,16 @@ function Home() {
     }
   }
 
-  const [searchData, setSearchData] = useState(null);
 
+    const [searchData, setSearchData] = useState(null);
+  
   async function fetchdatasearch() {
     try {
       const response = await fetch(
         "https://admin.joocare.com/api/searches?pagination=on&limit_per_page=10&page=1",
-        {
+       {
           headers: { "Accept-Language": "en" },
-        },
-      );
+        },);
       const data = await response.json();
       setSearchData(data);
     } catch (error) {
@@ -142,6 +136,7 @@ function Home() {
   useEffect(() => {
     fetchdatasearch();
   }, []);
+
 
   async function fetchdatahome() {
     try {
@@ -159,13 +154,11 @@ function Home() {
     fetchdatahome();
     fetchdatasearch();
     const handleClickOutside = (event) => {
-      if (
-        suggestionsRef.current &&
-        !suggestionsRef.current.contains(event.target)
-      ) {
+      if (suggestionsRef.current && !suggestionsRef.current.contains(event.target)) {
         setShowSuggestions(false);
       }
     };
+     
   }, []);
 
   useEffect(() => {
@@ -177,15 +170,11 @@ function Home() {
 
   const handleSearch = (e) => {
     if (e.key === "Enter" || e.type === "click") {
-      setSearchParams({
-        search: term,
-        country: selectedCountryId,
-        domain: selectedDomainId,
-        category: selectedCategoryId,
-      });
+      setSearchParams({ search: term, country: selectedCountryId, domain: selectedDomainId, category: selectedCategoryId });
       setShowSuggestions(false);
     }
-  }; // {faqitem}
+    
+         }   // {faqitem}
   return (
     <>
       <motion.div
@@ -197,6 +186,7 @@ function Home() {
         <div className="section-home mt-50 pb-20">
           <div className="container  mx-auto  px-30  ">
             <div className="content text-center ">
+
               <h1 className=" w-[780px]  mx-auto">
                 {homeData?.data.home_section?.title}
 
@@ -207,170 +197,149 @@ function Home() {
               </p>
             </div>
             <div className="search-bar p-5 mt-20 relative">
-              <div className="bg-[#F1F3F5] rounded-[100px] p-2 flex items-center gap-2 shadow-inner">
-                {/* input*/}
-                <div
-                  className="flex-grow flex items-center gap-3 bg-white px-5 py-3 rounded-full relative"
-                  ref={suggestionsRef}
-                >
-                  <FiSearch
-                    className="text-gray-400 cursor-pointer"
-                    onClick={handleSearch}
-                  />
-                  <input
-                    type="text"
-                    value={term}
-                    onChange={(e) => {
-                      setTerm(e.target.value);
-                      setShowSuggestions(true);
-                    }}
-                    onFocus={() => setShowSuggestions(true)}
-                    onKeyDown={handleSearch}
-                    placeholder="Enter Skills, Designations or Company Names"
-                    className="w-full text-gray-700 bg-transparent focus:outline-none text-sm font-medium"
-                  />
-                </div>
+      <div className="bg-[#F1F3F5] rounded-[100px] p-2 flex items-center gap-2 shadow-inner">
+        
+        {/* input*/}
+        <div className="flex-grow flex items-center gap-3 bg-white px-5 py-3 rounded-full relative" ref={suggestionsRef}>
+          <FiSearch className="text-gray-400 cursor-pointer" onClick={handleSearch} />
+          <input
+            type="text"
+            value={term}
+            onChange={(e) => {
+                setTerm(e.target.value);
+                setShowSuggestions(true);
+            }}
+            onFocus={() => setShowSuggestions(true)}
+            onKeyDown={handleSearch}
+            placeholder="Enter Skills, Designations or Company Names"
+            className="w-full text-gray-700 bg-transparent focus:outline-none text-sm font-medium"
+          />
 
-                <div className="flex items-center gap-2">
-                  {/* By Country */}
-                  <div className={`relative ${dropdownStyle}`}>
-                    <select
-                      className="absolute inset-0 opacity-0 cursor-pointer z-10 w-full"
-                      onChange={(e) => {
-                        setSelectedCountry(
-                          e.target.options[e.target.selectedIndex].text,
-                        );
-                        setSelectedCountryId(e.target.value);
-                      }}
-                    >
-                      <option value="">By country</option>
-                      {homeData?.data?.home_section?.countries?.map((c) => (
-                        <option key={c.id} value={c.id}>
-                          {c.name.en}
-                        </option>
-                      ))}
-                    </select>
-                    <span className="text-sm flex-1 pr-1 truncate">
-                      {selectedCountry}
-                    </span>
-                    <MdKeyboardArrowDown className="text-gray-500" size={18} />
-                  </div>
+           
+        </div>
 
-                  {/* By Domain */}
-                  <div className={`relative ${dropdownStyle}`}>
-                    <select
-                      className="absolute inset-0 opacity-0 cursor-pointer z-10 w-full"
-                      onChange={(e) => {
-                        setSelectedDomain(
-                          e.target.options[e.target.selectedIndex].text,
-                        );
-                        setSelectedDomainId(e.target.value);
-                      }}
-                    >
-                      <option value="">By Domain</option>
-                      {homeData?.data?.home_section?.domains?.map((d) => (
-                        <option key={d.id} value={d.id}>
-                          {d.title.en}
-                        </option>
-                      ))}
-                    </select>
-                    <span className="text-sm flex-1 pr-1 truncate">
-                      {selectedDomain}
-                    </span>
-                    <MdKeyboardArrowDown className="text-gray-500" size={18} />
-                  </div>
+        <div className="flex items-center gap-2">
+          {/* By Country */}
+          <div className={`relative ${dropdownStyle}`}>
+            <select
+              className="absolute inset-0 opacity-0 cursor-pointer z-10 w-full"
+              onChange={(e) => {
+                setSelectedCountry(e.target.options[e.target.selectedIndex].text);
+                setSelectedCountryId(e.target.value);
+              }}
+            >
+              <option value="">By country</option>
+              {homeData?.data?.home_section?.countries?.map((c) => (
+                <option key={c.id} value={c.id}>{c.name.en}</option>
+              ))}
+            </select>
+            <span className="text-sm flex-1 pr-1 truncate">{selectedCountry}</span>
+            <MdKeyboardArrowDown className="text-gray-500" size={18} />
+          </div>
 
-                  {/* By Category */}
-                  <div className={`relative ${dropdownStyle}`}>
-                    <select
-                      className="absolute inset-0 opacity-0 cursor-pointer z-10 w-full"
-                      onChange={(e) => {
-                        setSelectedCategory(
-                          e.target.options[e.target.selectedIndex].text,
-                        );
-                        setSelectedCategoryId(e.target.value);
-                      }}
-                    >
-                      <option value="">By Category</option>
-                      {homeData?.data?.home_section?.categories?.map((cat) => (
-                        <option key={cat.id} value={cat.id}>
-                          {cat.title.en}
-                        </option>
-                      ))}
-                    </select>
-                    <span className="text-sm flex-1 pr-1 truncate">
-                      {selectedCategory}
-                    </span>
-                    <MdKeyboardArrowDown className="text-gray-500" size={18} />
-                  </div>
-                </div>
+          {/* By Domain */}
+          <div className={`relative ${dropdownStyle}`}>
+            <select
+              className="absolute inset-0 opacity-0 cursor-pointer z-10 w-full"
+              onChange={(e) => {
+                setSelectedDomain(e.target.options[e.target.selectedIndex].text);
+                setSelectedDomainId(e.target.value);
+              }}
+            >
+              <option value="">By Domain</option>
+              {homeData?.data?.home_section?.domains?.map((d) => (
+                <option key={d.id} value={d.id}>{d.title.en}</option>
+              ))}
+            </select>
+            <span className="text-sm flex-1 pr-1 truncate">{selectedDomain}</span>
+            <MdKeyboardArrowDown className="text-gray-500" size={18} />
+          </div>
 
-                <Link
-                  to={`/jobs?search=${term}&country=${selectedCountryId}&domain=${selectedDomainId}&category=${selectedCategoryId}`}
-                  className="bg-[#00694B] text-white px-8 py-3 rounded-full font-semibold text-sm hover:bg-black transition-colors text-center"
-                >
-                  Find Jobs
-                </Link>
-              </div>
-            </div>
-            <div className="px-[24px]">
-              <div className="container mx-auto py-5 flex items-start gap-5">
-                <h2 className="text-[18px] font-bold text-[#1A1A1A] pt-2 whitespace-nowrap">
-                  Popular Searches
-                </h2>
-                <div className="flex-1">
-                  <div className="flex flex-wrap gap-x-[12px] gap-y-3 items-center">
-                    {searchData?.data?.slice(0, 4).map((job, index) => (
-                      <Link to="/jobdetails" key={index}>
-                        <NavLink
-                          to={`/jobs?search=${job.word}`}
-                          className="flex items-center gap-2 px-[12px] py-[8px] border border-[#E5E7EB] rounded-full hover:bg-gray-50 cursor-pointer transition"
-                        >
-                          <FiSearch className="text-gray-400" />
-                          <span className="text-[14px] font-medium text-[#00694B]">
-                            {job?.word}
-                          </span>
-                        </NavLink>
-                      </Link>
-                    ))}
-                  </div>
-                  <div
-                    className={`grid transition-all duration-500 ease-in-out ${showAll ? "grid-rows-[1fr] mt-3" : "grid-rows-[0fr]"}`}
-                  >
-                    <div className="overflow-hidden">
-                      <div className="flex flex-wrap gap-x-3 gap-y-3 items-center ">
-                        {searchData?.data?.slice(4).map((job, index) => (
-                          <Link
-                            to={`/jobs?search=${encodeURIComponent(job.word)}`}
-                            key={index}
-                          >
-                            <div className="flex items-center gap-2 px-[12px] py-[8px] border border-[#E5E7EB] rounded-full hover:bg-gray-50 cursor-pointer transition">
-                              <FiSearch className="text-gray-400" />
-                              <span className="text-[14px] font-medium text-[#00694B]">
-                                {job?.word}
-                              </span>
-                            </div>
-                          </Link>
-                        ))}
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div className="flex items-center gap-2 ml-4 cursor-pointer shrink-0  pt-1">
-                  <div className="flex items-center gap-1 p-2 rounded-full transition duration-500 hover:bg-[#00694B] group">
-                    <button
-                      onClick={() => setShowAll(!showAll)}
-                      className="text-[14px] font-bold text-[#00694B] group-hover:text-white cursor-pointer transition-all"
-                    >
-                      {showAll ? "Show Less" : "Show More"}
-                    </button>
-                    <BsArrowUpRightCircle
-                      className={`size-[16px] text-[#00694B] group-hover:text-white  cursor-pointer transition-transform duration-500 ${showAll ? "rotate-45" : "rotate-0"}`}
-                    />
-                  </div>
-                </div>
-              </div>
-            </div>
+          {/* By Category */}
+          <div className={`relative ${dropdownStyle}`}>
+            <select
+              className="absolute inset-0 opacity-0 cursor-pointer z-10 w-full"
+              onChange={(e) => {
+                setSelectedCategory(e.target.options[e.target.selectedIndex].text);
+                setSelectedCategoryId(e.target.value);
+              }}
+            >
+              <option value="">By Category</option>
+              {homeData?.data?.home_section?.categories?.map((cat) => (
+                <option key={cat.id} value={cat.id}>{cat.title.en}</option>
+              ))}
+            </select>
+            <span className="text-sm flex-1 pr-1 truncate">{selectedCategory}</span>
+            <MdKeyboardArrowDown className="text-gray-500" size={18} />
+          </div>
+        </div>
+
+        <Link
+          to={`/jobs?search=${(term)}&country=${selectedCountryId}&domain=${selectedDomainId}&category=${selectedCategoryId}`}
+          className="bg-[#00694B] text-white px-8 py-3 rounded-full font-semibold text-sm hover:bg-black transition-colors text-center"
+        >
+          Find Jobs
+        </Link>
+      </div>
+    </div>  
+              <div className="px-[24px]">
+                             <div className="container mx-auto py-5 flex items-start gap-5">
+                               <h2 className="text-[18px] font-bold text-[#1A1A1A] pt-2 whitespace-nowrap">
+                                 Popular Searches
+                               </h2>
+                               <div className="flex-1">
+                                 <div className="flex flex-wrap gap-x-[12px] gap-y-3 items-center">
+                                   {searchData?.data?.slice(0, 4).map((job, index) => (
+                                     <Link to="/jobdetails" key={index}>
+                                       <NavLink
+                                         to={`/jobs?search=${(job.word)}`} 
+                                         className="flex items-center gap-2 px-[12px] py-[8px] border border-[#E5E7EB] rounded-full hover:bg-gray-50 cursor-pointer transition"
+                                       >
+                                         <FiSearch className="text-gray-400" />
+                                         <span className="text-[14px] font-medium text-[#00694B]">
+                                           {job?.word}
+                                         </span>
+                                       </NavLink>
+                                     </Link>
+                                   ))}
+                                 </div>
+                                 <div
+                                   className={`grid transition-all duration-500 ease-in-out ${showAll ? "grid-rows-[1fr] mt-3" : "grid-rows-[0fr]"}`}
+                                 >
+                                   <div className="overflow-hidden">
+                                     <div className="flex flex-wrap gap-x-3 gap-y-3 items-center ">
+                                       {searchData?.data?.slice(4).map((job, index) => (
+                                         <Link
+                                           to={`/jobs?search=${encodeURIComponent(job.word)}`}
+                                           key={index}
+                                         >
+                                           <div className="flex items-center gap-2 px-[12px] py-[8px] border border-[#E5E7EB] rounded-full hover:bg-gray-50 cursor-pointer transition">
+                                             <FiSearch className="text-gray-400" />
+                                             <span className="text-[14px] font-medium text-[#00694B]">
+                                               {job?.word}
+                                             </span>
+                                           </div>
+                                         </Link>
+                                       ))}
+                                     </div>
+                                   </div>
+                                 </div>
+                               </div>
+                               <div className="flex items-center gap-2 ml-4 cursor-pointer shrink-0  pt-1">
+                                 <div className="flex items-center gap-1 p-2 rounded-full transition duration-500 hover:bg-[#00694B] group">
+                                   <button
+                                     onClick={() => setShowAll(!showAll)}
+                                     className="text-[14px] font-bold text-[#00694B] group-hover:text-white cursor-pointer transition-all"
+                                   >
+                                     {showAll ? "Show Less" : "Show More"}
+                                   </button>
+                                   <BsArrowUpRightCircle
+                                     className={`size-[16px] text-[#00694B] group-hover:text-white  cursor-pointer transition-transform duration-500 ${showAll ? "rotate-45" : "rotate-0"}`}
+                                   />
+                                 </div>
+                               </div>
+                             </div>
+                           </div>
           </div>
         </div>
         <div className="section-about pt-32 pb-20  ">
@@ -799,39 +768,38 @@ function Home() {
                 <div className="content flex">
                   <div className="contanier grid grid-cols-4 gap-[16px]">
                     {homeData?.data?.recent_jobs?.jobs?.map((job) => (
-                      <Link to={`/job/${job.id}`}>
+                      <Link to={`job/${job.id}`}>
                         <div
-                          key={job.id}
-                          className="flex bg-[#e0dddd1f] border-[2px] border-transparent mb-[16px] hover:shadow-2xl duration-500 hover:border-green-700 hover:cursor-pointer p-[16px] rounded-[16px]"
-                        >
-                          <div className="logo  flex-shrink-0">
-                            <img
-                              src={job.company?.image || logo}
-                              alt={job.company?.name}
-                              className="w-[48px] h-[48px] rounded-full object-cover"
-                            />
-                          </div>
-                          <div className="details ml-[8px] overflow-hidden">
-                            <h2 className="text-[18px] font-[600] line-clamp-1">
-                              {job.title || job.job_title?.title}
-                            </h2>
-                            <p className="font-[600] text-[14px]">
-                              {job.company?.name}{" "}
-                              <span className="text-[gray] font-[400] text-[13px]">
-                                {job.city?.name}, {job.country?.name}
-                              </span>
-                            </p>
+                        key={job.id}
+                        className="flex bg-[#e0dddd1f] border-[2px] border-transparent mb-[16px] hover:shadow-2xl duration-500 hover:border-green-700 hover:cursor-pointer p-[16px] rounded-[16px]">
+                        <div className="logo  flex-shrink-0">
+                          <img
+                            src={job.company?.image || logo}
+                            alt={job.company?.name}
+                            className="w-[48px] h-[48px] rounded-full object-cover"
+                          />
+                        </div>
+                        <div className="details ml-[8px] overflow-hidden">
+                          <h2 className="text-[18px] font-[600] line-clamp-1">
+                            {job.title || job.job_title?.title}
+                          </h2>
+                          <p className="font-[600] text-[14px]">
+                            {job.company?.name}{" "}
+                            <span className="text-[gray] font-[400] text-[13px]">
+                              {job.city?.name}, {job.country?.name}
+                            </span>
+                          </p>
 
-                            <div className="flex items-center gap-[4px] mt-[8px] flex-wrap">
-                              <span className="bg-[#0D0D0D0D] text-[gray] py-[4px] px-[8px] rounded-[8px] text-[12px]">
-                                {job.employment_type?.title}
-                              </span>
-                              <p className="bg-[#0D0D0D0D] text-[gray] py-[4px] px-[6px] rounded-[8px] text-[12px]">
-                                {job.current_status?.created_at}
-                              </p>
-                            </div>
+                          <div className="flex items-center gap-[4px] mt-[8px] flex-wrap">
+                            <span className="bg-[#0D0D0D0D] text-[gray] py-[4px] px-[8px] rounded-[8px] text-[12px]">
+                              {job.employment_type?.title}
+                            </span>
+                            <p className="bg-[#0D0D0D0D] text-[gray] py-[4px] px-[6px] rounded-[8px] text-[12px]">
+                              {job.current_status?.created_at}
+                            </p>
                           </div>
                         </div>
+                      </div>
                       </Link>
                     ))}
                   </div>
@@ -949,6 +917,7 @@ function Home() {
                         item={item}
                         openIndex={openIndex}
                         setOpenIndex={setOpenIndex}
+                        
                       />
                     ))}
                 </div>
@@ -959,6 +928,10 @@ function Home() {
       </motion.div>
     </>
   );
+ 
+
+
+
 }
 
 export default Home;
