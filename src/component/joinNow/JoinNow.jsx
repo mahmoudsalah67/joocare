@@ -75,7 +75,18 @@ function JoinNow() {
                 id="email"
                 placeholder="ex:mail@mail.com"
                 className="p-[16px] bg-[#0D0D0D0D] focus:border-[#00694B] outline-none transition duration-300 border-[1px] border-[#0D0D0D14] rounded-[999px] mt-[4px]"
-                {...register("email", { required: true })}
+                {...register("email", { 
+                  
+                  required:{
+                    value :true,
+                    message: 'email is required'
+                  },
+                  pattern:{
+                    value: /^[\w-\.]+@([\w-]+\.)+[w-]{2,4}$/,
+                    message: 'email is not format'
+                  }
+
+                })}
               />
             </div>
 
@@ -139,7 +150,12 @@ function JoinNow() {
                   id="password"
                   placeholder="••••••••"
                   className="p-[16px] w-full bg-[#0D0D0D0D] focus:border-[#00694B] outline-none transition duration-300 border-[1px] border-[#0D0D0D14] rounded-[999px] mt-[4px]"
-                  {...register("password", { required: true })}
+                  {...register("password", { 
+                    required: {
+                     value: true,
+                     message: 'password is required'
+                  }
+                   })}
                 />
                 <div className="absolute right-5 top-1/2 -translate-y-1/2 mt-[2px] cursor-pointer">
                   <img src={eye} alt="" />

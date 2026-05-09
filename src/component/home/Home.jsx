@@ -174,7 +174,7 @@ const [searchdata, setsearchdata] = useState(null);
       setShowSuggestions(false);
     }
     
-         }   // {faqitem}
+         }  
   return (
     <>
       <motion.div
