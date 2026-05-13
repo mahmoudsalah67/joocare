@@ -5,27 +5,35 @@ import Footer from '../footer/Footer'
 
 function Layout() {
   const location = useLocation();
-  const isLoginPage = location.pathname === '/login';
-  const isJoinPage = location.pathname === '/joinnow';
-  const isforcandidate = location.pathname === '/forcandidate';
+  const path = location.pathname;
 
-   useEffect(() => {
-    window.scrollTo(0,0);
-  }, [location.pathname]);
+  const isLoginPage = path === '/login';
+  const isJoinPage = path === '/joinnow';
+  const isforcandidate = path === '/forcandidate';
+   const isDetailsPage = path.startsWith('/details');
 
-   const isAuthPage = isLoginPage || isJoinPage || isforcandidate;
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [path]);
+
+  const isAuthPage = isLoginPage || isJoinPage || isforcandidate;
 
   return (
     <>
-      <Navbar isLoginVariant={isLoginPage} isjoinnow={isJoinPage} isforcandidate={isforcandidate} />
+      <Navbar 
+        isLoginVariant={isLoginPage} 
+        isjoinnow={isJoinPage} 
+        isforcandidate={isforcandidate}
+        isDetailsPage={isDetailsPage} 
+      />
       
       <main>
         <Outlet />
       </main>
 
-       {!isAuthPage && <Footer />}
+       {!isAuthPage && !isDetailsPage && <Footer />}
     </>
-  )
+  );
 }
 
 export default Layout;

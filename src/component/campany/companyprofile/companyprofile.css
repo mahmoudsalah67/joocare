@@ -1,0 +1,14 @@
+/* في ملف الـ CSS الأساسي */
+
+.hidden-input {
+  /* دي أهم طريقة احترافية لإخفاء الـ input بس تخليه شغال */
+  display: none !important; 
+  /* أو لو عايز المتصفح يشوفه كأنه موجود بس مختفي بصرياً: */
+  /*
+  opacity: 0;
+  width: 1px;
+  height: 1px;
+  position: absolute;
+  left: -9999px;
+  */
+}

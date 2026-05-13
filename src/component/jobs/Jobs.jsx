@@ -278,7 +278,7 @@ setter(data)
      fetchdataleft(`${baseurl}/experiences?pagination=on&limit_per_page=10&page=1`,setexperiencess)
      fetchdataleft(`${baseurl}/role-categories?pagination=on&limit_per_page=10&page=1`,setrolecategories)
      fetchdataleft(`${baseurl}/seniority-levels?pagination=on&limit_per_page=10&page=1`,setsenioritylevels)
-     fetchdataleft(`${baseurl}employer-types/?pagination=on&limit_per_page=10&page=1`,setemployertypes)
+     fetchdataleft(`${baseurl}/employment-types/?pagination=on&limit_per_page=10&page=1`,setemployertypes)
   }, []);
 
  

@@ -1,7 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import { Link, useParams } from "react-router-dom";
-import imgcompany from "../../../public/imge/job-details/a6680f4f77b6b9212dae35d94f66c6ab33d89f64.png";
-import linkedin from "../../../public/imge/job-details/Social Media Icon (5).svg";
+ import linkedin from "../../../public/imge/job-details/Social Media Icon (5).svg";
 import face from "../../../public/imge/job-details/Social Media Icon (6).svg";
 import insta from "../../../public/imge/job-details/Social Media Icon (7).svg";
 import x from "../../../public/imge/job-details/Social Media Icon (8).svg";
