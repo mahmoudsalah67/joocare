@@ -108,7 +108,7 @@ const [searchdata, setsearchdata] = useState(null);
   // --- 3. API Functions ---
   async function fetchdatasearch(searchStr = "") {
     try {
-      const res = await fetch(`https://admin.joocare.com/api/searches?pagination=on&limit_per_page=10&page=1&lang=ar&search=${searchStr}`);
+      const res = await fetch(`https://joocare.nami-tec.com/api/searches?pagination=on&limit_per_page=10&page=1&lang=ar&search=${searchStr}`);
       const dataa = await res.json();
       setsearchdata(dataa);
     } catch (error) {
@@ -122,7 +122,7 @@ const [searchdata, setsearchdata] = useState(null);
   async function fetchdatasearch() {
     try {
       const response = await fetch(
-        "https://admin.joocare.com/api/searches?pagination=on&limit_per_page=10&page=1",
+        "https://joocare.nami-tec.com/api/searches?pagination=on&limit_per_page=10&page=1",
        {
           headers: { "Accept-Language": "en" },
         },);
@@ -140,7 +140,7 @@ const [searchdata, setsearchdata] = useState(null);
 
   async function fetchdatahome() {
     try {
-      const response = await fetch("https://admin.joocare.com/api/home", {
+      const response = await fetch("https://joocare.nami-tec.com/api/home", {
         headers: { "Accept-Language": "en" },
       });
       const data = await response.json();

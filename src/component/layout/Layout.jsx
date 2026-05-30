@@ -8,6 +8,7 @@ function Layout() {
   const path = location.pathname;
 
   const isLoginPage = path === '/login';
+  const isLoginPage2 = path === '/login2';
   const isJoinPage = path === '/joinnow';
   const isforcandidate = path === '/forcandidate';
    const isDetailsPage = path.startsWith('/details');
@@ -16,12 +17,13 @@ function Layout() {
     window.scrollTo(0, 0);
   }, [path]);
 
-  const isAuthPage = isLoginPage || isJoinPage || isforcandidate;
+  const isAuthPage = isLoginPage || isLoginPage2 || isJoinPage || isforcandidate;
 
   return (
     <>
       <Navbar 
         isLoginVariant={isLoginPage} 
+        isLoginVariant2={isLoginPage2}
         isjoinnow={isJoinPage} 
         isforcandidate={isforcandidate}
         isDetailsPage={isDetailsPage} 

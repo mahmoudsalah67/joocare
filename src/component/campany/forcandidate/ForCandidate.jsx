@@ -13,8 +13,6 @@ import "react-phone-number-input/style.css";
 import PhoneInput from "react-phone-number-input";
 import "./ForCandidate.css";
 import { parsePhoneNumber } from "react-phone-number-input";
-
-
 function ForCandidate() {
   const [value, setValue] = useState();
   const [showModal, setShowModal] = useState(false);
@@ -29,7 +27,7 @@ function ForCandidate() {
    async function fetchdatadomain() {
  
    try {
-     const response = await fetch('https://admin.joocare.com/api/domains?pagination=on&limit_per_page=10&page=1');
+     const response = await fetch('https://joocare.nami-tec.com/api/domains?pagination=on&limit_per_page=10&page=1');
      const data = await response.json();
    setdomains(data)
       
@@ -74,11 +72,7 @@ fetchdatadomain()
 
       console.log(finalData);
 
-       axios
-        .post(
-          "https://joocare.nami-tec.com/api/company/auth/register",
-          finalData,
-        )
+       axios.post("https://joocare.nami-tec.com/api/company/auth/register",finalData,)
         .then((res) => {
           toast.success("Registration successfull! Please verify your email.", {
             position: "top-right",

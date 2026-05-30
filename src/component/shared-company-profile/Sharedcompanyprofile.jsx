@@ -25,7 +25,7 @@ function Sharedcompanyprofile() {
   const fetchJobs = async (page = 1) => {
     try {
       const jobsRes = await axios.get(
-        `https://admin.joocare.com/api/user/companies/${id}/jobs?pagination=on&limit_per_page=10&page=${page}`,
+        `https://joocare.nami-tec.com/api/user/companies/${id}/jobs?pagination=on&limit_per_page=10&page=${page}`,
       );
       setCompanyJobs(jobsRes.data.data);
     } catch (err) {
@@ -37,7 +37,7 @@ function Sharedcompanyprofile() {
     try {
       setLoading(true);
       const companyRes = await axios.get(
-        `https://admin.joocare.com/api/user/companies/${id}`,
+        `https://joocare.nami-tec.com/api/user/companies/${id}`,
       );
       setJobDatacompany(companyRes.data);
       await fetchJobs();

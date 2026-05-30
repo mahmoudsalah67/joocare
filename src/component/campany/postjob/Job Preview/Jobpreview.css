@@ -1,0 +1,53 @@
+/* Job Description HTML Content Styling */
+.job-description-content h1,
+.job-description-content h2,
+.job-description-content h3 {
+  font-weight: 700;
+  color: #152126;
+  margin-top: 16px;
+  margin-bottom: 8px;
+}
+
+.job-description-content p {
+  font-size: 14px;
+  color: #212529;
+  line-height: 1.7;
+  margin-bottom: 12px;
+  text-align: justify;
+}
+
+.job-description-content ul {
+  list-style-type: disc;
+  padding-left: 20px;
+  margin-bottom: 12px;
+}
+
+.job-description-content ol {
+  list-style-type: decimal;
+  padding-left: 20px;
+  margin-bottom: 12px;
+}
+
+.job-description-content li {
+  font-size: 14px;
+  color: #212529;
+  margin-bottom: 6px;
+  line-height: 1.6;
+}
+
+.job-description-content strong {
+  font-weight: 700;
+  color: #152126;
+}
+
+.job-description-content a {
+  color: #1C7ED6;
+  text-decoration: underline;
+}
+
+.job-description-content blockquote {
+  border-left: 3px solid #00694B;
+  padding-left: 12px;
+  color: #555;
+  font-style: italic;
+}

@@ -1,6 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import axios from 'axios';
 import { toast } from 'react-hot-toast';
+import { useNavigate } from 'react-router-dom';
 
 const EmailVerificationModal = ({ email, onClose }) => {
   const [otp, setOtp] = useState(['', '', '', '', '']);
@@ -61,7 +62,7 @@ const EmailVerificationModal = ({ email, onClose }) => {
       if (response.status === 200) {
         toast.success("Email verified successfully!");
         onClose();
-        navigate('/details')  
+        navigate('/login')  
          
       }
     } catch (error) {

@@ -1,12 +1,64 @@
-import React, { useState } from 'react';
-import { useForm } from 'react-hook-form';
+import React, { useEffect, useState } from 'react';
+import { useForm ,Controller } from 'react-hook-form';
 import { NavLink, useNavigate } from 'react-router-dom';
-import { MdDashboard, MdKeyboardArrowDown, MdPersonOutline, MdSettings, MdWorkOutline, MdUpload } from 'react-icons/md';
+import { MdDashboard, MdKeyboardArrowDown, MdPersonOutline, MdSettings, MdWorkOutline, MdUpload, MdOutlineBrokenImage, MdOutlineImage } from 'react-icons/md';
 import { FaLinkedin, FaFacebook, FaInstagram, FaSnapchat } from 'react-icons/fa';
 import { FaXTwitter } from 'react-icons/fa6';
-
+import Icon from "../../../../public/imge/Icon.svg";
+import Icon2 from "../../../../public/imge/Icon (1).svg";
+ import "react-phone-number-input/style.css";
+import PhoneInput from "react-phone-number-input";
+import toast from 'react-hot-toast';
+import axios from 'axios';
+import { tr } from 'framer-motion/client';
 function Details3() {
-  const { handleSubmit, register, formState: { errors } } = useForm();
+  
+  // {api city list}
+const [cities, setCities] = useState([]);
+  async function fetchCities() {
+      try {
+        const response = await fetch(
+          "https://joocare.nami-tec.com/api/cities?pagination=on&limit_per_page=10&page=1",
+          {
+            headers: { "Accept-Language": "en" },
+          },
+        );
+        const data = await response.json();
+        setCities(data);
+      } catch (error) {
+        console.error("Error:", error);
+      }
+    }
+
+    useEffect(() => {
+      fetchCities();
+    }, []);
+  // {api city list}
+// {api country list}
+const [countries, setCountries] = useState([]);
+
+  async function fetchCountries() {
+      try {
+        const response = await fetch(
+          "https://joocare.nami-tec.com/api/countries?pagination=on&limit_per_page=10&page=1",
+          {
+            headers: { "Accept-Language": "en" },
+          },
+        );
+        const data = await response.json();
+        setCountries(data);
+      } catch (error) {
+        console.error("Error:", error);
+      }
+    }
+
+    useEffect(() => {
+      fetchCountries();
+    }, []);
+// {api country list}
+
+
+  const { handleSubmit, register, control, formState: { errors } } = useForm();
   const navigate = useNavigate();
   const currentStep = 3;
 
@@ -14,10 +66,74 @@ function Details3() {
   const [profileImage, setProfileImage] = useState(null);
 
   const onSubmit = (data) => {
-    console.log("Details3 Data:", data);
-    // Done - navigate to dashboard or success page
-    navigate("/dashboard");
+  console.log("Details3 Raw Data:", data);
+  
+  const token = localStorage.getItem('company_token');
+  const formData = new FormData();
+ 
+  let phoneCode = "";
+  let phoneNumber = data.person_phone || "";
+
+  if (phoneNumber.startsWith('+')) {
+    // ريجكس متطور لفصل كود الدولة عن باقي الرقم
+    const match = phoneNumber.match(/^(\+\d{1,2})(\d+)$/);
+    if (match) {
+      phoneCode = match[1]; // سياخذ مثلا +966 أو +20
+      phoneNumber = match[2]; // سيأخذ باقي الرقم
+    }
+  }
+
+  // إضافة الحقول النصية الأساسية للـ FormData
+  if (data.country_id) formData.append("country_id", data.country_id);
+  if (data.city_id) formData.append("city_id", data.city_id);
+  if (data.established_date) formData.append("established_date", data.established_date);
+  if (data.bio) formData.append("bio", data.bio);
+  
+  // إضافة حقول الهاتف بالأسماء المتوقعة للـ API
+  formData.append("phone", phoneNumber);
+  formData.append("phone_code", phoneCode);
+
+  // إضافة روابط الحسابات الاجتماعية إذا وُجدت
+  const socialFields = ["website", "linkedin", "facebook", "twitter", "instagram", "snapchat"];
+  socialFields.forEach(field => {
+    if (data[field]) {
+      formData.append(field, data[field]);
+    }
+  });
+
+  // إضافة الملفات والصور المرفقة من الـ state يدوياً
+  if (profileImage) formData.append("image", profileImage);  
+  if (coverImage) formData.append("cover", coverImage);
+
+  // إعدادات الهيدر المتوافقة مع رفع الملفات FormData
+  const config = {
+    headers: {
+      'Authorization': `Bearer ${token}`,
+      'Accept': 'application/json',
+      'Content-Type': 'multipart/form-data' // تحويلها لـ multipart لرفع الصور بنجاح
+    }
   };
+
+  // إرسال الـ formData بالكامل عبر الـ API
+  axios
+    .post("https://joocare.nami-tec.com/api/company/auth/setup-company-profile", formData, config)
+    .then((res) => {
+      toast.success("Company profile updated successfully", {
+        position: "top-right",
+        style: {
+          background: "#E6F4EA", 
+          color: "#1E8E3E",
+          borderRadius: "10px",
+        },
+      });
+      // الانتقال للـ dashboard فقط عند نجاح الإرسال
+      navigate("/dashboard");
+    })
+    .catch((err) => {
+      console.error("API Error:", err.response?.data || err.message);
+      toast.error(err.response?.data?.message || "Something went wrong");
+    });
+};
 
   return (
     <div className="min-h-screen bg-[#F8F9FA] ">
@@ -45,55 +161,37 @@ function Details3() {
             <button className="w-full bg-[#E32B2B] text-white font-bold py-3 rounded-full hover:bg-[#C22424] transition-all">Complete Now</button>
           </div>
 
-             <div className="flex flex-col gap-1 px-2 mt-2">
-  {/* Company Profile */}
-  <NavLink 
-    to="/companyprofile" 
-    className={({ isActive }) => 
-      `flex items-center gap-3 p-3 rounded-full font-medium transition-all ${
-        isActive ? "bg-[#E6F3EF] text-[#00694B] font-bold border border-[#00694B]/10" : "text-[#8F8F8F]"
-      }`
-    }
-  >
-    <MdPersonOutline className="text-xl"/> Company Profile
-  </NavLink>
+ {/* قائمة الروابط */}
+          <div className="flex flex-col gap-1 px-2 mt-2">
+            {/* Company Profile */}
+           <NavLink to="/companyprofile" className={({ isActive }) => `flex items-center gap-3 p-3 rounded-full font-medium transition-all ${isActive ? "bg-[#E6F3EF] text-[#00694B] font-bold" : "text-[#8F8F8F]"}`}>
+            <MdPersonOutline className="text-xl" /> Company Profile
+          </NavLink>
 
-  {/* Dashboard */}
-  <NavLink 
-    to="/Dashboard" 
-    className={({ isActive }) => 
-      `flex items-center gap-3 p-3 rounded-full font-medium transition-all ${
-        isActive ? "bg-[#E6F3EF] text-[#00694B] font-bold border border-[#00694B]/10" : "text-[#8F8F8F]"
-      }`
-    }
-  >
-    <MdDashboard className="text-xl"/> Dashboard
-  </NavLink>
+            {/* Dashboard */}
+             <NavLink to="/Dashboard" className={({ isActive }) => `flex items-center gap-3 p-3 rounded-full font-medium transition-all ${isActive ? "bg-[#E6F3EF] text-[#00694B] font-bold" : "text-[#8F8F8F]"}`}>
+                        <img src={Icon} className="text-xl w-5 h-5 object-contain" alt="" /> Dashboard
+                      </NavLink>
 
-  {/* Job Management */}
-  <NavLink 
-    to="/JobManagement" 
-    className={({ isActive }) => 
-      `flex items-center gap-3 p-3 rounded-full font-medium transition-all ${
-        isActive ? "bg-[#E6F3EF] text-[#00694B] font-bold border border-[#00694B]/10" : "text-[#8F8F8F]"
-      }`
-    }
-  >
-    <MdWorkOutline className="text-xl"/> Job Management
-  </NavLink>
+            {/* Job Management */}
+         <NavLink to="/JobManagement" className={({ isActive }) => `flex items-center gap-3 p-3 rounded-full font-medium transition-all ${isActive ? "bg-[#E6F3EF] text-[#00694B] font-bold" : "text-[#8F8F8F]"}`}>
+                     <img src={Icon2} className="text-xl w-5 h-5 object-contain" alt="" /> Job Management
+                   </NavLink>
 
-  {/* Account settings */}
-  <NavLink 
-    to="/Accountsettings" 
-    className={({ isActive }) => 
-      `flex items-center gap-3 p-3 rounded-full font-medium transition-all ${
-        isActive ? "bg-[#E6F3EF] text-[#00694B] font-bold border border-[#00694B]/10" : "text-[#8F8F8F]"
-      }`
-    }
-  >
-    <MdSettings className="text-xl"/> Account settings
-  </NavLink>
-</div>
+            {/* Account settings */}
+            <NavLink
+              to="/Accountsettings"
+              className={({ isActive }) =>
+                `flex items-center gap-3 p-3 rounded-full font-medium transition-all ${
+                  isActive
+                    ? "bg-[#E6F3EF] text-[#00694B] font-bold border border-[#00694B]/10"
+                    : "text-[#8F8F8F]"
+                }`
+              }
+            >
+              <MdSettings className="text-xl" /> Account settings
+            </NavLink>
+          </div>
 
           <button className="mt-6 w-full bg-[#00694B] text-white font-bold py-4 rounded-full flex items-center justify-center gap-2">Post a Job</button>
         </aside>
@@ -155,126 +253,202 @@ function Details3() {
 </div>
 
             {/* Form */}
-            <form onSubmit={handleSubmit(onSubmit)} className="space-y-6 max-w-[850px] mx-auto">
+<form onSubmit={handleSubmit(onSubmit)} className="space-y-6 max-w-[850px] mx-auto">
 
-              {/* Cover Image */}
-              <div className="flex flex-col">
-                <label className="text-[15px] font-bold text-[#0D0D0D] mb-2">Cover Image</label>
-                <label className="w-full h-[160px] border-2 border-dashed border-[#CCCCCC] rounded-[16px] flex flex-col items-center justify-center cursor-pointer bg-[#FAFAFA] hover:bg-[#F0F9F4] hover:border-[#00694B] transition-all relative overflow-hidden">
-                  <input type="file" className="hidden" accept="image/*" onChange={(e) => setCoverImage(e.target.files[0])} />
-                  {coverImage ? (
-                    <img src={URL.createObjectURL(coverImage)} alt="cover" className="w-full h-full object-cover absolute inset-0" />
-                  ) : (
-                    <>
-                      <MdUpload className="text-[#AAAAAA] text-[40px] mb-2" />
-                      <p className="text-[13px] text-[#8F8F8F]">upload a cover image</p>
-                    </>
-                  )}
-                </label>
+  <div className="flex flex-col gap-4">
+    {/* Container for Cover and Profile */}
+    <div className="relative mb-16">
+      {/* Cover Image Section */}
+      <div className="flex flex-col">
+        <label htmlFor='cover' className="w-full h-[220px] rounded-[32px] flex flex-col items-center justify-center cursor-pointer bg-[#EBEBEB] hover:bg-[#E2E2E2] transition-all relative overflow-hidden group">
+          <input 
+            type="file" 
+            className="hidden" 
+            id='cover'
+            accept="image/*" 
+            onChange={(e) => setCoverImage(e.target.files[0])} 
+          />
+          {coverImage ? (
+            <img 
+              src={URL.createObjectURL(coverImage)} 
+              alt="cover" 
+              className="w-full h-full object-cover absolute inset-0" 
+            />
+          ) : (
+            <div className="flex flex-col items-center gap-2">
+              <div className="w-14 h-14 bg-white/50 rounded-lg flex items-center justify-center group-hover:scale-110 transition-transform">
+                 <MdOutlineBrokenImage className="text-[#8F8F8F] text-[32px]" />
               </div>
+              <p className="text-[14px] text-[#8F8F8F] font-medium">upload a cover image</p>
+            </div>
+          )}
+        </label>
+      </div>
 
-              {/* Profile Image */}
-              <div className="flex flex-col">
-                <label className="text-[15px] font-bold text-[#0D0D0D] mb-2">Organization Logo</label>
-                <label className="w-[120px] h-[120px] border-2 border-dashed border-[#CCCCCC] rounded-full flex flex-col items-center justify-center cursor-pointer bg-[#FAFAFA] hover:bg-[#F0F9F4] hover:border-[#00694B] transition-all relative overflow-hidden">
-                  <input type="file" className="hidden" accept="image/*" onChange={(e) => setProfileImage(e.target.files[0])} />
-                  {profileImage ? (
-                    <img src={URL.createObjectURL(profileImage)} alt="profile" className="w-full h-full object-cover" />
-                  ) : (
-                    <>
-                      <MdUpload className="text-[#AAAAAA] text-[28px]" />
-                      <p className="text-[11px] text-[#8F8F8F] text-center mt-1">Organization<br />Logo</p>
-                    </>
-                  )}
-                </label>
-              </div>
+      {/* Profile Image (Logo) Section */}
+      <div className="absolute -bottom-14 left-8">
+        <label htmlFor='image' className="w-[120px] h-[120px] rounded-full border-[6px] border-white bg-[#EBEBEB] flex flex-col items-center justify-center cursor-pointer shadow-sm hover:bg-[#E2E2E2] transition-all relative overflow-hidden group">
+          <input 
+            type="file" 
+            id='image'
+            className="hidden" 
+            accept="image/*" 
+            onChange={(e) => setProfileImage(e.target.files[0])} 
+          />
+          {profileImage ? (
+            <img 
+              src={URL.createObjectURL(profileImage)} 
+              alt="profile" 
+              className="w-full h-full object-cover" 
+            />
+          ) : (
+            <div className="flex flex-col items-center text-center p-2">
+              <MdOutlineImage className="text-[#8F8F8F] text-[24px] mb-1 group-hover:scale-110 transition-transform" />
+              <p className="text-[10px] text-[#8F8F8F] leading-tight font-medium">Organization<br />Logo</p>
+            </div>
+          )}
+        </label>
+      </div>
+    </div>
+  </div>
 
-              {/* Phone */}
-              <div className="flex flex-col">
-                <label className="text-[15px] font-bold text-[#0D0D0D] mb-2">Organization official phone number <span className="text-[#8F8F8F] font-normal">(optional)</span></label>
-                <div className="flex gap-3">
-                  <div className="w-[110px] h-[56px] rounded-full bg-[#EAEAEA] flex items-center justify-center gap-2 text-[#0D0D0D] font-medium cursor-pointer">
-                    <span className="text-lg">🇸🇦</span><span>+966</span><MdKeyboardArrowDown size={16} />
-                  </div>
-                  <input type="tel" placeholder="ex: 52 987 6543" {...register("org_phone")}
-                    className="flex-1 h-[56px] bg-[#EAEAEA] rounded-full px-6 outline-none placeholder:text-[#8F8F8F]" />
-                </div>
-              </div>
+  {/* Phone */}
+  <div className="flex flex-col">
+    <label className="text-[15px] font-bold text-[#0D0D0D] mb-2 flex items-center justify-between">
+      <span>Contact person _ Phone number <span className="text-red-500">*</span></span>
+    </label>
+    
+    <div className={`phone-input-container flex items-center bg-[#EAEAEA] border rounded-full px-4 transition duration-300 ${errors.person_phone ? 'border-red-500 focus-within:border-red-500' : 'border-transparent focus-within:border-[#00694B]'}`}>
+      <Controller
+        name="person_phone"
+        control={control}
+        rules={{ required: "Phone number is required" }}
+        render={({ field: { onChange, value } }) => (
+          <PhoneInput
+            international
+            defaultCountry="EG"
+            placeholder="Enter phone number"
+            value={value}
+            onChange={onChange}
+            className="w-full h-[56px]"
+          />
+        )}
+      />
+    </div>
+    {errors.person_phone && <p className="text-red-500 text-[13px] mt-1 px-4 font-medium">{errors.person_phone.message}</p>}
+  </div>
 
-              {/* Country & City */}
-              <div className="grid grid-cols-2 gap-4">
-                <div className="flex flex-col">
-                  <label className="text-[15px] font-bold text-[#0D0D0D] mb-2">Country</label>
-                  <div className="relative">
-                    <select {...register("country")} className="w-full h-[56px] bg-[#EAEAEA] rounded-full px-6 appearance-none outline-none cursor-pointer text-[#8F8F8F]">
-                      <option value="">ex: Country</option>
-                      <option>Egypt</option>
-                      <option>Saudi Arabia</option>
-                      <option>UAE</option>
-                    </select>
-                    <MdKeyboardArrowDown className="absolute right-5 top-1/2 -translate-y-1/2 text-[#00694B] pointer-events-none" size={22} />
-                  </div>
-                </div>
-                <div className="flex flex-col">
-                  <label className="text-[15px] font-bold text-[#0D0D0D] mb-2">City</label>
-                  <div className="relative">
-                    <select {...register("city")} className="w-full h-[56px] bg-[#EAEAEA] rounded-full px-6 appearance-none outline-none cursor-pointer text-[#8F8F8F]">
-                      <option value="">ex: City</option>
-                      <option>Cairo</option>
-                      <option>Riyadh</option>
-                      <option>Dubai</option>
-                    </select>
-                    <MdKeyboardArrowDown className="absolute right-5 top-1/2 -translate-y-1/2 text-[#00694B] pointer-events-none" size={22} />
-                  </div>
-                </div>
-              </div>
+  {/* Country & City */}
+  <div className="grid grid-cols-2 gap-4">
+    {/* Country */}
+    <div className="flex flex-col">
+      <label className="text-[15px] font-bold text-[#0D0D0D] mb-2">Country <span className="text-red-500">*</span></label>
+      <div className="relative">
+        <select 
+          {...register("country_id", { required: "Country is required" })} 
+          className={`w-full h-[56px] bg-[#EAEAEA] rounded-full px-6 appearance-none outline-none cursor-pointer text-[#8F8F8F] border transition-all ${errors.country_id ? 'border-red-500 focus:border-red-500' : 'border-transparent focus:border-[#00694B]'}`}
+        >
+          <option value="">ex: Country</option>
+           {countries?.data?.map((country) => (
+            <option key={country.id} value={country.id}>{country.name}</option>
+          ))}
+        </select>
+        <MdKeyboardArrowDown className="absolute right-5 top-1/2 -translate-y-1/2 text-[#00694B] pointer-events-none" size={22} />
+      </div>
+      {errors.country_id && <p className="text-red-500 text-[13px] mt-1 px-4 font-medium">{errors.country_id.message}</p>}
+    </div>
 
-              {/* Date of Establishment */}
-              <div className="flex flex-col">
-                <label className="text-[15px] font-bold text-[#0D0D0D] mb-2">Date of Establishment</label>
-                <input type="date" {...register("established_date")}
-                  className="w-full h-[56px] bg-[#EAEAEA] rounded-full px-6 outline-none text-[#8F8F8F]" />
-              </div>
+    {/* City */}
+    <div className="flex flex-col">
+      <label className="text-[15px] font-bold text-[#0D0D0D] mb-2">City <span className="text-red-500">*</span></label>
+      <div className="relative">
+        <select 
+          {...register("city_id", { required: "City is required" })} 
+          className={`w-full h-[56px] bg-[#EAEAEA] rounded-full px-6 appearance-none outline-none cursor-pointer text-[#8F8F8F] border transition-all ${errors.city_id ? 'border-red-500 focus:border-red-500' : 'border-transparent focus:border-[#00694B]'}`}
+        >
+          <option value="">ex: City</option>
+          {cities?.data?.map((city) => (
+            <option key={city.id} value={city.id}>
+              {city.name}
+              </option>
+          ))}
+        </select>
+        <MdKeyboardArrowDown className="absolute right-5 top-1/2 -translate-y-1/2 text-[#00694B] pointer-events-none" size={22} />
+      </div>
+      {errors.city_id && <p className="text-red-500 text-[13px] mt-1 px-4 font-medium">{errors.city_id.message}</p>}
+    </div>
+  </div>
 
-              {/* About */}
-              <div className="flex flex-col">
-                <label className="text-[15px] font-bold text-[#0D0D0D] mb-2">About the Organization</label>
-                <textarea placeholder="ex: About the Organization ..." {...register("about")} rows={4}
-                  className="w-full bg-[#EAEAEA] rounded-[20px] px-6 py-4 outline-none resize-none placeholder:text-[#8F8F8F] focus:ring-2 focus:ring-[#00694B]/20 transition-all" />
-              </div>
+  {/* Date of Establishment */}
+  <div className="flex flex-col">
+    <label className="text-[15px] font-bold text-[#0D0D0D] mb-2">Date of Establishment <span className="text-red-500">*</span></label>
+    <input 
+      type="date" 
+      {...register("established_date", { required: "Establishment date is required" })}
+      className={`w-full h-[56px] bg-[#EAEAEA] rounded-full px-6 outline-none text-[#8F8F8F] border transition-all ${errors.established_date ? 'border-red-500 focus:border-red-500' : 'border-transparent focus:border-[#00694B]'}`} 
+    />
+    {errors.established_date && <p className="text-red-500 text-[13px] mt-1 px-4 font-medium">{errors.established_date.message}</p>}
+  </div>
 
-              {/* Online Profile */}
-              <div className="flex flex-col gap-4">
-                <h3 className="text-[16px] font-bold text-[#0D0D0D] border-b border-[#F1F1F1] pb-3">Online profile</h3>
+  {/* About */}
+  <div className="flex flex-col">
+    <label className="text-[15px] font-bold text-[#0D0D0D] mb-2">About the Organization <span className="text-red-500">*</span></label>
+    <textarea 
+      placeholder="ex: About the Organization ..." 
+      {...register("bio", { 
+        required: "Bio is required",
+        minLength: { value: 20, message: "Bio must be at least 20 characters long" }
+      })} 
+      rows={4}
+      className={`w-full bg-[#EAEAEA] rounded-[20px] px-6 py-4 outline-none resize-none placeholder:text-[#8F8F8F] border transition-all focus:ring-2 focus:ring-[#00694B]/10 ${errors.bio ? 'border-red-500 focus:border-red-500' : 'border-transparent focus:border-[#00694B]'}`} 
+    />
+    {errors.bio && <p className="text-red-500 text-[13px] mt-1 px-4 font-medium">{errors.bio.message}</p>}
+  </div>
 
-                {[
-                  { name: "website", placeholder: "ex: www.joocare.com", icon: "🌐" },
-                  { name: "linkedin", placeholder: "ex: linkedin.com/in/username", icon: <FaLinkedin className="text-[#0077B5]" /> },
-                  { name: "facebook", placeholder: "ex: facebook.com/username", icon: <FaFacebook className="text-[#1877F2]" /> },
-                  { name: "twitter", placeholder: "ex: x.com/username", icon: <FaXTwitter className="text-black" /> },
-                  { name: "instagram", placeholder: "ex: instagram.com/username", icon: <FaInstagram className="text-[#E4405F]" /> },
-                  { name: "snapchat", placeholder: "ex: snapchat.com/add/username", icon: <FaSnapchat className="text-[#FFFC00]" /> },
-                ].map(({ name, placeholder, icon }) => (
-                  <div key={name} className="relative flex items-center">
-                    <input type="text" placeholder={placeholder} {...register(name)}
-                      className="w-full h-[56px] bg-[#EAEAEA] rounded-full px-6 pr-14 outline-none placeholder:text-[#8F8F8F] focus:ring-2 focus:ring-[#00694B]/20 transition-all" />
-                    <div className="absolute right-5 text-[20px]">{icon}</div>
-                  </div>
-                ))}
-              </div>
+  {/* Online Profile */}
+  <div className="flex flex-col gap-4">
+    <h3 className="text-[16px] font-bold text-[#0D0D0D] border-b border-[#F1F1F1] pb-3">Online profile</h3>
 
-              {/* Buttons */}
-              <div className="flex items-center justify-center gap-4 mt-10">
-                <button type="button" onClick={() => navigate("/details2")}
-                  className="w-[160px] h-[56px] border border-[#CCCCCC] text-[#0D0D0D] rounded-full font-bold text-[16px] hover:bg-[#F5F5F5] transition-all">
-                  Prev
-                </button>
-                <button type="submit"
-                  className="w-[160px] h-[56px] bg-[#152126] hover:bg-black text-white rounded-full font-bold text-[16px] transition-all">
-                  Send
-                </button>
-              </div>
-            </form>
+    {[
+      { name: "website",  placeholder: "ex: www.joocare.com", icon: "🌐", required: true },
+      { name: "linkedin", placeholder: "ex: linkedin.com/in/username", icon: <FaLinkedin className="text-[#0077B5]" />, required: true },
+      { name: "facebook", placeholder: "ex: facebook.com/username", icon: <FaFacebook className="text-[#1877F2]" />, required: true },
+      { name: "twitter", placeholder: "ex: x.com/username", icon: <FaXTwitter className="text-black" />, required: true },
+      { name: "instagram", placeholder: "ex: instagram.com/username", icon: <FaInstagram className="text-[#E4405F]" />, required: true },
+      { name: "snapchat", placeholder: "ex: snapchat.com/add/username", icon: <FaSnapchat className="text-[#FFFC00]" />, required: true },
+    ].map(({ name, placeholder, icon, required }) => (
+      <div key={name} className="flex flex-col gap-1">
+        <div className="relative flex items-center">
+          <input 
+            type="text" 
+            placeholder={placeholder} 
+            {...register(name, { required: required ? `${name} is required` : false })}
+            className={`w-full h-[56px] bg-[#EAEAEA] rounded-full px-6 pr-14 outline-none placeholder:text-[#8F8F8F] border transition-all focus:ring-2 focus:ring-[#00694B]/10 ${errors[name] ? 'border-red-500 focus:border-red-500' : 'border-transparent focus:border-[#00694B]'}`} 
+          />
+          <div className="absolute right-5 text-[20px]">{icon}</div>
+        </div>
+        {errors[name] && <p className="text-red-500 text-[13px] mt-1 px-4 font-medium">{errors[name].message}</p>}
+      </div>
+    ))}
+  </div>
+
+  {/* Buttons */}
+  <div className="flex items-center justify-center gap-4 mt-10">
+    <button 
+      type="button" 
+      onClick={() => navigate("/details2")}
+      className="w-[160px] h-[56px] border border-[#CCCCCC] text-[#0D0D0D] rounded-full font-bold text-[16px] hover:bg-[#F5F5F5] transition-all"
+    >
+      Prev
+    </button>
+    <button 
+      type="submit"
+      className="w-[160px] h-[56px] bg-[#152126] hover:bg-black text-white rounded-full font-bold text-[16px] transition-all shadow-md active:scale-95"
+    >
+      Send
+    </button>
+  </div>
+</form>
           </div>
         </main>
       </div>

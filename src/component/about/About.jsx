@@ -29,7 +29,7 @@ function About() {
 
   async function fetchaboutdata() {
     try {
-      const response = await fetch("https://admin.joocare.com/api/about", {
+      const response = await fetch("https://joocare.nami-tec.com/api/about", {
         headers: {
           "Accept-Language": "en",
         },

@@ -99,7 +99,7 @@ function Jobs() {
     categories = "",
   ) {
     try {
-      const url = `https://admin.joocare.com/api/user/jobs?pagination=on&limit_per_page=10&page=${page}&search=${search}${country ? `&country=${country}` : ""}&professional_license=${professional}&domain=${dom}&role_categories=${role}&seniority_levels=${senior}&experiences=${exp}&availabilities=${avail}&employment_types=${employ}&categories=${categories}`;
+      const url = `https://joocare.nami-tec.com/api/user/jobs?pagination=on&limit_per_page=10&page=${page}&search=${search}${country ? `&country=${country}` : ""}&professional_license=${professional}&domain=${dom}&role_categories=${role}&seniority_levels=${senior}&experiences=${exp}&availabilities=${avail}&employment_types=${employ}&categories=${categories}`;
 
       const response = await fetch(url, {
         headers: { Accept: "application/json", "Accept-Language": "en" },
@@ -193,7 +193,7 @@ const handleReset = () => {
   async function fetchdatacountry() {
     try {
       const response = await fetch(
-        "https://admin.joocare.com/api/countries?pagination=on&limit_per_page=10&page=1",
+        "https://joocare.nami-tec.com/api/countries?pagination=on&limit_per_page=10&page=1",
         {
           headers: { "Accept-Language": "en" },
         },
@@ -210,7 +210,7 @@ const handleReset = () => {
   async function fetchdatasearch() {
     try {
       const response = await fetch(
-        "https://admin.joocare.com/api/searches?pagination=on&limit_per_page=10&page=1",
+        "https://joocare.nami-tec.com/api/searches?pagination=on&limit_per_page=10&page=1",
       );
       const data = await response.json();
       setSearchData(data);
@@ -271,14 +271,14 @@ setter(data)
  }
 
  useEffect(() => {
-     const baseurl = 'https://admin.joocare.com/api'
+     const baseurl = 'https://joocare.nami-tec.com/api'
      fetchdataleft(`${baseurl}/availabilities?pagination=on&limit_per_page=10&page=1`,setavailabilitiess)
      fetchdataleft(`${baseurl}/categories?pagination=on&limit_per_page=10&page=1`,setcategoriess)
      fetchdataleft(`${baseurl}/domains?pagination=on&limit_per_page=10&page=1`,setdomains)
      fetchdataleft(`${baseurl}/experiences?pagination=on&limit_per_page=10&page=1`,setexperiencess)
      fetchdataleft(`${baseurl}/role-categories?pagination=on&limit_per_page=10&page=1`,setrolecategories)
      fetchdataleft(`${baseurl}/seniority-levels?pagination=on&limit_per_page=10&page=1`,setsenioritylevels)
-     fetchdataleft(`${baseurl}/employment-types/?pagination=on&limit_per_page=10&page=1`,setemployertypes)
+     fetchdataleft(`${baseurl}/employment-types?pagination=on&limit_per_page=10&page=1`,setemployertypes)
   }, []);
 
  

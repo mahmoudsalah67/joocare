@@ -17,7 +17,7 @@ function Faq() {
   async function fetchdatafaq(page = 1) {
     try {
       const response = await fetch(
-        `https://admin.joocare.com/api/faqs?pagination=on&limit_per_page=10&page=${page}`,
+        `https://joocare.nami-tec.com/api/faqs?pagination=on&limit_per_page=10&page=${page}`,
         { headers: { "Accept-Language": "en" } }
       );
       const data = await response.json();

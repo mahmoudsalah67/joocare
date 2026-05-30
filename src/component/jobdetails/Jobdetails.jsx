@@ -3,10 +3,10 @@ import "./Jobdetails.css";
 import { motion } from "framer-motion";
 import { Link, NavLink } from "react-router-dom";
 import arrow from "../../../public/imge/img-jobs/arrow-square-left.svg";
-import logo from "../../../public/imge/16 [Converted].svg";
 import rating from "../../../public/imge/img-jobs/Job Rating.svg";
 import save from "../../../public/imge/img-jobs/BookmarkSimple.svg";
 import arrowright from "../../../public//imge/img-jobs/arrow-right.svg";
+import logo from "../../../public/imge/16 [Converted].svg";
 import rr from "../../../public//imge/img-jobs/Rectangle 5439.svg";
 import dollar from "../../../public//imge/job-details/Location Icon (1).svg";
 import map from "../../../public//imge/job-details/map-pin.svg";
@@ -62,7 +62,7 @@ function Jobdetails() {
       try {
         setLoading(true);
         const res = await axios.get(
-          `https://admin.joocare.com/api/user/jobs/${id}`,
+          `https://joocare.nami-tec.com/api/user/jobs/${id}`,
         );
         setJobData(res.data);
         window.scrollTo(0, 0);
@@ -97,7 +97,7 @@ function Jobdetails() {
       transition={{ duration: 1 }}
       viewport={{ once: true }}
     >
-      <div className="job-details mt-22">
+      <div className="job-details mt-18">
         <div className="topp h-[200px] py-[40px] text-white bg-[#00694B]">
           <div className="container px-30 flex items-center justify-between">
             <h1 className="text-[18px] font-[600]">jobs</h1>
@@ -156,29 +156,26 @@ function Jobdetails() {
                 </div>
 
                 <div className="details mt-[16px]">
-                  <div className="details-1">
-                    Qualifications
-                    <div className="p text-[14px] font-[400] mt-[12px]">
-                      <p>
-                        <div
-                          className="details mt-[16px] text-[14px] font-[400]"
-                          dangerouslySetInnerHTML={{
-                            __html: jobData?.data?.job?.description,
-                          }}
-                        />
-                      </p>
-                    </div>
-                    <div className="pt-[16px] pb-[28px]">
-                      <p className="text-[#00694B] font-[700] text-[21px]">
-                        Skills:
-                      </p>
-                      <ul className="text-[#212529] pl-4 pt-[8px] text-[16px] font-[400]">
-                        {jobData?.data?.job?.skills?.map((skill) => (
-                          <li key={skill.id}>- {skill.title}</li>
-                        ))}
-                      </ul>
-                    </div>
-                  </div>
+                  <div className="leftt p-[28px] rounded-[16px] w-full max-w-full">
+                               <h1 className="text-[#00694B] text-[21px] font-[700]">Job Description</h1>
+                               <div
+                                 className="text-[#212529] text-[14px] text-justify font-[400] mt-[8px] w-full break-words whitespace-pre-line prose max-w-none"
+                                 dangerouslySetInnerHTML={{ __html: jobData?.data?.job?.description }}
+                               />
+                      
+                               {jobData?.data?.job?.skills?.length > 0 && (
+                                 <div className="mt-[24px]">
+                                   <h2 className="text-[#00694B] text-[21px] font-[700]">Skills:</h2>
+                                   <ul className="list-none pl-4 mt-[12px] flex flex-col gap-2">
+                                     {jobData?.data?.job?.skills?.map((skill) => (
+                                       <li key={skill.id} className="text-[#212529] text-[14px] font-[400] relative before:content-['-'] before:absolute before:-left-4">
+                                         {skill.title}
+                                       </li>
+                                     ))}
+                                   </ul>
+                                 </div>
+                               )}
+                             </div>
                 </div>
               </div>
               <div className="about border-[2px] border-[#0D0D0D14] mt-[20px] py-[32px] bg-white shadow-lg shadow-[#0000000D] rounded-[16px]">
@@ -203,13 +200,13 @@ function Jobdetails() {
                       </p>
                     </div>
                   </div>
-                  <p className="mt-[12px] text-justify    text-[400] text-[14px]  text-[#0D0D0DA6]">
+                  <p className="mt-[12px] text-[#212529] text-[14px] text-justify font-[400] mt-[8px] w-full break-words whitespace-pre-line prose max-w-none">
                     {jobData?.data?.job?.company?.bio}
                   </p>
                   <Link
                     to={`/shared-company-profile/${jobData?.data?.job?.company_id}`}
                   >
-                    <div className="btn-view flex items-center justify-center mb-[32px]">
+                    <div className="btn-view  mt-[12px] flex items-center justify-center mb-[32px]">
                       <button className=" rounded-full border-[#1C2628] hover:bg-[#00694B] duration-500 hover:text-white hover:border-transparent cursor-pointer  border-[1px] rounded- px-[20px] py-[10px]">
                         View Profile
                       </button>
