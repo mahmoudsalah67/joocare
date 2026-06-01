@@ -24,6 +24,7 @@ import { useEffect } from "react";
 import { MdKeyboardArrowLeft, MdKeyboardArrowRight } from "react-icons/md";
 import { img } from "framer-motion/client";
 import { set } from "react-hook-form";
+
 function Jobs() {
   const [showAll, setShowAll] = useState(false);
 
@@ -187,9 +188,6 @@ const handleReset = () => {
    document.querySelectorAll('input[type="radio"]').forEach((r) => r.checked = false);
 };
 
-
-
-
   async function fetchdatacountry() {
     try {
       const response = await fetch(
@@ -226,7 +224,6 @@ const handleReset = () => {
   useEffect(() => {
     fetchdatacountry();
   }, []);
-  console.log("jobsData:", searchData);
 
   const handleSearch = (e) => {
     if (e.key === "Enter" || e.type === "click") {
@@ -241,14 +238,8 @@ const handleReset = () => {
   const toggleCheck = (key) =>
     setChecked((prev) => ({ ...prev, [key]: !prev[key] }));
 
-
-
-
 // {api jobs left}
-
- 
 const [fetchDataleft, setfetchdataleft] = useState(null);
-
 const [availabilitiess, setavailabilitiess] = useState(null);
 const [categoriess, setcategoriess] = useState(null);
 const [domains, setdomains] = useState(null);
@@ -257,14 +248,11 @@ const [rolecategories, setrolecategories] = useState(null);
 const [senioritylevels, setsenioritylevels] = useState(null);
 const [employertypes, setemployertypes] = useState(null);
  
-
  async function fetchdataleft(url ,setter) {
- 
    try {
      const response = await fetch(url);
      const data = await response.json();
 setter(data)
-      
    } catch (error) {
      console.error("Error:", error);
    }
@@ -281,23 +269,6 @@ setter(data)
      fetchdataleft(`${baseurl}/employment-types?pagination=on&limit_per_page=10&page=1`,setemployertypes)
   }, []);
 
- 
-
-
-
-
-// {api jobs left}
-
-
-
-
-
-
-
-
-
-
-
   return (
     <>
       <motion.div
@@ -309,7 +280,7 @@ setter(data)
         <div className="section-jobs pt-19 bg-gray-50">
           <div className="parent">
             <div className="topp h-[200px] py-[40px] text-white bg-[#00694B]">
-              <div className="container px-30 flex items-center justify-between">
+              <div className="container px-4 md:px-10 lg:px-20 xl:px-30 mx-auto flex items-center justify-between">
                 <h1 className="text-[18px] font-[600]">jobs</h1>
                 <div className="flex items-center text-[18px] font-[600]">
                   <Link to="/" className="cursor-pointer">
@@ -321,11 +292,11 @@ setter(data)
               </div>
             </div>
 
-            <div className="container px-30 mx-auto">
+            <div className="container px-4 md:px-10 lg:px-20 xl:px-30 mx-auto">
               <div className="top-search py-[16px] rounded-[16px] bg-white shadow-sm mx-auto -mt-[70px] relative z-10">
-                <div className="search-bar w-[1000px] mx-auto">
-                  <div className="bg-[#F1F3F5] rounded-[100px] p-2 flex items-center gap-2 shadow-inner">
-                    <div className="flex-grow flex items-center gap-3 bg-white px-5 py-3 rounded-full border border-gray-100 focus-within:border-green-600 transition-all">
+                <div className="search-bar w-full max-w-[1000px] mx-auto px-4">
+                  <div className="bg-[#F1F3F5] rounded-xl xl:rounded-[100px] p-2 flex flex-col xl:flex-row items-center gap-2 shadow-inner">
+                    <div className="flex-grow flex items-center gap-3 bg-white px-5 py-3 rounded-full border border-gray-100 focus-within:border-green-600 transition-all w-full">
                       <FiSearch
                         className="text-gray-400 cursor-pointer hover:text-green-600"
                         onClick={handleSearch}
@@ -340,9 +311,9 @@ setter(data)
                       />
                     </div>
 
-                    <div className="flex items-center gap-2">
+                    <div className="flex items-center gap-2 w-full xl:w-auto">
                       <div
-                        className={`relative ${dropdownStyle} min-w-[140px] max-w-[160px] flex items-center`}
+                        className={`relative flex items-center gap-2.5 bg-white text-gray-400 px-5 py-3 rounded-full cursor-pointer hover:bg-gray-50 transition min-w-full xl:min-w-[140px] xl:max-w-[180px]`}
                       >
                         <select
                           className="absolute inset-0 opacity-0 cursor-pointer z-10 w-full"
@@ -361,7 +332,7 @@ setter(data)
                             </option>
                           ))}
                         </select>
-                        <span className="text-sm flex-1 pr-1">
+                        <span className="text-sm flex-1 pr-1 truncate">
                           {selectedCountry}
                         </span>
                         <MdKeyboardArrowDown
@@ -373,7 +344,7 @@ setter(data)
 
                     <button
                       onClick={handleSearch}
-                      className="bg-[#00694B] text-white px-8 py-3 rounded-full font-semibold text-sm hover:bg-black transition-colors cursor-pointer min-w-[120px]"
+                      className="bg-[#00694B] text-white px-8 py-3 rounded-full font-semibold text-sm hover:bg-black transition-colors cursor-pointer min-w-full xl:min-w-[120px]"
                     >
                       Search
                     </button>
@@ -381,17 +352,17 @@ setter(data)
                 </div>
 
                 {/* Popular Searches */}
-                <div className="px-[24px]">
-                  <div className="container mx-auto py-5 flex items-start gap-5">
+                <div className="px-4 xl:px-[24px]">
+                  <div className="container mx-auto py-5 flex flex-col xl:flex-row items-start gap-5">
                     <h2 className="text-[18px] font-bold text-[#1A1A1A] pt-2 whitespace-nowrap">
                       Popular Searches
                     </h2>
-                    <div className="flex-1">
+                    <div className="flex-1 w-full">
                       <div className="flex flex-wrap gap-x-[12px] gap-y-3 items-center">
                         {searchData?.data?.slice(0, 4).map((job, index) => (
                           <Link to="/jobdetails" key={index}>
                             <NavLink
-                              to={`/jobs?search=${encodeURIComponent(job.word)}`} // ✅
+                              to={`/jobs?search=${encodeURIComponent(job.word)}`}
                               className="flex items-center gap-2 px-[12px] py-[8px] border border-[#E5E7EB] rounded-full hover:bg-gray-50 cursor-pointer transition"
                             >
                               <FiSearch className="text-gray-400" />
@@ -424,7 +395,7 @@ setter(data)
                         </div>
                       </div>
                     </div>
-                    <div className="flex items-center gap-2 ml-4 cursor-pointer shrink-0  pt-1">
+                    <div className="flex items-center gap-2 xl:ml-4 cursor-pointer shrink-0 pt-1">
                       <div className="flex items-center gap-1 p-2 rounded-full transition duration-500 hover:bg-[#00694B] group">
                         <button
                           onClick={() => setShowAll(!showAll)}
@@ -433,62 +404,32 @@ setter(data)
                           {showAll ? "Show Less" : "Show More"}
                         </button>
                         <BsArrowUpRightCircle
-                          className={`size-[16px] text-[#00694B] group-hover:text-white  cursor-pointer transition-transform duration-500 ${showAll ? "rotate-45" : "rotate-0"}`}
+                          className={`size-[16px] text-[#00694B] group-hover:text-white cursor-pointer transition-transform duration-500 ${showAll ? "rotate-45" : "rotate-0"}`}
                         />
                       </div>
                     </div>
                   </div>
                 </div>
               </div>
+
               {/* Details Section */}
-              <div className="details flex items-start mb-[20px] justify-center gap-[24px] p-[24px] bg-white shadow-md rounded-[16px] mt-[24px]">
+              <div className="details flex flex-col xl:flex-row items-start mb-[20px] justify-center gap-[24px] p-4 md:p-[24px] bg-white shadow-md rounded-[16px] mt-[24px]">
                 {/* details-left */}
-                <div className="details-left bg-white border-[1px] border-[#0D0D0D14] w-[375px] rounded-[16px] shadow-sm sticky top-5">
-                  {/* Professional License - radio */}
+                <div className="details-left bg-white border-[1px] border-[#0D0D0D14] w-full xl:w-[350px] 2xl:w-[375px] rounded-[16px] shadow-sm xl:sticky xl:top-5">
+                  {/* Professional License */}
                   <div className="item-1 my-[16px] mx-[16px]">
                     <div
                       onClick={() => toggleSection("professional")}
                       className="title flex items-center justify-between border-b-[1px] border-[#0D0D0D14] pb-[11px] cursor-pointer"
                     >
-                      <p className="text-[14px] font-[600]">
-                        Professional License
-                      </p>
-                      <img
-                        src={openSections.professional ? arrowup : arrowdowen}
-                        alt=""
-                      />
+                      <p className="text-[14px] font-[600]">Professional License</p>
+                      <img src={openSections.professional ? arrowup : arrowdowen} alt="" />
                     </div>
-                    <div
-                      className={`grid transition-all duration-500 ease-in-out ${openSections.professional ? "grid-rows-[1fr] mt-[16px]" : "grid-rows-[0fr]"}`}
-                    >
+                    <div className={`grid transition-all duration-500 ease-in-out ${openSections.professional ? "grid-rows-[1fr] mt-[16px]" : "grid-rows-[0fr]"}`}>
                       <div className="overflow-hidden space-y-[16px]">
-                        {[
-                          {
-                            id: "with_medical_license",
-                            label: "With Medical License",
-                            value: "with_medical_license",
-                          },
-                          {
-                            id: "without_medical_license",
-                            label: "Without Medical License",
-                            value: "without_medical_license",
-                          },
-                        ].map((item) => (
-                          <label
-                            key={item.id}
-                            className="flex items-center gap-[10px] cursor-pointer"
-                          >
-                            <input
-                              type="radio"
-                              name="professional"
-                              id={item.id}
-                              value={item.value}
-                              checked={prfessionalLicense === item.value}
-                              onChange={() =>
-                                setProfessionalLicense(item.value)
-                              }
-                              className="w-5 h-5 accent-[#00694B] cursor-pointer"
-                            />
+                        {[{ id: "with_medical_license", label: "With Medical License", value: "with_medical_license" }, { id: "without_medical_license", label: "Without Medical License", value: "without_medical_license" }].map((item) => (
+                          <label key={item.id} className="flex items-center gap-[10px] cursor-pointer">
+                            <input type="radio" name="professional" checked={prfessionalLicense === item.value} onChange={() => setProfessionalLicense(item.value)} className="w-5 h-5 accent-[#00694B] cursor-pointer" />
                             <span className="text-[14px]">{item.label}</span>
                           </label>
                         ))}
@@ -496,45 +437,20 @@ setter(data)
                     </div>
                   </div>
 
-                  {/* role categories - checkbox */}
+                  {/* Role Categories */}
                   <div className="item-3 my-[16px] mx-[16px]">
-                    <div
-                      onClick={() => toggleSection("roleCategories")}
-                      className="title flex items-center justify-between border-b-[1px] border-[#0D0D0D14] pb-[11px] cursor-pointer"
-                    >
+                    <div onClick={() => toggleSection("roleCategories")} className="title flex items-center justify-between border-b-[1px] border-[#0D0D0D14] pb-[11px] cursor-pointer">
                       <p className="text-[14px] font-[600]">Role Categories</p>
-                      <img
-                        src={openSections.roleCategories ? arrowup : arrowdowen}
-                        alt=""
-                      />
+                      <img src={openSections.roleCategories ? arrowup : arrowdowen} alt="" />
                     </div>
-                    <div
-                      className={`grid transition-all duration-500 ease-in-out ${openSections.roleCategories ? "grid-rows-[1fr] mt-[16px]" : "grid-rows-[0fr]"}`}
-                    >
-                      <div className="overflow-hidden space-y-[16px]">
+                    <div className={`grid transition-all duration-500 ease-in-out ${openSections.roleCategories ? "grid-rows-[1fr] mt-[16px]" : "grid-rows-[0fr]"}`}>
+                      <div className="overflow-hidden space-y-[16px] max-h-[300px] overflow-y-auto pr-2 custom-scrollbar">
                         {rolecategories?.data?.map((item) => (
-                          <label
-                            key={item.id}
-                            className="flex items-center gap-[10px] cursor-pointer"
-                          >
-                            <input
-                              type="checkbox"
-                              id={item.id}
-                              checked={checked[item.id] || false}
-                              onChange={() => {
-                                const value = item.value;
-                                setRoleCategories((prev) =>
-                                  prev.includes(value)
-                                    ? prev.filter((i) => i !== value)
-                                    : [...prev, value],
-                                );
-                                setChecked((prev) => ({
-                                  ...prev,
-                                  [item.id]: !prev[item.id],
-                                }));
-                              }}
-                              className="w-5 h-5 accent-[#00694B] cursor-pointer rounded"
-                            />
+                          <label key={item.id} className="flex items-center gap-[10px] cursor-pointer">
+                            <input type="checkbox" checked={checked[item.id] || false} onChange={() => {
+                              setRoleCategories(prev => prev.includes(item.value) ? prev.filter(i => i !== item.value) : [...prev, item.value]);
+                              setChecked(prev => ({ ...prev, [item.id]: !prev[item.id] }));
+                            }} className="w-5 h-5 accent-[#00694B] cursor-pointer rounded" />
                             <span className="text-[14px]">{item.title}</span>
                           </label>
                         ))}
@@ -542,45 +458,20 @@ setter(data)
                     </div>
                   </div>
 
-                  {/* Seniority Level - checkbox */}
+                  {/* Seniority Level */}
                   <div className="item-seniority my-[16px] mx-[16px]">
-                    <div
-                      onClick={() => toggleSection("seniority")}
-                      className="title flex items-center justify-between border-b-[1px] border-[#0D0D0D14] pb-[11px] cursor-pointer"
-                    >
+                    <div onClick={() => toggleSection("seniority")} className="title flex items-center justify-between border-b-[1px] border-[#0D0D0D14] pb-[11px] cursor-pointer">
                       <p className="text-[14px] font-[600]">Seniority Level</p>
-                      <img
-                        src={openSections.seniority ? arrowup : arrowdowen}
-                        alt=""
-                      />
+                      <img src={openSections.seniority ? arrowup : arrowdowen} alt="" />
                     </div>
-                    <div
-                      className={`grid transition-all duration-500 ease-in-out ${openSections.seniority ? "grid-rows-[1fr] mt-[16px]" : "grid-rows-[0fr]"}`}
-                    >
+                    <div className={`grid transition-all duration-500 ease-in-out ${openSections.seniority ? "grid-rows-[1fr] mt-[16px]" : "grid-rows-[0fr]"}`}>
                       <div className="overflow-hidden space-y-[16px]">
                         {senioritylevels?.data?.map((item) => (
-                          <label
-                            key={item.id}
-                            className="flex items-center gap-[10px] cursor-pointer"
-                          >
-                            <input
-                              type="checkbox"
-                              id={item.id}
-                              checked={!!checked[item.id]}
-                              onChange={() => {
-                                const value = item.id;
-                                setSeniority_levels((prev) =>
-                                  prev.includes(value)
-                                    ? prev.filter((i) => i !== value)
-                                    : [...prev, value],
-                                );
-                                setChecked((prev) => ({
-                                  ...prev,
-                                  [item.id]: !prev[item.id],
-                                }));
-                              }}
-                              className="w-5 h-5 accent-[#00694B] cursor-pointer rounded"
-                            />
+                          <label key={item.id} className="flex items-center gap-[10px] cursor-pointer">
+                            <input type="checkbox" checked={!!checked[item.id]} onChange={() => {
+                              setSeniority_levels(prev => prev.includes(item.id) ? prev.filter(i => i !== item.id) : [...prev, item.id]);
+                              setChecked(prev => ({ ...prev, [item.id]: !prev[item.id] }));
+                            }} className="w-5 h-5 accent-[#00694B] cursor-pointer rounded" />
                             <span className="text-[14px]">{item.title}</span>
                           </label>
                         ))}
@@ -588,45 +479,20 @@ setter(data)
                     </div>
                   </div>
 
-                  {/* Domain - checkbox */}
+                  {/* Domain */}
                   <div className="item-3 my-[16px] mx-[16px]">
-                    <div
-                      onClick={() => toggleSection("Domain")}
-                      className="title flex items-center justify-between border-b-[1px] border-[#0D0D0D14] pb-[11px] cursor-pointer"
-                    >
+                    <div onClick={() => toggleSection("Domain")} className="title flex items-center justify-between border-b-[1px] border-[#0D0D0D14] pb-[11px] cursor-pointer">
                       <p className="text-[14px] font-[600]">Domain</p>
-                      <img
-                        src={openSections.Domain ? arrowup : arrowdowen}
-                        alt=""
-                      />
+                      <img src={openSections.Domain ? arrowup : arrowdowen} alt="" />
                     </div>
-                    <div
-                      className={`grid transition-all duration-500 ease-in-out ${openSections.Domain ? "grid-rows-[1fr] mt-[16px]" : "grid-rows-[0fr]"}`}
-                    >
+                    <div className={`grid transition-all duration-500 ease-in-out ${openSections.Domain ? "grid-rows-[1fr] mt-[16px]" : "grid-rows-[0fr]"}`}>
                       <div className="overflow-hidden space-y-[16px]">
                         {domains?.data?.map((item) => (
-                          <label
-                            key={item.id}
-                            className="flex items-center gap-[10px] cursor-pointer"
-                          >
-                            <input
-                              type="checkbox"
-                              id={item.id}
-                              checked={checked[item.id] || false}
-                              onChange={() => {
-                                const value = item.value;
-                                setDomin((prev) =>
-                                  prev.includes(value)
-                                    ? prev.filter((i) => i !== value)
-                                    : [...prev, value],
-                                );
-                                setChecked((prev) => ({
-                                  ...prev,
-                                  [item.id]: !prev[item.id],
-                                }));
-                              }}
-                              className="w-5 h-5 accent-[#00694B] cursor-pointer rounded"
-                            />
+                          <label key={item.id} className="flex items-center gap-[10px] cursor-pointer">
+                            <input type="checkbox" checked={checked[item.id] || false} onChange={() => {
+                              setDomin(prev => prev.includes(item.value) ? prev.filter(i => i !== item.value) : [...prev, item.value]);
+                              setChecked(prev => ({ ...prev, [item.id]: !prev[item.id] }));
+                            }} className="w-5 h-5 accent-[#00694B] cursor-pointer rounded" />
                             <span className="text-[14px]">{item.title}</span>
                           </label>
                         ))}
@@ -634,47 +500,20 @@ setter(data)
                     </div>
                   </div>
 
-                  {/* Experience - checkbox */}
+                  {/* Experience */}
                   <div className="item-3 my-[16px] mx-[16px]">
-                    <div
-                      onClick={() => toggleSection("ExperienceLevel")}
-                      className="title flex items-center justify-between border-b-[1px] border-[#0D0D0D14] pb-[11px] cursor-pointer"
-                    >
+                    <div onClick={() => toggleSection("ExperienceLevel")} className="title flex items-center justify-between border-b-[1px] border-[#0D0D0D14] pb-[11px] cursor-pointer">
                       <p className="text-[14px] font-[600]">Experience</p>
-                      <img
-                        src={
-                          openSections.ExperienceLevel ? arrowup : arrowdowen
-                        }
-                        alt=""
-                      />
+                      <img src={openSections.ExperienceLevel ? arrowup : arrowdowen} alt="" />
                     </div>
-                    <div
-                      className={`grid transition-all duration-500 ease-in-out ${openSections.ExperienceLevel ? "grid-rows-[1fr] mt-[16px]" : "grid-rows-[0fr]"}`}
-                    >
+                    <div className={`grid transition-all duration-500 ease-in-out ${openSections.ExperienceLevel ? "grid-rows-[1fr] mt-[16px]" : "grid-rows-[0fr]"}`}>
                       <div className="overflow-hidden space-y-[16px]">
                         {experiencess?.data?.map((item) => (
-                          <label
-                            key={item.id}
-                            className="flex items-center gap-[10px] cursor-pointer"
-                          >
-                            <input
-                              type="checkbox"
-                              id={item.id}
-                              checked={checked[item.id] || false}
-                              onChange={() => {
-                                const value = item.value;
-                                setExperiences((prev) =>
-                                  prev.includes(value)
-                                    ? prev.filter((i) => i !== value)
-                                    : [...prev, value],
-                                );
-                                setChecked((prev) => ({
-                                  ...prev,
-                                  [item.id]: !prev[item.id],
-                                }));
-                              }}
-                              className="w-5 h-5 accent-[#00694B] cursor-pointer rounded"
-                            />
+                          <label key={item.id} className="flex items-center gap-[10px] cursor-pointer">
+                            <input type="checkbox" checked={checked[item.id] || false} onChange={() => {
+                              setExperiences(prev => prev.includes(item.value) ? prev.filter(i => i !== item.value) : [...prev, item.value]);
+                              setChecked(prev => ({ ...prev, [item.id]: !prev[item.id] }));
+                            }} className="w-5 h-5 accent-[#00694B] cursor-pointer rounded" />
                             <span className="text-[14px]">{item.title}</span>
                           </label>
                         ))}
@@ -682,46 +521,20 @@ setter(data)
                     </div>
                   </div>
 
-                  {/* Availability - checkbox */}
+                  {/* Availability */}
                   <div className="item-3 my-[16px] mx-[16px]">
-                    <div
-                      onClick={() => toggleSection("Availability")}
-                      className="title flex items-center justify-between border-b-[1px] border-[#0D0D0D14] pb-[11px] cursor-pointer"
-                    >
+                    <div onClick={() => toggleSection("Availability")} className="title flex items-center justify-between border-b-[1px] border-[#0D0D0D14] pb-[11px] cursor-pointer">
                       <p className="text-[14px] font-[600]">Availability</p>
-                      <img
-                        src={openSections.Availability ? arrowup : arrowdowen}
-                        alt=""
-                      />
+                      <img src={openSections.Availability ? arrowup : arrowdowen} alt="" />
                     </div>
-                    <div
-                      className={`grid transition-all duration-500 ease-in-out ${openSections.Availability ? "grid-rows-[1fr] mt-[16px]" : "grid-rows-[0fr]"}`}
-                    >
+                    <div className={`grid transition-all duration-500 ease-in-out ${openSections.Availability ? "grid-rows-[1fr] mt-[16px]" : "grid-rows-[0fr]"}`}>
                       <div className="overflow-hidden space-y-[16px]">
                         {availabilitiess?.data?.map((item) => (
-                          <label
-                            key={item.id}
-                            className="flex items-center gap-[10px] cursor-pointer"
-                          >
-                            <input
-                              type="checkbox"
-                              id={item.id}
-                              checked={!!checked[item.id]}
-                              onChange={() => {
-                                const value = item.value;
-                                // Logic الـ Toggle
-                                setAvailabilities((prev) =>
-                                  prev.includes(value)
-                                    ? prev.filter((i) => i !== value)
-                                    : [...prev, value],
-                                );
-                                setChecked((prev) => ({
-                                  ...prev,
-                                  [item.id]: !prev[item.id],
-                                }));
-                              }}
-                              className="w-5 h-5 accent-[#00694B] cursor-pointer rounded"
-                            />
+                          <label key={item.id} className="flex items-center gap-[10px] cursor-pointer">
+                            <input type="checkbox" checked={!!checked[item.id]} onChange={() => {
+                              setAvailabilities(prev => prev.includes(item.value) ? prev.filter(i => i !== item.value) : [...prev, item.value]);
+                              setChecked(prev => ({ ...prev, [item.id]: !prev[item.id] }));
+                            }} className="w-5 h-5 accent-[#00694B] cursor-pointer rounded" />
                             <span className="text-[14px]">{item.title}</span>
                           </label>
                         ))}
@@ -729,45 +542,20 @@ setter(data)
                     </div>
                   </div>
 
-                  {/* Category - checkbox */}
+                  {/* Category */}
                   <div className="item-4 my-[16px] mx-[16px]">
-                    <div
-                      onClick={() => toggleSection("Category")}
-                      className="title flex items-center justify-between border-b-[1px] border-[#0D0D0D14] pb-[11px] cursor-pointer"
-                    >
+                    <div onClick={() => toggleSection("Category")} className="title flex items-center justify-between border-b-[1px] border-[#0D0D0D14] pb-[11px] cursor-pointer">
                       <p className="text-[14px] font-[600]">Category</p>
-                      <img
-                        src={openSections.Category ? arrowup : arrowdowen}
-                        alt=""
-                      />
+                      <img src={openSections.Category ? arrowup : arrowdowen} alt="" />
                     </div>
-                    <div
-                      className={`grid transition-all duration-500 ease-in-out ${openSections.Category ? "grid-rows-[1fr] mt-[16px]" : "grid-rows-[0fr]"}`}
-                    >
+                    <div className={`grid transition-all duration-500 ease-in-out ${openSections.Category ? "grid-rows-[1fr] mt-[16px]" : "grid-rows-[0fr]"}`}>
                       <div className="overflow-hidden space-y-[16px]">
                         {categoriess?.data?.map((item) => (
-                          <label
-                            key={item.id}
-                            className="flex items-center gap-[10px] cursor-pointer"
-                          >
-                            <input
-                              type="checkbox"
-                              id={item.id}
-                              checked={!!checked[item.id]}
-                              onChange={() => {
-                                const value = item.id;
-                                setCategories((prev) =>
-                                  prev.includes(value)
-                                    ? prev.filter((i) => i !== value)
-                                    : [...prev, value],
-                                );
-                                setChecked((prev) => ({
-                                  ...prev,
-                                  [item.id]: !prev[item.id],
-                                }));
-                              }}
-                              className="w-5 h-5 accent-[#00694B] cursor-pointer rounded"
-                            />
+                          <label key={item.id} className="flex items-center gap-[10px] cursor-pointer">
+                            <input type="checkbox" checked={!!checked[item.id]} onChange={() => {
+                              setCategories(prev => prev.includes(item.id) ? prev.filter(i => i !== item.id) : [...prev, item.id]);
+                              setChecked(prev => ({ ...prev, [item.id]: !prev[item.id] }));
+                            }} className="w-5 h-5 accent-[#00694B] cursor-pointer rounded" />
                             <span className="text-[14px]">{item.title}</span>
                           </label>
                         ))}
@@ -775,45 +563,20 @@ setter(data)
                     </div>
                   </div>
 
-                  {/* Employment type - checkbox */}
+                  {/* Employment type */}
                   <div className="item-3 my-[16px] mx-[16px]">
-                    <div
-                      onClick={() => toggleSection("EmployerType")}
-                      className="title flex items-center justify-between border-b-[1px] border-[#0D0D0D14] pb-[11px] cursor-pointer"
-                    >
+                    <div onClick={() => toggleSection("EmployerType")} className="title flex items-center justify-between border-b-[1px] border-[#0D0D0D14] pb-[11px] cursor-pointer">
                       <p className="text-[14px] font-[600]">Employment type</p>
-                      <img
-                        src={openSections.EmployerType ? arrowup : arrowdowen}
-                        alt=""
-                      />
+                      <img src={openSections.EmployerType ? arrowup : arrowdowen} alt="" />
                     </div>
-                    <div
-                      className={`grid transition-all duration-500 ease-in-out ${openSections.EmployerType ? "grid-rows-[1fr] mt-[16px]" : "grid-rows-[0fr]"}`}
-                    >
+                    <div className={`grid transition-all duration-500 ease-in-out ${openSections.EmployerType ? "grid-rows-[1fr] mt-[16px]" : "grid-rows-[0fr]"}`}>
                       <div className="overflow-hidden space-y-[16px]">
                         {employertypes?.data?.map((item) => (
-                          <label
-                            key={item.id}
-                            className="flex items-center gap-[10px] cursor-pointer"
-                          >
-                            <input
-                              type="checkbox"
-                              id={item.id}
-                              checked={checked[item.id] || false}
-                              onChange={() => {
-                                const value = item.value;
-                                setemployment_types((prev) =>
-                                  prev.includes(value)
-                                    ? prev.filter((i) => i !== value)
-                                    : [...prev, value],
-                                );
-                                setChecked((prev) => ({
-                                  ...prev,
-                                  [item.id]: !prev[item.id],
-                                }));
-                              }}
-                              className="w-5 h-5 accent-[#00694B] cursor-pointer rounded"
-                            />
+                          <label key={item.id} className="flex items-center gap-[10px] cursor-pointer">
+                            <input type="checkbox" checked={checked[item.id] || false} onChange={() => {
+                              setemployment_types(prev => prev.includes(item.value) ? prev.filter(i => i !== item.value) : [...prev, item.value]);
+                              setChecked(prev => ({ ...prev, [item.id]: !prev[item.id] }));
+                            }} className="w-5 h-5 accent-[#00694B] cursor-pointer rounded" />
                             <span className="text-[14px]">{item.title}</span>
                           </label>
                         ))}
@@ -823,49 +586,23 @@ setter(data)
 
                   {/* Salary Range */}
                   <div className="item-8 my-[16px] mx-[16px]">
-                    <div
-                      onClick={() => toggleSection("salary")}
-                      className="title flex items-center justify-between border-b-[1px] border-[#0D0D0D59] pb-[11px] cursor-pointer"
-                    >
+                    <div onClick={() => toggleSection("salary")} className="title flex items-center justify-between border-b-[1px] border-[#0D0D0D59] pb-[11px] cursor-pointer">
                       <p className="text-[14px] font-[600]">Salary Range</p>
                       <div className="flex items-center gap-2">
-                        <span className="text-[12px] font-[500]">
-                          Salary Type
-                        </span>
-                        <img
-                          src={openSections.salary ? arrowup : arrowdowen}
-                          alt=""
-                        />
+                        <span className="text-[12px] font-[500]">Salary Type</span>
+                        <img src={openSections.salary ? arrowup : arrowdowen} alt="" />
                       </div>
                     </div>
-                    <div
-                      className={`grid transition-all duration-500 ease-in-out ${openSections.salary ? "grid-rows-[1fr] mt-[12px]" : "grid-rows-[0fr]"}`}
-                    >
+                    <div className={`grid transition-all duration-500 ease-in-out ${openSections.salary ? "grid-rows-[1fr] mt-[12px]" : "grid-rows-[0fr]"}`}>
                       <div className="overflow-hidden">
-                        <div className="min-max flex items-center justify-between w-full gap-[8px]">
-                          <div className="min">
-                            <label className="font-[600] text-[14px] mb-[4px]">
-                              min
-                            </label>
-                            <input
-                              type="number"
-                              className="h-[42px] bg-[#0D0D0D0D] rounded-[12px] border-[1px] border-[#0D0D0D14] py-[12px] px-[16px] w-full"
-                              value={minSalary}
-                              onChange={(e) => setMinSalary(e.target.value)}
-                              placeholder="100"
-                            />
+                        <div className="min-max flex flex-col sm:flex-row items-center justify-between w-full gap-[8px]">
+                          <div className="min w-full">
+                            <label className="font-[600] text-[14px] mb-[4px]">min</label>
+                            <input type="number" className="h-[42px] bg-[#0D0D0D0D] rounded-[12px] border-[1px] border-[#0D0D0D14] py-[12px] px-[16px] w-full" value={minSalary} onChange={(e) => setMinSalary(e.target.value)} placeholder="100" />
                           </div>
-                          <div className="max">
-                            <label className="font-[600] text-[14px] mb-[4px]">
-                              max
-                            </label>
-                            <input
-                              type="number"
-                              className="h-[42px] bg-[#0D0D0D0D] rounded-[12px] border-[1px] border-[#0D0D0D14] py-[12px] px-[16px] w-full"
-                              value={maxSalary}
-                              onChange={(e) => setMaxSalary(e.target.value)}
-                              placeholder="500"
-                            />
+                          <div className="max w-full">
+                            <label className="font-[600] text-[14px] mb-[4px]">max</label>
+                            <input type="number" className="h-[42px] bg-[#0D0D0D0D] rounded-[12px] border-[1px] border-[#0D0D0D14] py-[12px] px-[16px] w-full" value={maxSalary} onChange={(e) => setMaxSalary(e.target.value)} placeholder="500" />
                           </div>
                         </div>
                       </div>
@@ -873,176 +610,89 @@ setter(data)
                   </div>
 
                   {/* Buttons */}
-                  <div className="flex items-center gap-[12px] my-[16px] mx-[16px]">
-                    <button
-                      onClick={handleApplyFilter}
-                      className="flex-1 rounded-[999px] bg-[#047857] text-white py-[16px] px-[32px] hover:bg-black transition duration-500 cursor-pointer font-[600]"
-                    >
-                      Apply Filters
-                    </button>
-
-                    <button
-                      onClick={handleReset}
-                      className="rounded-[999px] border border-gray-200 bg-white text-[#0D0D0D] py-[16px] px-[24px] hover:bg-gray-100 transition duration-500 cursor-pointer font-[600]"
-                    >
-                      Reset
-                    </button>
+                  <div className="flex flex-col sm:flex-row items-center gap-[12px] my-[16px] mx-[16px]">
+                    <button onClick={handleApplyFilter} className="flex-1 rounded-[999px] bg-[#047857] text-white py-[16px] px-[32px] hover:bg-black transition duration-500 cursor-pointer font-[600] w-full">Apply Filters</button>
+                    <button onClick={handleReset} className="rounded-[999px] border border-gray-200 bg-white text-[#0D0D0D] py-[16px] px-[24px] hover:bg-gray-100 transition duration-500 cursor-pointer font-[600] w-full">Reset</button>
                   </div>
                 </div>
 
                 {/* details-right */}
-                <div className="details-right flex-1 flex flex-col mb-[141px] gap-[24px]">
-                  <div className="grid grid-cols-2  gap-[24px]">
+                <div className="details-right flex-1 flex flex-col mb-[141px] gap-[24px] w-full">
+                  <div className="grid grid-cols-1 md:grid-cols-1 lg:grid-cols-1 2xl:grid-cols-2 gap-[24px]">
                     {jobsData?.data?.map((job) => (
-                      <div
-                        key={job.id}
-                        className="card border-[2px] hover:border-[#047857] duration-500 cursor-pointer bg-white rounded-[16px] border-[1px] border-[#0D0D0D14] shadow-lg p-[16px] "
-                      >
-                        <div className="title flex   justify-between items-start mb-[16px]">
-                          <div className="flex gap-[14px] w-[287.5px]">
-                            <img
-                              src={job.company?.image}
-                              alt="logo"
-                              className="w-[48px] h-[48px] rounded-full object-cover"
-                            />
-                            <div>
-                              <h3 className="font-[600]">
-                                {job.title || job.job_title?.title}
-                              </h3>
-                              <p className="text-gray-500 text-[14px]">
-                                {job.company?.name}
-                              </p>
-                              <p className="text-[#F59E0B] text-[12px]">
-                                {job.created_at}
-                              </p>
+                      <div key={job.id} className="card border-[2px] hover:border-[#047857] duration-500 cursor-pointer bg-white rounded-[16px] border-[1px] border-[#0D0D0D14] shadow-lg p-[16px] flex flex-col h-full">
+                        <div className="title flex justify-between items-start mb-[16px]">
+                          <div className="flex gap-[14px] flex-1 min-w-0">
+                            <img src={job.company?.image} alt="logo" className="w-[48px] h-[48px] rounded-full object-cover shrink-0" />
+                            <div className="min-w-0 flex-1">
+                              <h3 className="font-[600] truncate text-[16px]">{job.title || job.job_title?.title}</h3>
+                              <p className="text-gray-500 text-[14px] truncate">{job.company?.name}</p>
+                              <p className="text-[#F59E0B] text-[12px]">{job.created_at}</p>
                             </div>
                           </div>
-                          
                         </div>
-                        <div className="info flex flex-wrap items-center gap-[12px] text-[14px] mb-[16px]">
-                          <div className="flex items-center gap-1">
-                            <img src={loction} alt="" />
-                            <span>
-                              {job.city?.name}, {job.country?.name}
-                            </span>
+                        <div className="info flex flex-wrap items-center gap-[12px] text-[13px] mb-[16px]">
+                          <div className="flex items-center gap-1 shrink-0">
+                            <img src={loction} alt="" className="w-4 h-4" />
+                            <span className="truncate max-w-[120px]">{job.city?.name}, {job.country?.name}</span>
                           </div>
-                          <div className="flex items-center gap-1">
-                            <img src={jobtype} alt="" />
-                            <span>{job.specialty?.title}</span>
+                          <div className="flex items-center gap-1 shrink-0">
+                            <img src={jobtype} alt="" className="w-4 h-4" />
+                            <span className="truncate max-w-[120px]">{job.specialty?.title}</span>
                           </div>
-                          <div className="flex items-center gap-1">
-                            <img src={currencydollar} alt="" />
-                            <span>
-                              {Number(job.min_salary) > 0 ||
-                              Number(job.max_salary) > 0
-                                ? `${job.min_salary}$ - ${job.max_salary}$`
-                                : "Not specified"}
-                            </span>
+                          <div className="flex items-center gap-1 shrink-0 font-bold text-[#047857]">
+                            <img src={currencydollar} alt="" className="w-4 h-4" />
+                            <span>{Number(job.min_salary) > 0 || Number(job.max_salary) > 0 ? `${job.min_salary}$ - ${job.max_salary}$` : "Not specified"}</span>
                           </div>
                         </div>
-                        <div className="tags flex flex-wrap gap-[4px] mb-[16px]">
-                          {job.experience?.title && (
-                            <span className="rounded-[999px] py-[4px] px-[12px] bg-[#0D0D0D0D] text-[12px]">
-                              {job.experience.title}
-                            </span>
-                          )}
-                          {job.employment_type?.title && (
-                            <span className="rounded-[999px] py-[4px] px-[12px] bg-[#0D0D0D0D] text-[12px]">
-                              {job.employment_type.title}
-                            </span>
-                          )}
-                          {job.category?.title && (
-                            <span className="rounded-[999px] py-[4px] px-[12px] bg-[#0D0D0D0D] text-[12px]">
-                              {job.category.title}
-                            </span>
-                          )}
+                        <div className="tags flex flex-wrap gap-[6px] mb-[16px]">
+                          {job.experience?.title && <span className="rounded-[999px] py-[4px] px-[12px] bg-[#0D0D0D0D] text-[11px] font-medium">{job.experience.title}</span>}
+                          {job.employment_type?.title && <span className="rounded-[999px] py-[4px] px-[12px] bg-[#0D0D0D0D] text-[11px] font-medium">{job.employment_type.title}</span>}
+                          {job.category?.title && <span className="rounded-[999px] py-[4px] px-[12px] bg-[#0D0D0D0D] text-[11px] font-medium">{job.category.title}</span>}
                         </div>
-                        <p
-                          className="text-gray-600 text-[14px] mb-[16px] line-clamp-2"
-                          dangerouslySetInnerHTML={{ __html: job.description }}
-                        />
-                        <div className="border-t border-[#0D0D0D14] pt-[16px] flex items-center justify-between">
-                          <div className="flex gap-[8px]">
-                            <button className="flex items-center gap-1 rounded-[999px] py-[8px] px-[16px] bg-[#0D0D0D0D] border border-[#0D0D0D14] text-[14px]">
-                              <img src={save} alt="" /> Save
+                        <p className="text-gray-600 text-[14px] mb-[16px] line-clamp-2 break-words flex-grow" dangerouslySetInnerHTML={{ __html: job.description }} />
+                        <div className="border-t border-[#0D0D0D14] pt-[16px] flex flex-col sm:flex-row items-center justify-between gap-4 mt-auto">
+                          <div className="flex gap-[8px] w-full sm:w-auto">
+                            <button className="flex-1 sm:flex-none flex items-center justify-center gap-1 rounded-[999px] py-[8px] px-[16px] bg-[#0D0D0D0D] border border-[#0D0D0D14] text-[13px] font-semibold">
+                              <img src={save} alt="" className="w-4 h-4" /> Save
                             </button>
-                            <button className="flex items-center gap-1 rounded-[999px] py-[8px] px-[16px] bg-[#0D0D0D0D] border border-[#0D0D0D14] text-[14px]">
-                              <img src={share} alt="" /> Share
+                            <button className="flex-1 sm:flex-none flex items-center justify-center gap-1 rounded-[999px] py-[8px] px-[16px] bg-[#0D0D0D0D] border border-[#0D0D0D14] text-[13px] font-semibold">
+                              <img src={share} alt="" className="w-4 h-4" /> Share
                             </button>
                           </div>
-                          <NavLink
-                            to={`/job/${job.id}`}
-                            className="bg-[#047857] text-white rounded-[999px] flex items-center gap-2 py-[8px] px-[16px] hover:bg-black transition"
-                          >
-                            View <img src={arrowright} alt="" />
+                          <NavLink to={`/job/${job.id}`} className="w-full sm:w-auto bg-[#047857] text-white rounded-[999px] flex items-center justify-center gap-2 py-[8px] px-[20px] hover:bg-black transition text-[14px] font-bold">
+                            View <img src={arrowright} alt="" className="brightness-0 invert w-3 h-3" />
                           </NavLink>
                         </div>
                       </div>
                     ))}
                   </div>
-                  <div className="flex items-center justify-center gap-4 mt-8">
-                    {/* زرار السابق */}
-                    <button
-                      onClick={() =>
-                        setCurrentPage((prev) => Math.max(prev - 1, 1))
-                      }
-                      disabled={currentPage === 1}
-                      className="w-10 h-10 flex items-center justify-center rounded-full border border-gray-200 bg-white disabled:opacity-40 cursor-pointer hover:bg-gray-50 transition"
-                    >
-                      <MdKeyboardArrowLeft
-                        size={20}
-                        className="text-gray-500"
-                      />
+                  {/* Pagination */}
+                  <div className="flex flex-wrap items-center justify-center gap-4 mt-8">
+                    <button onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))} disabled={currentPage === 1} className="w-10 h-10 flex items-center justify-center rounded-full border border-gray-200 bg-white disabled:opacity-40 cursor-pointer hover:bg-gray-50 transition">
+                      <MdKeyboardArrowLeft size={20} className="text-gray-500" />
                     </button>
-
-                    {/* أرقام الصفحات */}
-                    <div className="flex gap-2">
+                    <div className="flex flex-wrap gap-2">
                       {[...Array(jobsData?.last_page || 0)].map((_, index) => {
                         const pageNum = index + 1;
                         return (
-                          <button
-                            key={pageNum}
-                            onClick={() => setCurrentPage(pageNum)}
-                            className={`w-10 h-10 rounded-full flex items-center justify-center text-[14px] font-[500] transition-all cursor-pointer
-            ${
-              currentPage === pageNum
-                ? "bg-[#00694B] text-white shadow-md"
-                : "text-gray-600 hover:bg-gray-100"
-            }`}
-                          >
+                          <button key={pageNum} onClick={() => setCurrentPage(pageNum)} className={`w-10 h-10 rounded-full flex items-center justify-center text-[14px] font-[500] transition-all cursor-pointer ${currentPage === pageNum ? "bg-[#00694B] text-white shadow-md" : "text-gray-600 hover:bg-gray-100"}`}>
                             {pageNum}
                           </button>
                         );
                       })}
                     </div>
-
-                    {/* زرار التالي */}
-                    <button
-                      onClick={() =>
-                        setCurrentPage((prev) =>
-                          Math.min(prev + 1, jobsData?.last_page || 1),
-                        )
-                      }
-                      disabled={currentPage === jobsData?.last_page}
-                      className="w-10 h-10 flex items-center justify-center rounded-full border border-gray-200 bg-white disabled:opacity-40 cursor-pointer hover:bg-gray-50 transition"
-                    >
-                      <MdKeyboardArrowRight
-                        size={20}
-                        className="text-gray-500"
-                      />
+                    <button onClick={() => setCurrentPage((prev) => Math.min(prev + 1, jobsData?.last_page || 1))} disabled={currentPage === jobsData?.last_page} className="w-10 h-10 flex items-center justify-center rounded-full border border-gray-200 bg-white disabled:opacity-40 cursor-pointer hover:bg-gray-50 transition">
+                      <MdKeyboardArrowRight size={20} className="text-gray-500" />
                     </button>
-
-                    {/* النص */}
-                    <p className="text-gray-500 text-[14px] ml-2">
-                      Show {jobsData?.from || 0} - {jobsData?.to || 0} from{" "}
-                      {jobsData?.total || 0}
-                    </p>
+                    <p className="text-gray-500 text-[14px] w-full text-center md:w-auto">Show {jobsData?.from || 0} - {jobsData?.to || 0} from {jobsData?.total || 0}</p>
                   </div>
                 </div>
               </div>
             </div>
           </div>
         </div>
+        <Footer />
       </motion.div>
     </>
   );

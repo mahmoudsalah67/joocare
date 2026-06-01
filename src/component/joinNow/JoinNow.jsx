@@ -29,8 +29,7 @@ const [registeredEmail, setRegisteredEmail] = useState("");
   const [countries, setcountries] = useState([]);
   const [cities, setcities] = useState([]);
 
-  // مراقبة country_id لجلب المدن التابعة لها
-  const selectedCountry = watch("country_id");
+   const selectedCountry = watch("country_id");
   const watchCvFile = watch("cvFile");
   const watchLicenseFile = watch("licenseFile");
 

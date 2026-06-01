@@ -30,6 +30,13 @@ function Login2() {
   .then((res) => {
   console.log("Full Login Response:", res.data);
 
+ // 1. التشيك الذكي: لو الباكيند باعت كود إيرور (زي 422) جوه الـ 200 OK
+    // أو لو الداتا راجعة بـ null
+    if (res.data?.code === 422 || res.data?.data === null) {
+      // ارمي إيرور فوراً بالرسالة العربي اللي جاية من السيرفر
+      throw new Error(res.data?.message || "البريد الإلكتروني أو كلمة المرور غير صحيحة");
+    }
+
   toast.success("Login successful!", {
     position: "top-right",
     style: {

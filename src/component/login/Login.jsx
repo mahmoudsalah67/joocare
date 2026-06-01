@@ -26,12 +26,29 @@ function Login() {
       password: data.password
     };
 
- axios
+axios
   .post("https://joocare.nami-tec.com/api/company/auth/login", loginPayload)  
   .then((res) => {
-    // 1. اطبع الاستجابة كاملة هنا لمعاينتها في متصفحك (Inspect -> Console)
     console.log("Full Login Response:", res.data);
 
+    // 1. التشيك الذكي: لو الباكيند باعت كود إيرور (زي 422) جوه الـ 200 OK
+    // أو لو الداتا راجعة بـ null
+    if (res.data?.code === 422 || res.data?.data === null) {
+      // ارمي إيرور فوراً بالرسالة العربي اللي جاية من السيرفر
+      throw new Error(res.data?.message || "البريد الإلكتروني أو كلمة المرور غير صحيحة");
+    }
+
+    // 2. لو الداتا سليمة ومفيش إيرور، كمل استخراج التوكن عادي
+    const token = res.data?.token || 
+                  res.data?.data?.token || 
+                  res.data?.authorisation?.token || 
+                  res.data?.data?.access_token;
+
+    if (!token) {
+      throw new Error("لم يتم العثور على التوكن، برجاء المحاولة لاحقاً");
+    }
+
+    // 3. نجاح حقيقي! اظهر التوست الأخضر وانقل المستخدم
     toast.success("Login successful!", {
       position: "top-right",
       style: {
@@ -41,24 +58,14 @@ function Login() {
       },
     });
 
-     const token = res.data?.token || 
-                  res.data?.data?.token || 
-                  res.data?.authorisation?.token || 
-                  res.data?.data?.access_token;
-
-    if (token) {
-      localStorage.setItem('company_token', token);
-      console.log("Token saved successfully:", token);
-    } else {
-      console.error("Token not found in response! Check the console structure above.");
-    }
-
+    localStorage.setItem('company_token', token);
     navigate("/companyprofile");
-      })
-      .catch((err) => {
-        console.error(err);
-        toast.error(err.response?.data?.message || "Login failed. Please check your credentials.");
-      });
+  })
+  .catch((err) => {
+    console.error(err);
+    // التوست الأحمر هيعرض الرسالة اللي رميناها فوق (البريد الإلكتروني غير مسجل)
+    toast.error(err.message || "Login failed. Please check your credentials.");
+  });
   };
 
   return (

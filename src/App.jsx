@@ -1,4 +1,8 @@
-import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import React from "react";
+import { createBrowserRouter, RouterProvider, Navigate } from "react-router-dom";
+import { Toaster } from "react-hot-toast";
+
+// استيراد الكومبوننتس العامة والأساسية
 import Layout from "./component/layout/Layout";
 import Home from "./component/home/Home";
 import About from "./component/about/About";
@@ -10,31 +14,40 @@ import Foremployer from "./component/foremployer/Foremployer.jsx";
 import ForCandidate from "./component/campany/forcandidate/ForCandidate.jsx";
 import Jobdetails from "./component/jobdetails/Jobdetails.jsx";
 import Sharedcompanyprofile from "./component/shared-company-profile/Sharedcompanyprofile.jsx";
-import { Toaster } from "react-hot-toast";
 import Faq from "./component/faq/Faq.jsx";
+
+// استيراد كومبوننتس الـ Authentication والـ Setup
 import EmailVerificationModal from "./component/campany/forcandidate/EmailVerification/EmailVerification.jsx";
 import Details1 from "./component/campany/AccountSetup/details-1/Details1.jsx";
 import Details2 from "./component/campany/AccountSetup/Details2.jsx";
 import Details3 from "./component/campany/AccountSetup/Details3.jsx";
-import Companyprofile from "./component/campany/companyprofile/Companyprofile.jsx";
+import ForgotPassword from "./component/login/forgetpassored/ForgotPassword.jsx";
+import ResetPassword from "./component/login/ResetPassword/ResetPassword.jsx";
+import VerifyOtp from "./component/login/VerifyOtp/VerifyOtp.jsx";
+import Login2 from "./component/campany/login2/Login2.jsx";
+
+// استيراد كومبوننتس لوحة تحكم الشركات (Company Dashboard)
 import Dashboardlayout from "./component/layout/DashboardLayout.jsx";
+import Companyprofile from "./component/campany/companyprofile/Companyprofile.jsx";
 import Dashboard from "./component/campany/dashboard/Dashboard.jsx";
 import JobManagement from "./component/campany/JobManagement/JobManagement.jsx";
 import Accountsettings from "./component/campany/Account settings/Accountsettings.jsx";
 import Basicinfo from "./component/campany/Account settings/basicinfo/Basicinfo.jsx";
 import Businessverification from "./component/campany/Account settings/business-verification/Businessverification.jsx";
-import { Navigate } from "react-router-dom";
 import Changepassword from "./component/campany/Account settings/Change password/Changepassword.jsx";
 import Postjob from "./component/campany/postjob/Postjob.jsx";
 import JobDescriptionRequirements from "./component/campany/postjob/JobDescription&Requirements/JobDescriptionRequirements.jsx";
 import JobPreview from "./component/campany/postjob/Job Preview/JobPreview.jsx";
 import Veiwdetails from "./component/campany/JobManagement/veiwdetails/Veiwdetails.jsx";
 import ViewCandidates from "./component/campany/JobManagement/View Candidates/ViewCandidates.jsx";
-import ForgotPassword from "./component/login/forgetpassored/ForgotPassword.jsx";
-import ResetPassword from "./component/login/ResetPassword/ResetPassword.jsx";
-import VerifyOtp from "./component/login/VerifyOtp/VerifyOtp.jsx";
-import Login2 from "./component/campany/login2/Login2.jsx";
+
+// استيراد كومبوننتس حسابات المستخدمين (User Dashboard)
 import Profile from "./component/user/myprofile/Profile.jsx";
+import Applications from "./component/user/applictions/Applictions.jsx"; 
+import ProfessionalCredentials from "./component/user/Professional Credentials/ProfessionalCredentials.jsx";
+import Certificates from "./component/user/Professional Credentials/Certificates.jsx";
+import Licenses from "./component/user/Professional Credentials/Licenses.jsx";
+import Settings from "./component/user/settings/Settings.jsx";
 
 const router = createBrowserRouter([
   {
@@ -57,10 +70,16 @@ const router = createBrowserRouter([
       { path: "VerifyOtp", element: <VerifyOtp /> },
       { path: "ResetPassword", element: <ResetPassword /> },
       { path: "forgotpassword", element: <ForgotPassword /> },
-      { path: "profile", element: <Profile /> }, // جلبنا البروفايل هنا ياباشا لتشغيل المسار فوراً وعرض الصفحة
+      
+      // مسارات لوحة تحكم المستخدم (User Panel Routes)
+      { path: "profile", element: <Profile /> },
+      { path: "applications", element: <Applications /> },  
+      { path: "ProfessionalCredentials", element: <ProfessionalCredentials /> },  
+      { path: "ProfessionalCredentials/Certificates", element: <Certificates /> },  
+      { path: "ProfessionalCredentials/Licenses", element: <Licenses /> },  
+      { path: "settings", element: <Settings /> },  
     ],
   },
-  
   {
     path: "/",
     element: <Dashboardlayout />,
