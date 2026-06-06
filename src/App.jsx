@@ -48,6 +48,7 @@ import ProfessionalCredentials from "./component/user/Professional Credentials/P
 import Certificates from "./component/user/Professional Credentials/Certificates.jsx";
 import Licenses from "./component/user/Professional Credentials/Licenses.jsx";
 import Settings from "./component/user/settings/Settings.jsx";
+import SavedJobs from "./component/user/SavedJobs/SavedJobs.jsx";
 
 const router = createBrowserRouter([
   {
@@ -78,6 +79,7 @@ const router = createBrowserRouter([
       { path: "ProfessionalCredentials/Certificates", element: <Certificates /> },  
       { path: "ProfessionalCredentials/Licenses", element: <Licenses /> },  
       { path: "settings", element: <Settings /> },  
+      { path: "SavedJobs", element: <SavedJobs /> },  
     ],
   },
   {
@@ -94,7 +96,7 @@ const router = createBrowserRouter([
       { path: "JobPreview/:id", element: <JobPreview /> },
       { path: "jobManagement", element: <JobManagement /> },
       { path: "veiwdetails/:id", element: <Veiwdetails /> },
-      { path: "ViewCandidates", element: <ViewCandidates /> },
+      { path: "ViewCandidates/:id", element: <ViewCandidates /> },
       {
         path: "Accountsettings",
         element: <Accountsettings />,

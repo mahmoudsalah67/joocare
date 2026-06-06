@@ -241,6 +241,14 @@ function Basicinfo() {
           {errors.domain && <p className="text-red-500 text-[12px] px-2">{errors.domain.message}</p>}
         </div>
 
+
+ 
+
+
+
+
+
+
         {/* Contact Person Full Name */}
         <div className="flex flex-col gap-2">
           <label className="text-[14px] font-semibold text-[#111]">Contact person _ full name</label>

@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
-import { Link, useParams } from "react-router-dom";
+import { Link,  useNavigate,  useParams } from "react-router-dom";
  import linkedin from "../../../public/imge/job-details/Social Media Icon (5).svg";
 import face from "../../../public/imge/job-details/Social Media Icon (6).svg";
 import insta from "../../../public/imge/job-details/Social Media Icon (7).svg";
@@ -14,6 +14,7 @@ import share from "../../../public/imge/job-details/sharee.svg";
 import arrow from "../../../public/imge/img-jobs/arrow-square-left.svg";
 import arrowright from "../../../public/imge/img-jobs/arrow-right.svg";
 import axios from "axios";
+import { FiBookmark } from "react-icons/fi";
 
 function Sharedcompanyprofile() {
   const { id } = useParams();
@@ -21,6 +22,30 @@ function Sharedcompanyprofile() {
   const [error, setError] = useState(null);
   const [companyJobs, setCompanyJobs] = useState([]);
   const [jobDatacompany, setJobDatacompany] = useState(null);
+  const navigate = useNavigate();
+
+  const handleSave = async (jobId) => {
+    try {
+      const formData = new FormData();
+      formData.append('_method', 'PUT');
+
+      await axios.post(
+        `https://joocare.nami-tec.com/api/user/jobs/${jobId}`,
+        formData,
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("user_token")}`,
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
+
+       navigate('/Savedjobs'); // حذف الوظيفة من الواجهة فوراً
+      setSavedJobs((prev) => prev.filter((item) => item.id !== jobId));
+    } catch (err) {
+      console.error("Error toggling save:", err);
+    }
+  };
 
   const fetchJobs = async (page = 1) => {
     try {
@@ -231,10 +256,18 @@ function Sharedcompanyprofile() {
 
                     <div className="buttom flex items-center justify-between mt-[16px] gap-[8px]">
                       <div className="flex items-center gap-[6px]">
-                        <div className="save flex items-center gap-[4px] text-[#0D0D0DA6] bg-[#0D0D0D0D] rounded-full border-[1px] border-[#0D0D0D14] hover:text-[#000000] duration-500 cursor-pointer py-[8px] px-[16px]">
-                          <img src={save} alt="" />
-                          <p>save</p>
-                        </div>
+                        
+                            <button 
+                onClick={() => handleSave(job.id)}
+                className="flex items-center gap-2 rounded-[999px] py-[8px] px-[16px] bg-[#00694B] hover:bg-[#0D0D0D] cursor-pointer duration-300 text-white text-[13px] font-semibold"
+              >
+                <FiBookmark /> Saved
+              </button>
+                           
+                                                        
+
+                          
+                        
                         <div className="share flex items-center gap-[4px] bg-[#0D0D0D0D] text-[#0D0D0DA6] rounded-full border-[1px] hover:text-[#000000] duration-500 cursor-pointer border-[#0D0D0D14] py-[8px] px-[16px]">
                           <img src={share} alt="" />
                           <p>share</p>

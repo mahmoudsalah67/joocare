@@ -22,6 +22,7 @@ function Dashboard() {
   const [jobs, setJobs] = useState([]); 
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  
 
   useEffect(() => {
     const fetchDashboardAndJobs = async () => {
@@ -259,18 +260,13 @@ function Dashboard() {
                               {job.created_at ? new Date(job.created_at).toLocaleDateString("en-GB", { day: 'numeric', month: 'long', year: 'numeric' }) : "Recent"}
                             </td>
                             <td className="p-4 flex gap-2">
-                              <Link to={`/JobPreview/${job.id}`}>
+                              <Link to={`/viewcandidates/${job.id}`}>
                                 <button className="bg-[#00694B] text-white text-[12px] px-3 py-1.5 rounded-full flex items-center gap-1 cursor-pointer">
                                   <MdRemoveRedEye /> View
                                 </button>
                               </Link>
                               
-                              <button 
-                                onClick={() => handleDownloadCV(job.id, job.cv_url || job.job_title?.cv_url)}
-                                className="bg-[#00694B]/10 hover:bg-[#00694B]/20 text-[#00694B] text-[12px] px-3 py-1.5 rounded-full flex items-center gap-1 cursor-pointer font-medium"
-                              >
-                                <MdDownload /> CV
-                              </button>
+                              
                             </td>
                           </tr>
                         ))

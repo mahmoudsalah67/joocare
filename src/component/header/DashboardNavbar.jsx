@@ -151,8 +151,7 @@ function DashboardNavbar() {
               </div>
               <MdKeyboardArrowDown className={`text-gray-500 text-sm md:text-base transition-transform duration-200 ${isDropdownOpen ? "rotate-180" : ""}`} />
 
-              {/* الـ Dropdown (تم ضبط موقعه وأبعاده ليكون متوافق مع شاشات الموبايل) */}
-              {isDropdownOpen && (
+               {isDropdownOpen && (
                 <div 
                   className="absolute top-[45px] md:top-[50px] right-0 w-[240px] md:w-[260px] bg-white border border-gray-100 rounded-2xl shadow-xl py-4 z-[999]"
                   onClick={(e) => e.stopPropagation()}
@@ -229,8 +228,7 @@ function DashboardNavbar() {
             </div>
           </div>
 
-          {/* القائمة المنسدلة لروابط التنقل للموبايل (Mobile Menu Dropdown) */}
-          {isMobileMenuOpen && (
+           {isMobileMenuOpen && (
             <div 
               ref={mobileMenuRef}
               className="absolute top-[64px] left-0 w-full bg-white shadow-lg border-b border-gray-100 px-6 py-4 flex flex-col gap-2 md:hidden z-40 animate-fadeIn"

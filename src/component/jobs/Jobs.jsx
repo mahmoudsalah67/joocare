@@ -653,9 +653,12 @@ setter(data)
                         <p className="text-gray-600 text-[14px] mb-[16px] line-clamp-2 break-words flex-grow" dangerouslySetInnerHTML={{ __html: job.description }} />
                         <div className="border-t border-[#0D0D0D14] pt-[16px] flex flex-col sm:flex-row items-center justify-between gap-4 mt-auto">
                           <div className="flex gap-[8px] w-full sm:w-auto">
-                            <button className="flex-1 sm:flex-none flex items-center justify-center gap-1 rounded-[999px] py-[8px] px-[16px] bg-[#0D0D0D0D] border border-[#0D0D0D14] text-[13px] font-semibold">
+                            <NavLink to={'/Savedjobs'}>
+                             <button className="flex-1 sm:flex-none flex items-center justify-center gap-1 rounded-[999px] py-[8px] px-[16px] bg-[#0D0D0D0D] border border-[#0D0D0D14] text-[13px] font-semibold">
                               <img src={save} alt="" className="w-4 h-4" /> Save
                             </button>
+
+                            </NavLink>
                             <button className="flex-1 sm:flex-none flex items-center justify-center gap-1 rounded-[999px] py-[8px] px-[16px] bg-[#0D0D0D0D] border border-[#0D0D0D14] text-[13px] font-semibold">
                               <img src={share} alt="" className="w-4 h-4" /> Share
                             </button>
