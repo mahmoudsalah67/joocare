@@ -25,8 +25,8 @@ import trash from "../../../../public/imge/trash.gif";
 function JobManagement() {
   const [currentPage, setCurrentPage] = useState(1);
   const [profileData, setProfileData] = useState(null);
-  const [loading, setLoading] = useState(false); // إضافة الـ state الناقص للتحميل
-  const [error, setError] = useState(null);     // إضافة الـ state الناقص للأخطاء
+  const [loading, setLoading] = useState(false);  
+  const [error, setError] = useState(null);     
   
   const [totalPages, setTotalPages] = useState(1);
   const [selectedStatus, setSelectedStatus] = useState("Status");

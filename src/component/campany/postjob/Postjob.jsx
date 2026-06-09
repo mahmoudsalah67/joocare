@@ -61,9 +61,7 @@ function Postjob() {
     }
   }
 
-  
-  const selectedCountry = watch("country_id");
-  const showSalary = watch("has_salary");
+ 
   const {
     register,
     handleSubmit,
@@ -79,6 +77,9 @@ function Postjob() {
       has_salary: 1
     }
   });
+  
+  const selectedCountry = watch("country_id");
+  const showSalary = watch("has_salary");
 
   useEffect(() => {
     const baseurl = 'https://joocare.nami-tec.com/api';
