@@ -64,7 +64,7 @@ function Foremployer() {
         <div className="sectionForemployer mt-22">
           {/* Fake Nav */}
           <div className="fakenav bg-[#0D0D0D0D] py-5">
-            <div className="container px-4 md:px-30 flex items-center justify-between">
+            <div className="container px-4 md:px-30 mx-auto flex items-center justify-between">
               <h1 className="text-[18px] font-[600]">For Employers</h1>
               <div className="flex items-center text-[18px] font-[600]">
                 <NavLink to={"/"}>home</NavLink>

@@ -392,10 +392,10 @@ return (
               </div>
             </div>
           </div>
-
           {/* Why Joocare */}
-          <div className="frame">
-            <div className="content pt-32 pb-20">
+          <div className="frame ">
+            
+            <div className="content  pt-32 pb-20">
               <div className="title-1 flex justify-center items-center gap-2 border border-[#2E90A61A] mx-auto w-fit bg-[#12121205] px-4 py-1 rounded-full">
                 <img src={star2} alt="" />
                 <p className="text-[#1C2628] font-medium text-sm">Why Joocare?</p>
@@ -403,9 +403,9 @@ return (
               <div className="title-2 text-center pt-5 mb-16"></div>
 
               {/*  flex-col on mobile */}
-              <div className="whycontainer relative flex flex-col md:flex-row w-full overflow-hidden">
+              <div className="whycontainer  relative flex flex-col md:flex-row w-full overflow-hidden">
                 <div className="w-full md:w-1/2 bg-[#E6EAED] p-8 md:p-20 flex justify-end items-center">
-                  <div className="max-w-[560px] w-full">
+                  <div className="max-w-[560px]  w-full">
                     <div className="mb-8">
                       <span className="text-[#00694B] font-bold text-sm flex items-center gap-2 border border-[#2E90A61A] w-fit bg-[#00694B]/5 rounded-full px-4 py-2">
                         <FaStar size={12} className="text-[#00694B]" /> The Legacy Model
@@ -470,6 +470,7 @@ return (
               </div>
             </div>
           </div>
+
         </div>
 
         {/* Top Employers */}
@@ -483,7 +484,7 @@ return (
               <div className="title-2 text-center mt-[16px] mb-[24px]">
                 <h1>{homeData?.data?.top_employers?.title}</h1>
               </div>
-              {/* ✅ grid-cols-2 on mobile */}
+              {/*  grid-cols-2 on mobile */}
               <div className="logos">
                 <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-8 gap-6 mb-[80px]">
                   {homeData?.data?.top_employers?.top_employers?.map((employer) => (
@@ -498,7 +499,7 @@ return (
         {/* Proven Hiring Impact */}
         <div className="Proven bg-[#F8FAFA] py-20">
           <div className="container mx-auto px-4 lg:px-30">
-            {/* ✅ flex-col on mobile */}
+            {/*  flex-col on mobile */}
             <div className="content flex flex-col lg:flex-row items-center justify-between gap-12">
               <div className="details w-full lg:max-w-[500px]">
                 <div className="title-1 flex items-center gap-2 mb-6 border-[1px] border-[#2E90A61A] rounded-[12px] py-[8px] px-[16px] w-fit bg-[#12121205]">
@@ -513,7 +514,7 @@ return (
                 </button>
               </div>
 
-              {/* ✅ grid-cols-2 كما هو */}
+              {/*  grid-cols-2 */}
               <div className="cards grid grid-cols-2 gap-[16px] w-full">
                 {[
                   { num: "+500,000", label: "Verified Healthcare Professionals" },
@@ -545,7 +546,7 @@ return (
                     <img src={star2} alt="" />
                     <p className="text-[#1C2628] text-[16px] font-[400]">Recent Jobs</p>
                   </div>
-                  {/* ✅ w-[433px] → w-full max-w-[433px] */}
+                  {/*  w-[433px] → w-full max-w-[433px] */}
                   <h1 className="font-[600] text-[28px] mb-[21px] w-full max-w-[433px]">{homeData?.data?.recent_jobs?.title}</h1>
                 </div>
                 <div className="right">
@@ -560,7 +561,7 @@ return (
 
               <div className="register mb-[80px]">
                 <div className="content flex">
-                  {/* ✅ grid-cols-1 on mobile → 2 → 4 */}
+                  {/*  grid-cols-1 on mobile → 2 → 4 */}
                   <div className="contanier grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-[16px] w-full">
                     {homeData?.data?.recent_jobs?.jobs?.map((job) => (
                       <Link to={`job/${job.id}`} key={job.id}>
@@ -598,7 +599,7 @@ return (
                   <img src={star2} alt="" />
                   <p className="text-[#1C2628] text-[16px] font-[400]">What Professionals Say</p>
                 </div>
-                {/* ✅ w-[526px] → w-full max-w-[526px] */}
+                {/*  w-[526px] → w-full max-w-[526px] */}
                 <h1 className="font-[600] text-[28px] w-full max-w-[526px] mb-[21px]">{homeData?.data?.rates?.title}</h1>
               </div>
               <div className="right">
@@ -632,7 +633,7 @@ return (
 
         {/* FAQ */}
         <div className="faq mb-[165px]">
-          <div className="container px-4 lg:px-30">
+          <div className="container mx-auto px-4 lg:px-30">
             <div>
               <div className="title-1 flex items-center justify-center mx-auto gap-2 border-[1px] border-[#2E90A61A] rounded-[12px] py-[8px] px-[16px] w-fit bg-[#12121205]">
                 <img src={star2} alt="" />
@@ -643,7 +644,7 @@ return (
               </div>
             </div>
             <div className="subscribe flex gap-[16px]">
-              {/* ✅ grid-cols-1 on mobile */}
+              {/*  grid-cols-1 on mobile */}
               <div className="grid grid-cols-1 md:grid-cols-2 gap-[16px] w-full">
                 <div className="flex flex-col gap-[16px]">
                   {homeData?.data?.faqs?.faqs?.filter((_, index) => index % 2 === 0).map((item) => (

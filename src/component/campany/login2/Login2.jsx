@@ -30,10 +30,10 @@ function Login2() {
   .then((res) => {
   console.log("Full Login Response:", res.data);
 
- // 1. التشيك الذكي: لو الباكيند باعت كود إيرور (زي 422) جوه الـ 200 OK
-    // أو لو الداتا راجعة بـ null
+  
+    
     if (res.data?.code === 422 || res.data?.data === null) {
-      // ارمي إيرور فوراً بالرسالة العربي اللي جاية من السيرفر
+      
       throw new Error(res.data?.message || "البريد الإلكتروني أو كلمة المرور غير صحيحة");
     }
 
@@ -51,12 +51,12 @@ function Login2() {
                 res.data?.authorisation?.token || 
                 res.data?.data?.access_token;
 
-  // جلب اسم المستخدم من الريسبونص (عدل المسار حسب الـ API عندك بيرجعه فين بالظبط)
+ 
   const userName = res.data?.user?.name || res.data?.data?.user?.name || "User";
 
   if (token) {
     localStorage.setItem('user_token', token);
-    localStorage.setItem('user_name', userName); // سطر التخزين الجديد
+    localStorage.setItem('user_name', userName); 
   } else {
     console.error("Token not found in response!");
   }
