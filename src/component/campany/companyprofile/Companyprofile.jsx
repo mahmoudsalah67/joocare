@@ -148,12 +148,12 @@ function Companyprofile() {
   if (loading) return <div className="flex items-center justify-center min-h-screen text-[#00694B] font-bold">Loading Profile...</div>;
   if (error) return <div className="flex items-center justify-center min-h-screen text-red-500 font-bold">{error}</div>;
 
-  return (
+return (
     <>
-      <div className="comapny-profile">
-        <div className="min-h-screen">
-          <div className="flex grid grid-cols-12 px-20 w-[1100px]">
-             <aside className="w-[300px] h-fit flex flex-col gap-4 col-span-4 bg-white pt-[120px] mt-[-80px] pb-8 px-[12px] rounded-b-[32px] shadow-sm">
+      <div className="comapny-profile w-full flex justify-center">
+        <div className="min-h-screen w-full max-w-[1800px]">
+          <div className="flex flex-col lg:flex-row gap-6 px-4 sm:px-8 lg:px-10 w-full">
+             <aside className="w-full lg:flex-none lg:basis-1/4 h-fit flex flex-col gap-4 bg-white pt-[60px] sm:pt-[90px] lg:pt-[120px] mt-0 lg:mt-[-80px] pb-8 px-[12px] rounded-b-[32px] shadow-sm">
                      <div className="bg-[#F7FAF7] rounded-[24px] p-5 border border-[#F1F1F1] shadow-sm">
                        <div className="flex items-center gap-3 mb-3">
                          <div className="w-12 h-12 bg-[#2D3134] rounded-full flex items-center justify-center text-white font-bold text-xl overflow-hidden">
@@ -224,18 +224,18 @@ function Companyprofile() {
                      </Link>
                    </aside>
 
-            <main className="flex-1 col-span-8 w-[1020px] py-[70px]">
-              <div className="profile-details px-[40px] py-[32px]">
+            <main className="w-full lg:flex-1 py-10 lg:py-[70px]">
+              <div className="profile-details px-4 sm:px-8 lg:px-[40px] py-6 sm:py-[32px]">
                 {/* قسم الغلاف واللوجو */}
-                <div className="imgs relative group max-w-[1020px]">
-                  <div className="background relative overflow-hidden rounded-[50px] h-[300px] bg-gray-100">
+                <div className="imgs relative group w-full">
+                  <div className="background relative overflow-hidden rounded-[30px] sm:rounded-[50px] h-[160px] sm:h-[220px] lg:h-[300px] bg-gray-100">
                     <label htmlFor="img_cover">
                       <img
                         src={profileData?.cover || background}
                         alt="cover"
                         className="w-full h-full object-cover"
                       />
-                      <div className="absolute cursor-pointer top-9 right-8 bg-black/30 p-2 rounded-full hover:bg-black/50 transition">
+                      <div className="absolute cursor-pointer top-4 right-4 sm:top-9 sm:right-8 bg-black/30 p-2 rounded-full hover:bg-black/50 transition">
                         <img src={cam} alt="change cover" className="w-6 h-6" />
                       </div>
                     </label>
@@ -248,18 +248,18 @@ function Companyprofile() {
                     />
                   </div>
                   
-                  <div className="absolute -bottom-16 left-12">
+                  <div className="absolute -bottom-10 left-4 sm:-bottom-16 sm:left-12">
                     <div className="relative group">
                       <label htmlFor="img_logo">
-                        <div className="rounded-full border-4 border-white overflow-hidden bg-white shadow-lg w-[140px] h-[140px]">
+                        <div className="rounded-full border-4 border-white overflow-hidden bg-white shadow-lg w-[80px] h-[80px] sm:w-[110px] sm:h-[110px] lg:w-[140px] lg:h-[140px]">
                           <img
                             src={profileData?.image || smallimg}
                             alt="logo"
                             className="w-full h-full object-contain"
                           />
                         </div>
-                        <div className="absolute bottom-2 right-2 bg-[#1F2937] p-2 cursor-pointer rounded-full border-2 border-white shadow-md">
-                          <img src={cam} alt="change logo" className="w-4 h-4 invert" />
+                        <div className="absolute bottom-1 right-1 sm:bottom-2 sm:right-2 bg-[#1F2937] p-1.5 sm:p-2 cursor-pointer rounded-full border-2 border-white shadow-md">
+                          <img src={cam} alt="change logo" className="w-3 h-3 sm:w-4 sm:h-4 invert" />
                         </div>
                       </label>
                       <input
@@ -274,9 +274,9 @@ function Companyprofile() {
                 </div>
 
                 {/* قسم About الديناميكي */}
-                <div className="bg-white mt-[100px] border border-[#E5E7EB] rounded-2xl p-6 relative shadow-sm">
+                <div className="bg-white mt-[60px] sm:mt-[80px] lg:mt-[100px] border border-[#E5E7EB] rounded-2xl p-4 sm:p-6 relative shadow-sm">
                   <div className="flex justify-between items-center mb-4">
-                    <h2 className="text-[20px] font-bold text-[#0D0D0D]">About</h2>
+                    <h2 className="text-[18px] sm:text-[20px] font-bold text-[#0D0D0D]">About</h2>
                     <button
                       onClick={() => setIsAboutModalOpen(true)}
                       className="text-gray-400 hover:text-[#00694B] transition-colors"
@@ -284,7 +284,7 @@ function Companyprofile() {
                       <svg className="cursor-pointer" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z" /></svg>
                     </button>
                   </div>
-                  <p className="text-[#666666] text-[15px] whitespace-pre-line break-words">
+                  <p className="text-[#666666] text-[14px] sm:text-[15px] whitespace-pre-line break-words">
                     {profileData?.bio || "No description set yet."}
                   </p>
                 </div>
@@ -293,9 +293,9 @@ function Companyprofile() {
                 {isAboutModalOpen && (
                   <div className="fixed inset-0 z-[999] flex items-center justify-center p-4">
                     <div className="absolute inset-0 bg-black/50 backdrop-blur-sm" onClick={() => setIsAboutModalOpen(false)}></div>
-                    <form onSubmit={handleUpdateAbout} className="bg-white rounded-[32px] w-full max-w-[620px] p-8 relative z-10 shadow-2xl">
+                    <form onSubmit={handleUpdateAbout} className="bg-white rounded-[32px] w-full max-w-[620px] p-5 sm:p-8 relative z-10 shadow-2xl">
                       <div className="flex justify-between items-center mb-6">
-                        <h2 className="text-[24px] font-bold text-[#0D0D0D]">Edit About</h2>
+                        <h2 className="text-[20px] sm:text-[24px] font-bold text-[#0D0D0D]">Edit About</h2>
                         <button type="button" onClick={() => setIsAboutModalOpen(false)} className="text-gray-400 hover:text-red-500 transition-colors">
                           <svg className="cursor-pointer" width="24" height="24" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
                         </button>
@@ -303,13 +303,13 @@ function Companyprofile() {
                       <div className="bg-[#F9FAFB] border border-[#F3F4F6] rounded-2xl p-5 mb-8">
                         <textarea
                           name="bio"
-                          className="w-full h-[220px] bg-transparent border-none focus:ring-0 text-[#4B5563] text-[15px] leading-relaxed resize-none focus:outline-none"
+                          className="w-full h-[180px] sm:h-[220px] bg-transparent border-none focus:ring-0 text-[#4B5563] text-[15px] leading-relaxed resize-none focus:outline-none"
                           placeholder="Describe your company..."
                           defaultValue={profileData?.bio || ""}
                         ></textarea>
                       </div>
                       <div className="flex justify-center">
-                        <button type="submit" className="bg-[#00694B] cursor-pointer text-white px-20 py-3.5 rounded-full font-bold text-[18px] hover:bg-[#00523B] transition-all shadow-md">
+                        <button type="submit" className="bg-[#00694B] cursor-pointer text-white w-full sm:w-auto px-8 sm:px-20 py-3.5 rounded-full font-bold text-[18px] hover:bg-[#00523B] transition-all shadow-md">
                           Save
                         </button>
                       </div>
@@ -320,9 +320,9 @@ function Companyprofile() {
                 {/* قسم السوشيال والمعلومات الأساسية */}
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-8">
                   {/* كارد السوشيال ميديا الديناميكي */}
-                  <div className="bg-white border border-gray-100 rounded-3xl p-6 shadow-sm">
+                  <div className="bg-white border border-gray-100 rounded-3xl p-4 sm:p-6 shadow-sm">
                     <div className="flex justify-between items-center mb-6">
-                      <h2 className="text-xl font-bold text-[#0D0D0D]">Social Media</h2>
+                      <h2 className="text-lg sm:text-xl font-bold text-[#0D0D0D]">Social Media</h2>
                       <button onClick={() => setIsSocialModalOpen(true)} className="text-gray-400 hover:text-black">
                         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"/></svg>
                       </button>
@@ -343,7 +343,7 @@ function Companyprofile() {
                             </div>
                             <div className="overflow-hidden w-full">
                               <p className="text-sm font-semibold text-gray-700">{social.name}</p>
-                              <p className="text-[11px] text-[#00694B] truncate max-w-[220px]">
+                              <p className="text-[11px] text-[#00694B] truncate max-w-full sm:max-w-[220px]">
                                 {social.value || "Not linked"}
                               </p>
                             </div>
@@ -354,8 +354,8 @@ function Companyprofile() {
                   </div>
 
                   {/* كارد معلومات الشركة الأساسية الديناميكي */}
-                  <div className="bg-white border border-gray-100 rounded-3xl p-8 shadow-sm">
-                    <h2 className="text-xl font-bold text-[#0D0D0D] mb-8">Base Info</h2>
+                  <div className="bg-white border border-gray-100 rounded-3xl p-5 sm:p-8 shadow-sm">
+                    <h2 className="text-lg sm:text-xl font-bold text-[#0D0D0D] mb-8">Base Info</h2>
                     <div className="space-y-6">
                       {[
                         { label: 'Official Email', value: profileData?.email },
@@ -364,7 +364,7 @@ function Companyprofile() {
                         { label: 'Founded', value: profileData?.established_date || "Not provided" },
                         { label: 'Contact Person', value: profileData?.person_name || "Not provided" },
                       ].map((info, idx) => (
-                        <div key={idx} className="flex justify-between items-center border-b border-gray-50 pb-4 last:border-0">
+                        <div key={idx} className="flex flex-col sm:flex-row justify-between sm:items-center gap-1 border-b border-gray-50 pb-4 last:border-0">
                           <span className="text-gray-500 text-sm">{info.label}</span>
                           <span className="font-bold text-sm text-[#0D0D0D]">{info.value}</span>
                         </div>
@@ -378,9 +378,9 @@ function Companyprofile() {
                   <div className="fixed inset-0 z-[100] flex items-center justify-center p-4">
                     <div className="absolute inset-0 bg-black/40 backdrop-blur-sm" onClick={() => setIsSocialModalOpen(false)}></div>
                     
-                    <form onSubmit={handleSubmit(onSocialSubmit)} className="bg-white rounded-[40px] w-full max-w-[550px] p-10 relative z-10 shadow-2xl">
+                    <form onSubmit={handleSubmit(onSocialSubmit)} className="bg-white rounded-[40px] w-full max-w-[550px] p-6 sm:p-10 relative z-10 shadow-2xl">
                       <div className="flex justify-between items-center mb-8">
-                        <h2 className="text-2xl font-bold text-[#0D0D0D]">Edit Online profile</h2>
+                        <h2 className="text-xl sm:text-2xl font-bold text-[#0D0D0D]">Edit Online profile</h2>
                         <button type="button" onClick={() => setIsSocialModalOpen(false)} className="text-gray-400 hover:text-black">
                           <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M18 6L6 18M6 6l12 12"/></svg>
                         </button>
@@ -414,7 +414,7 @@ function Companyprofile() {
                       </div>
                       
                       <div className="mt-10 flex justify-center">
-                        <button type="submit" className="bg-[#00694B] text-white px-20 py-3 rounded-full font-bold text-lg hover:bg-[#00523B] transition-all">
+                        <button type="submit" className="bg-[#00694B] text-white w-full sm:w-auto px-8 sm:px-20 py-3 rounded-full font-bold text-lg hover:bg-[#00523B] transition-all">
                           Save
                         </button>
                       </div>

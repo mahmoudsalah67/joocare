@@ -4,7 +4,7 @@ import "react-phone-number-input/style.css";
 import { Link, NavLink, useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import axios from "axios";
-import { useState, useEffect } from "react"; 
+import { useState, useEffect } from "react";
 import {
   MdDashboard,
   MdKeyboardArrowDown,
@@ -13,62 +13,81 @@ import {
   MdWorkOutline,
 } from "react-icons/md";
 import toast from "react-hot-toast";
-import {   
+import {
   Combobox,
-  ComboboxInput,
   ComboboxContent,
   ComboboxList,
   ComboboxItem,
-  ComboboxGroup,
-  ComboboxLabel,
-  ComboboxCollection,
-  ComboboxEmpty,
-  ComboboxSeparator,
   ComboboxChips,
   ComboboxChip,
   ComboboxChipsInput,
   ComboboxTrigger,
-  ComboboxValue,
-  useComboboxAnchor,
 } from "../../../components/ui/combobox";
 
-function Postjob() {
-  // State variables for fetched data
-  const [availabilitiess, setavailabilitiess] = useState(null);
-  const [categoriess, setcategoriess] = useState(null);
-  const [experiencess, setexperiencess] = useState(null);
-  const [rolecategories, setrolecategories] = useState(null);
-  const [employertypes, setemployertypes] = useState(null);
-  const [jobtitles, setjobtitles] = useState(null);
-   const [salarytypes, setsalarytypes] = useState(null);
-  const [currencies, setcurrencies] = useState(null);
-  const [specialties, setspecialties] = useState(null);
-  const [countries, setcountries] = useState(null);
-  const [cities, setcities] = useState(null);
-  const [educationlevels, seteducationlevels] = useState(null);
-  const [mandatorycertifications, setmandatorycertifications] = useState(null);
+const BASE_URL = "https://joocare.nami-tec.com/api";
+const EMPTY = { data: [] }; // safe fallback so `.map()` never breaks the UI
 
-  // api data fetching function
-  async function fetchdata(url, res) {
-    try {
-      const response = await fetch(url, {
-        headers: { "Accept-Language": "en" },
-      });
-      const data = await response.json();
-      res(data);
-    } catch (error) {
-      console.error("Error:", error);
+function Postjob() {
+  // State variables for fetched data — default to EMPTY instead of null
+  const [availabilitiess, setavailabilitiess] = useState(EMPTY);
+  const [categoriess, setcategoriess] = useState(EMPTY);
+  const [experiencess, setexperiencess] = useState(EMPTY);
+  const [rolecategories, setrolecategories] = useState(EMPTY);
+  const [employertypes, setemployertypes] = useState(EMPTY);
+  const [jobtitles, setjobtitles] = useState(EMPTY);
+  const [salarytypes, setsalarytypes] = useState(EMPTY);
+  const [currencies, setcurrencies] = useState(EMPTY);
+  const [specialties, setspecialties] = useState(EMPTY);
+  const [countries, setcountries] = useState(EMPTY);
+  const [cities, setcities] = useState(EMPTY);
+  const [educationlevels, seteducationlevels] = useState(EMPTY);
+  const [mandatorycertifications, setmandatorycertifications] = useState(EMPTY);
+  const [loadErrors, setLoadErrors] = useState([]); // collect which endpoints failed
+
+  /**
+   * Robust fetch helper:
+   * - checks response.ok before trusting the body
+   * - retries once automatically on failure (helps with transient 500s)
+   * - supports AbortController so we don't setState after unmount
+   * - never throws up to the caller; always resolves
+   */
+  async function fetchdata(url, setter, { signal, retries = 1 } = {}) {
+    for (let attempt = 0; attempt <= retries; attempt++) {
+      try {
+        const response = await fetch(url, {
+          headers: { "Accept-Language": "en", Accept: "application/json" },
+          signal,
+        });
+
+        if (!response.ok) {
+          throw new Error(`Request failed: ${response.status} ${response.statusText} (${url})`);
+        }
+
+        const data = await response.json();
+        setter(data ?? EMPTY);
+        return; // success, stop retrying
+      } catch (error) {
+        if (error.name === "AbortError") return; // component unmounted, ignore silently
+
+        const isLastAttempt = attempt === retries;
+        console.error(`Error fetching ${url} (attempt ${attempt + 1}):`, error.message);
+
+        if (isLastAttempt) {
+          setter(EMPTY); // keep the form usable even if this one endpoint fails
+          setLoadErrors((prev) => [...prev, url]);
+        } else {
+          // small backoff before retrying once
+          await new Promise((r) => setTimeout(r, 500));
+        }
+      }
     }
   }
 
-  
-  const selectedCountry = watch("country_id");
-  const showSalary = watch("has_salary");
   const {
     register,
     handleSubmit,
     control,
-    watch,  
+    watch,
     formState: { errors },
   } = useForm({
     mode: "onChange",
@@ -76,48 +95,64 @@ function Postjob() {
     defaultValues: {
       education_ids: [],
       mandatory_certification_ids: [],
-      has_salary: 1
-    }
+      has_salary: 1,
+    },
   });
+  const selectedCountry = watch("country_id");
+  const showSalary = watch("has_salary");
 
   useEffect(() => {
-    const baseurl = 'https://joocare.nami-tec.com/api';
-    fetchdata(`${baseurl}/availabilities?pagination=off`, setavailabilitiess);
-    fetchdata(`${baseurl}/categories?pagination=off`, setcategoriess);
-    fetchdata(`${baseurl}/experiences?pagination=off`, setexperiencess);
-    fetchdata(`${baseurl}/role-categories?pagination=off`, setrolecategories);
-    fetchdata(`${baseurl}/employment-types?pagination=off`, setemployertypes);
-    fetchdata(`${baseurl}/job-titles?pagination=off`, setjobtitles);
-     fetchdata(`${baseurl}/salary-types?pagination=off`, setsalarytypes);
-    fetchdata(`${baseurl}/currencies?pagination=off`, setcurrencies);
-    fetchdata(`${baseurl}/specialties?pagination=off`, setspecialties);
-    fetchdata(`${baseurl}/countries?`, setcountries);
-    fetchdata(`${baseurl}/education-levels?pagination=off`, seteducationlevels);
-    fetchdata(`${baseurl}/mandatory-certifications?pagination=off`, setmandatorycertifications);
+    // NOTE: in dev, React StrictMode intentionally runs this effect, its
+    // cleanup, then this effect again. The first pass's requests get
+    // aborted below (you'll see them as "canceled" in the Network tab —
+    // that's expected and harmless), and the second pass's requests
+    // complete normally. This only happens in development; production
+    // builds run the effect once.
+    const controller = new AbortController();
+    const { signal } = controller;
+
+    fetchdata(`${BASE_URL}/availabilities?pagination=off`, setavailabilitiess, { signal });
+    fetchdata(`${BASE_URL}/categories?pagination=off`, setcategoriess, { signal });
+    fetchdata(`${BASE_URL}/experiences?pagination=off`, setexperiencess, { signal });
+    fetchdata(`${BASE_URL}/role-categories?pagination=off`, setrolecategories, { signal });
+    fetchdata(`${BASE_URL}/employment-types?pagination=off`, setemployertypes, { signal });
+    fetchdata(`${BASE_URL}/job-titles?pagination=off`, setjobtitles, { signal });
+    fetchdata(`${BASE_URL}/salary-types?pagination=off`, setsalarytypes, { signal });
+    fetchdata(`${BASE_URL}/currencies?pagination=off`, setcurrencies, { signal });
+    fetchdata(`${BASE_URL}/specialties?pagination=off`, setspecialties, { signal });
+    fetchdata(`${BASE_URL}/countries?`, setcountries, { signal });
+    fetchdata(`${BASE_URL}/education-levels?pagination=off`, seteducationlevels, { signal });
+    fetchdata(`${BASE_URL}/mandatory-certifications?pagination=off`, setmandatorycertifications, { signal });
+
+    return () => controller.abort();
   }, []);
 
   useEffect(() => {
-    if (selectedCountry) {
-      const baseurl = 'https://joocare.nami-tec.com/api';
-      fetchdata(`${baseurl}/cities?country_id=${selectedCountry}&pagination=off`, setcities);
-    } else {
-      setcities(null);  
+    if (!selectedCountry) {
+      setcities(EMPTY);
+      return;
     }
+
+    const controller = new AbortController();
+    fetchdata(`${BASE_URL}/cities?country_id=${selectedCountry}&pagination=off`, setcities, {
+      signal: controller.signal,
+    });
+
+    return () => controller.abort();
   }, [selectedCountry]);
 
   const [currentStep, setCurrentStep] = useState(1);
   const navigate = useNavigate();
 
   const onSubmit = (data) => {
-    const token = localStorage.getItem('company_token');
-    
- 
+    const token = localStorage.getItem("company_token");
+
     const formData = new FormData();
 
-     formData.append("job_title_id", data.job_title_id);
+    formData.append("job_title_id", data.job_title_id);
     formData.append("professional_license", data.professional_license);
     formData.append("has_salary", data.has_salary ? 1 : 0);
-    
+
     if (Number(data.has_salary) === 1) {
       formData.append("min_salary", data.min_salary || "");
       formData.append("max_salary", data.max_salary || "");
@@ -133,34 +168,34 @@ function Postjob() {
     formData.append("city_id", data.city_id);
     formData.append("experience_title", data.experience_title);
     formData.append("availability_title", data.availability_title);
- 
-if (Array.isArray(data.education_ids)) {
-  data.education_ids.forEach((id) => {
-     formData.append("education_levels[]", id);
-  });
-}
 
- if (Array.isArray(data.mandatory_certification_ids)) {  
-  data.mandatory_certification_ids.forEach((id) => {
-     formData.append("mandatory_certifications[]", id);
-  });
-}
+    if (Array.isArray(data.education_ids)) {
+      data.education_ids.forEach((id) => {
+        formData.append("education_levels[]", id);
+      });
+    }
+
+    if (Array.isArray(data.mandatory_certification_ids)) {
+      data.mandatory_certification_ids.forEach((id) => {
+        formData.append("mandatory_certifications[]", id);
+      });
+    }
 
     const config = {
       headers: {
-        'Authorization': `Bearer ${token}`,
-        'Accept': 'application/json',
-        'language': 'en',
-        'Content-Type': 'multipart/form-data'   
-      }
+        Authorization: `Bearer ${token}`,
+        Accept: "application/json",
+        language: "en",
+        "Content-Type": "multipart/form-data",
+      },
     };
 
     axios
-      .post("https://joocare.nami-tec.com/api/company/jobs-step-one", formData, config,{
-        headers:{
-          'Accept-Language': 'en',
-          'Accept': 'application/json',
-        }
+      .post(`${BASE_URL}/company/jobs-step-one`, formData, config, {
+        headers: {
+          "Accept-Language": "en",
+          Accept: "application/json",
+        },
       })
       .then((res) => {
         toast.success("Job details saved successfully", {
@@ -168,9 +203,9 @@ if (Array.isArray(data.education_ids)) {
           style: { background: "#E6F4EA", color: "#1E8E3E", borderRadius: "10px" },
         });
         const createdJobId = res.data?.data?.job?.id;
-      if (createdJobId) {
-        localStorage.setItem('current_job_id', createdJobId);
-      }
+        if (createdJobId) {
+          localStorage.setItem("current_job_id", createdJobId);
+        }
         navigate(`/JobDescriptionRequirements/${createdJobId}`);
       })
       .catch((err) => {
@@ -183,7 +218,14 @@ if (Array.isArray(data.education_ids)) {
     <>
       <div className="Postjob px-50 p-[24px] mt-[50px]">
         <div className="bg-white rounded-[24px] shadow-[0_4px_30px_rgba(0,0,0,0.06)] px-[40px] py-[32px] border border-[#F1F1F1]">
-          
+
+          {/* Optional: surface a small banner if some reference data failed to load */}
+          {loadErrors.length > 0 && (
+            <div className="mb-4 p-3 rounded-xl bg-[#FFF4E5] border border-[#FFE0B2] text-[#8A5300] text-sm">
+              تعذر تحميل بعض القوائم ({loadErrors.length}). حاول تحديث الصفحة لو لقيت أي Dropdown فاضي.
+            </div>
+          )}
+
           {/* Progress Steps Indicator */}
           <div className="flex items-center justify-between mb-[80px] relative max-w-[95%] mx-auto">
             <div className="absolute top-[16px] left-0 right-0 h-[4px] bg-[#E5E5E5] z-0" style={{ transform: "translateY(-50%)" }}></div>
@@ -207,51 +249,50 @@ if (Array.isArray(data.education_ids)) {
 
           {/* FORM */}
           <form onSubmit={handleSubmit(onSubmit)} className="px-[24px] py-8 max-w-[1028px] mx-auto flex flex-col gap-6 bg-white antialiased text-[#152126]">
-              
+
             {/* Row 1: Job Title & Professional License */}
-            
-<div className="flex flex-col md:flex-row items-start w-full justify-between gap-6">
-    <div className="flex flex-col flex-1 w-full">
-      <label htmlFor="job_title_id" className="font-bold text-sm mb-2 text-[#152126]">Job Title</label>
-      <div className="relative w-full">
-        <select 
-          id="job_title_id" 
-          {...register("job_title_id", { required: "Job title is required" })}
-          className={`w-full h-[56px] px-5 rounded-full bg-[#F4F4F4] border-[1px] ${errors.job_title_id ? "border-red-500" : "border-[#0D0D0D14]"} text-[#A3A3A3] font-medium outline-none appearance-none cursor-pointer pr-10`}
-        >
-          <option value="">ex: Cardiac surgeon</option>
-          {jobtitles?.data?.map((title) => (
-            <option key={title.id} value={title.id}>
-              {title.title}
-            </option>
-          ))}
-        </select>
-        <div className="absolute inset-y-0 right-4 flex items-center pointer-events-none text-[#A3A3A3]">
-          <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7" /></svg>
-        </div>
-      </div>
-      {errors.job_title_id && <span className="text-red-500 text-xs mt-1 px-2">{errors.job_title_id.message}</span>}
-    </div>
-    
-   <div className="flex flex-col flex-1 w-full">
-  <label htmlFor="professional_license" className="font-bold text-sm mb-2 text-[#152126]">Professional License</label>
-  <div className="relative w-full">
-    <select 
-  id="professional_license" 
-  {...register("professional_license", { required: "Professional license is required" })}
-  className={`w-full h-[56px] px-5 rounded-full bg-[#F4F4F4] border-[1px] ${errors.professional_license ? "border-red-500" : "border-[#0D0D0D14]"} text-[#A3A3A3] font-medium outline-none appearance-none cursor-pointer pr-10`}
->
-  <option value="">ex: Without Medical license</option>
-  <option value="with_medical_license">With Medical License</option>
-  <option value="without_medical_license">Without Medical License</option>
-</select>
-    <div className="absolute inset-y-0 right-4 flex items-center pointer-events-none text-[#A3A3A3]">
-      <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7" /></svg>
-    </div>
-  </div>
-  {errors.professional_license && <span className="text-red-500 text-xs mt-1 px-2">{errors.professional_license.message}</span>}
-</div>
-  </div>
+            <div className="flex flex-col md:flex-row items-start w-full justify-between gap-6">
+              <div className="flex flex-col flex-1 w-full">
+                <label htmlFor="job_title_id" className="font-bold text-sm mb-2 text-[#152126]">Job Title</label>
+                <div className="relative w-full">
+                  <select
+                    id="job_title_id"
+                    {...register("job_title_id", { required: "Job title is required" })}
+                    className={`w-full h-[56px] px-5 rounded-full bg-[#F4F4F4] border-[1px] ${errors.job_title_id ? "border-red-500" : "border-[#0D0D0D14]"} text-[#A3A3A3] font-medium outline-none appearance-none cursor-pointer pr-10`}
+                  >
+                    <option value="">ex: Cardiac surgeon</option>
+                    {jobtitles?.data?.map((title) => (
+                      <option key={title.id} value={title.id}>
+                        {title.title}
+                      </option>
+                    ))}
+                  </select>
+                  <div className="absolute inset-y-0 right-4 flex items-center pointer-events-none text-[#A3A3A3]">
+                    <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7" /></svg>
+                  </div>
+                </div>
+                {errors.job_title_id && <span className="text-red-500 text-xs mt-1 px-2">{errors.job_title_id.message}</span>}
+              </div>
+
+              <div className="flex flex-col flex-1 w-full">
+                <label htmlFor="professional_license" className="font-bold text-sm mb-2 text-[#152126]">Professional License</label>
+                <div className="relative w-full">
+                  <select
+                    id="professional_license"
+                    {...register("professional_license", { required: "Professional license is required" })}
+                    className={`w-full h-[56px] px-5 rounded-full bg-[#F4F4F4] border-[1px] ${errors.professional_license ? "border-red-500" : "border-[#0D0D0D14]"} text-[#A3A3A3] font-medium outline-none appearance-none cursor-pointer pr-10`}
+                  >
+                    <option value="">ex: Without Medical license</option>
+                    <option value="with_medical_license">With Medical License</option>
+                    <option value="without_medical_license">Without Medical License</option>
+                  </select>
+                  <div className="absolute inset-y-0 right-4 flex items-center pointer-events-none text-[#A3A3A3]">
+                    <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7" /></svg>
+                  </div>
+                </div>
+                {errors.professional_license && <span className="text-red-500 text-xs mt-1 px-2">{errors.professional_license.message}</span>}
+              </div>
+            </div>
 
             {/* Section: Salary Container */}
             <div className="bg-[#F8F9FA] p-6 rounded-2xl flex flex-col gap-5 border border-[#F1F3F5]">
@@ -262,11 +303,11 @@ if (Array.isArray(data.education_ids)) {
                   name="has_salary"
                   render={({ field: { onChange, value } }) => (
                     <label className="relative inline-flex items-center cursor-pointer">
-                      <input 
-                        type="checkbox" 
-                        checked={Number(value) === 1} 
-                        onChange={(e) => onChange(e.target.checked ? 1 : 0)} 
-                        className="sr-only peer rounded-full" 
+                      <input
+                        type="checkbox"
+                        checked={Number(value) === 1}
+                        onChange={(e) => onChange(e.target.checked ? 1 : 0)}
+                        className="sr-only peer rounded-full"
                       />
                       <div className="w-[44px] h-[24px] bg-gray-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all duration-300 peer-checked:bg-[#037A4B]"></div>
                     </label>
@@ -318,7 +359,7 @@ if (Array.isArray(data.education_ids)) {
               <div className="flex flex-col flex-1 w-full">
                 <label className="font-bold text-sm mb-2 text-[#152126]">Job Category</label>
                 <div className="relative w-full">
-                  <select 
+                  <select
                     {...register("category_title", { required: "Job category is required" })}
                     className={`w-full h-[56px] px-5 border-[1px] ${errors.category_title ? "border-red-500" : "border-[#0D0D0D14]"} rounded-full bg-[#F4F4F4] text-[#A3A3A3] font-medium outline-none appearance-none cursor-pointer pr-10`}
                   >
@@ -333,11 +374,11 @@ if (Array.isArray(data.education_ids)) {
                 </div>
                 {errors.category_title && <span className="text-red-500 text-xs mt-1 px-2">{errors.category_title.message}</span>}
               </div>
-              
+
               <div className="flex flex-col flex-1 w-full">
                 <label className="font-bold text-sm mb-2 text-[#152126]">Specialty</label>
                 <div className="relative w-full">
-                  <select 
+                  <select
                     {...register("specialty_title", { required: "Specialty is required" })}
                     className={`w-full h-[56px] px-5 border-[1px] ${errors.specialty_title ? "border-red-500" : "border-[#0D0D0D14]"} rounded-full bg-[#F4F4F4] text-[#A3A3A3] font-medium outline-none appearance-none cursor-pointer pr-10`}
                   >
@@ -434,7 +475,7 @@ if (Array.isArray(data.education_ids)) {
             <div className="flex flex-col w-full">
               <label className="font-bold text-sm mb-2 text-[#152126]">Years of Experience</label>
               <div className="relative w-full">
-                <select 
+                <select
                   {...register("experience_title", { required: "Years of experience is required" })}
                   className={`w-full h-[56px] px-5 rounded-full bg-[#F4F4F4] border-[1px] ${errors.experience_title ? "border-red-500" : "border-[#0D0D0D14]"} text-[#A3A3A3] font-medium outline-none appearance-none cursor-pointer pr-10`}
                 >
@@ -454,7 +495,7 @@ if (Array.isArray(data.education_ids)) {
             <div className="bg-[#F8F9FA] p-6 rounded-2xl flex flex-col gap-4 border border-[#F1F3F5]">
               <h3 className="font-bold text-[16px] text-[#A3A3A3] tracking-wide mb-1">Education & Certifications section</h3>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                
+
                 {/* 1. Education Level */}
                 <div className="flex flex-col">
                   <label className="text-xs font-bold mb-2 text-[#152126]">Education Level</label>
@@ -571,7 +612,7 @@ if (Array.isArray(data.education_ids)) {
             >
               Next
             </button>
-          </form> 
+          </form>
         </div>
       </div>
     </>

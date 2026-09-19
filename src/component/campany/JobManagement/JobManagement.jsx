@@ -465,13 +465,13 @@ function JobManagement() {
     );
   };
 
-  return (
+ return (
     <div className="min-h-screen bg-[#F8F9FA] relative">
       
       {showCloseModal && (
-        <div className="fixed inset-0 z-[9999] flex items-center justify-center bg-black/60">
-          <div className="bg-white rounded-[24px] p-[24px] w-[400px] shadow-2xl relative text-center flex flex-col items-center border border-[#F1F1F1]">
-            <div className="w-[120px] h-[120px] flex items-center justify-center mb-2">
+        <div className="fixed inset-0 z-[9999] flex items-center justify-center bg-black/60 p-4">
+          <div className="bg-white rounded-[24px] p-[24px] w-full max-w-[400px] shadow-2xl relative text-center flex flex-col items-center border border-[#F1F1F1]">
+            <div className="w-[100px] h-[100px] sm:w-[120px] sm:h-[120px] flex items-center justify-center mb-2">
               <img src={alertGif} alt="Alert" className="w-full h-full object-contain" />
             </div>
             
@@ -504,9 +504,9 @@ function JobManagement() {
       )}
 
       {showSuccessModal && (
-        <div className="fixed inset-0 z-[9999] flex items-center justify-center bg-black/60">
-          <div className="bg-white rounded-[24px] p-[32px] w-[360px] shadow-2xl text-center flex flex-col items-center animate-scaleUp border border-[#F1F1F1]">
-            <div className="w-[120px] h-[120px] flex items-center justify-center mb-2">
+        <div className="fixed inset-0 z-[9999] flex items-center justify-center bg-black/60 p-4">
+          <div className="bg-white rounded-[24px] p-[24px] sm:p-[32px] w-full max-w-[360px] shadow-2xl text-center flex flex-col items-center animate-scaleUp border border-[#F1F1F1]">
+            <div className="w-[100px] h-[100px] sm:w-[120px] sm:h-[120px] flex items-center justify-center mb-2">
               <img src={truee} alt="Success" className="w-full h-full object-contain" />
             </div>
             
@@ -522,24 +522,24 @@ function JobManagement() {
 
       {showStatusModal && (
         <div className="fixed inset-0 z-[9999] flex items-center justify-center bg-black/60">
-          <div className="bg-white rounded-[24px] p-8 max-w-sm w-full text-center shadow-2xl mx-4 border border-[#F1F1F1] flex flex-col items-center">
+          <div className="bg-white rounded-[24px] p-6 sm:p-8 max-w-sm w-full text-center shadow-2xl mx-4 border border-[#F1F1F1] flex flex-col items-center">
             {!isStatusSuccess ? (
               <>
-                <img src={alertGif} alt="Alert GIF" className="w-24 h-24 mx-auto mb-4 object-contain" />
+                <img src={alertGif} alt="Alert GIF" className="w-20 h-20 sm:w-24 sm:h-24 mx-auto mb-4 object-contain" />
                 <h3 className="text-xl font-bold text-gray-900 mb-2">Change Job Status?</h3>
                 <p className="text-gray-500 text-sm mb-6">Are you sure you want to change this job status to <span className="font-bold text-[#00694B]">{pendingStatus}</span>?</p>
                 <div className="flex gap-3 justify-center w-full">
-                  <button onClick={() => { setShowStatusModal(false); setActiveJobId(null); }} className="flex-1 px-6 py-2.5 bg-gray-100 text-gray-700 font-semibold rounded-full hover:bg-gray-200 transition-all cursor-pointer">
+                  <button onClick={() => { setShowStatusModal(false); setActiveJobId(null); }} className="flex-1 px-4 sm:px-6 py-2.5 bg-gray-100 text-gray-700 font-semibold rounded-full hover:bg-gray-200 transition-all cursor-pointer">
                     Cancel
                   </button>
-                  <button onClick={confirmStatusUpdate} className="flex-1 px-6 py-2.5 bg-[#00694B] text-white font-semibold rounded-full hover:bg-opacity-90 transition-all cursor-pointer">
+                  <button onClick={confirmStatusUpdate} className="flex-1 px-4 sm:px-6 py-2.5 bg-[#00694B] text-white font-semibold rounded-full hover:bg-opacity-90 transition-all cursor-pointer">
                     Confirm
                   </button>
                 </div>
               </>
             ) : (
               <>
-                <img src={truee} alt="Success GIF" className="w-24 h-24 mx-auto mb-4 object-contain" />
+                <img src={truee} alt="Success GIF" className="w-20 h-20 sm:w-24 sm:h-24 mx-auto mb-4 object-contain" />
                 <h3 className="text-xl font-bold text-gray-900 mb-1">Updated Successfully!</h3>
                 <p className="text-gray-500 text-sm">The job status has been switched to {pendingStatus}.</p>
               </>
@@ -549,9 +549,9 @@ function JobManagement() {
       )}
 
       {showDeleteModal && (
-        <div className="fixed inset-0 z-[9999] flex items-center justify-center bg-black/60">
-          <div className="bg-white rounded-[24px] p-[24px] w-[400px] shadow-2xl relative text-center flex flex-col items-center border border-[#F1F1F1]">
-            <div className="w-[120px] h-[120px] flex items-center justify-center mb-2">
+        <div className="fixed inset-0 z-[9999] flex items-center justify-center bg-black/60 p-4">
+          <div className="bg-white rounded-[24px] p-[24px] w-full max-w-[400px] shadow-2xl relative text-center flex flex-col items-center border border-[#F1F1F1]">
+            <div className="w-[100px] h-[100px] sm:w-[120px] sm:h-[120px] flex items-center justify-center mb-2">
               <img src={trash} alt="Delete" className="w-full h-full object-contain" />
             </div>
             
@@ -584,9 +584,9 @@ function JobManagement() {
       )}
 
       {showDeleteSuccessModal && (
-        <div className="fixed inset-0 z-[9999] flex items-center justify-center bg-black/60">
-          <div className="bg-white rounded-[24px] p-[32px] w-[360px] shadow-2xl text-center flex flex-col items-center animate-scaleUp border border-[#F1F1F1]">
-            <div className="w-[120px] h-[120px] flex items-center justify-center mb-2">
+        <div className="fixed inset-0 z-[9999] flex items-center justify-center bg-black/60 p-4">
+          <div className="bg-white rounded-[24px] p-[24px] sm:p-[32px] w-full max-w-[360px] shadow-2xl text-center flex flex-col items-center animate-scaleUp border border-[#F1F1F1]">
+            <div className="w-[100px] h-[100px] sm:w-[120px] sm:h-[120px] flex items-center justify-center mb-2">
               <img src={truee} alt="Success" className="w-full h-full object-contain" />
             </div>
             
@@ -600,166 +600,170 @@ function JobManagement() {
         </div>
       )}
 
-      <div className="grid grid-cols-12 px-20 w-[1100px]">
-        {/* Sidebar الديناميكي بالكامل */}
-        <aside className="w-[300px] h-fit flex flex-col gap-4 col-span-4 bg-white pt-[120px] mt-[-80px] pb-8 px-[12px] rounded-b-[32px] shadow-sm">
-          <div className="bg-[#F7FAF7] rounded-[24px] p-5 border border-[#F1F1F1] shadow-sm">
-            <div className="flex items-center gap-3 mb-3">
-              <div className="w-12 h-12 bg-[#2D3134] rounded-full flex items-center justify-center text-white font-bold text-xl overflow-hidden">
-                {profileData?.image ? (
-                  <img src={profileData.image} alt="Logo" className="w-full h-full object-cover" />
-                ) : (
-                  profileData?.name?.charAt(0).toUpperCase() || "C"
-                )}
-              </div>
-              <div>
-                <h3 className="font-bold text-[16px] text-[#0D0D0D]">
-                  {profileData?.name || "Loading..."}
-                </h3>
-                <p className="text-[14px] text-[#4D4D4D]">{profileData?.city?.title || "Egypt"}</p>
-              </div>
-            </div>
-            <p className="text-[12px] text-[#8F8F8F] leading-relaxed mb-4 line-clamp-3">
-              {profileData?.bio || "No description provided yet."}
-            </p>
-            <div className={`text-center py-2 rounded-full text-[13px] font-semibold border ${
-              profileData?.status === "Approved" 
-                ? "bg-[#E6F3EF] text-[#00694B] border-[#00694B]/10" 
-                : "bg-[#FFF9E6] text-[#FFB800] border-[#FFB800]/10"
-            }`}>
-              Account status: {profileData?.status || "Under review"}
-            </div>
-          </div>
-          
-          <div className="bg-[#FFF5F5] rounded-[24px] p-6 border border-[#FFDADA]">
-            <h4 className="text-[#FF4D4D] font-bold text-[18px] mb-2 leading-tight">Please complete your details.</h4>
-            <p className="text-[13px] text-[#4D4D4D] mb-5">
-              Please complete your account details so you can use the platform normally and benefit from all its features.
-            </p>
-            <Link to={'/Details2'}>
-              <button className="w-full cursor-pointer bg-[#E32B2B] text-white font-bold py-3 rounded-full hover:bg-[#C22424] transition-all">
-                Complete Now
-              </button>
-            </Link>
-          </div>
-
-          <div className="flex flex-col gap-1 px-2 mt-2">
-            {[
-              { to: "/companyprofile", icon: <MdPersonOutline className="text-xl" />, label: "Company Profile" },
-              { to: "/Dashboard", icon: <img src={Icon} className="text-xl" alt="" />, label: "Dashboard" },
-              { to: "/JobManagement", icon: <img src={Icon2} className="text-xl" alt="" />, label: "Job Management" },
-              { to: "/Accountsettings", icon: <MdSettings className="text-xl" />, label: "Account settings" },
-            ].map(({ to, icon, label }) => (
-              <NavLink
-                key={to}
-                to={to}
-                className={({ isActive }) =>
-                  `flex items-center gap-3 p-3 rounded-full font-medium transition-all ${
-                    isActive
-                      ? "bg-[#E6F3EF] text-[#00694B] font-bold border border-[#00694B]/10"
-                      : "text-[#8F8F8F]"
-                  }`
-                }
-              >
-                {icon} {label}
-              </NavLink>
-            ))}
-          </div>
-
-          <Link to={"/postjob"}>
-            <button className="mt-10 w-full cursor-pointer bg-[#00694B] text-white font-bold py-4 rounded-full flex items-center justify-center gap-2">
-              Post a Job
-            </button>
-          </Link>
-        </aside>
-
-        {/* Main */}
-        <main className="flex-1 col-span-8 w-[1020px] py-[70px]">
-          <div className="profile-details px-[40px] py-[32px] bg-[#F7FAF7] min-h-screen">
-            {/* Top Bar */}
-            <div className="flex items-center justify-between mb-6">
-              <div className="relative">
-                <button
-                  onClick={() => setStatusOpen(!statusOpen)}
-                  className="flex items-center gap-2 bg-white border border-gray-200 text-[#0D0D0D] text-[14px] font-[500] py-[10px] px-[20px] rounded-full hover:border-[#00694B] transition cursor-pointer"
-                >
-                  {selectedStatus} <MdKeyboardArrowDown size={18} />
-                </button>
-
-                {statusOpen && (
-                  <div className="absolute top-[110%] left-0 bg-white border border-gray-100 rounded-[16px] shadow-lg py-[8px] w-[160px] z-50">
-                    {statuses.map((s) => (
-                      <div
-                        key={s}
-                        onClick={() => {
-                          setSelectedStatus(s);
-                          setStatusOpen(false);
-                          setCurrentPage(1);
-                        }}
-                        className="px-[16px] py-[10px] text-[14px] text-[#0D0D0D] hover:bg-[#F0F9F4] hover:text-[#00694B] cursor-pointer transition"
-                      >
-                        {s}
-                      </div>
-                    ))}
+      <div className="comapny-profile w-full flex justify-center">
+        <div className="w-full max-w-[1800px]">
+          <div className="flex flex-col lg:flex-row gap-6 px-4 sm:px-8 lg:px-10 w-full">
+            {/* Sidebar الديناميكي بالكامل */}
+            <aside className="w-full lg:flex-none lg:basis-1/4 h-fit flex flex-col gap-4 bg-white pt-[60px] sm:pt-[90px] lg:pt-[120px] mt-0 lg:mt-[-80px] pb-8 px-[12px] rounded-b-[32px] shadow-sm">
+              <div className="bg-[#F7FAF7] rounded-[24px] p-5 border border-[#F1F1F1] shadow-sm">
+                <div className="flex items-center gap-3 mb-3">
+                  <div className="w-12 h-12 bg-[#2D3134] rounded-full flex items-center justify-center text-white font-bold text-xl overflow-hidden">
+                    {profileData?.image ? (
+                      <img src={profileData.image} alt="Logo" className="w-full h-full object-cover" />
+                    ) : (
+                      profileData?.name?.charAt(0).toUpperCase() || "C"
+                    )}
                   </div>
-                )}
+                  <div>
+                    <h3 className="font-bold text-[16px] text-[#0D0D0D]">
+                      {profileData?.name || "Loading..."}
+                    </h3>
+                    <p className="text-[14px] text-[#4D4D4D]">{profileData?.city?.title || "Egypt"}</p>
+                  </div>
+                </div>
+                <p className="text-[12px] text-[#8F8F8F] leading-relaxed mb-4 line-clamp-3">
+                  {profileData?.bio || "No description provided yet."}
+                </p>
+                <div className={`text-center py-2 rounded-full text-[13px] font-semibold border ${
+                  profileData?.status === "Approved" 
+                    ? "bg-[#E6F3EF] text-[#00694B] border-[#00694B]/10" 
+                    : "bg-[#FFF9E6] text-[#FFB800] border-[#FFB800]/10"
+                }`}>
+                  Account status: {profileData?.status || "Under review"}
+                </div>
+              </div>
+              
+              <div className="bg-[#FFF5F5] rounded-[24px] p-6 border border-[#FFDADA]">
+                <h4 className="text-[#FF4D4D] font-bold text-[18px] mb-2 leading-tight">Please complete your details.</h4>
+                <p className="text-[13px] text-[#4D4D4D] mb-5">
+                  Please complete your account details so you can use the platform normally and benefit from all its features.
+                </p>
+                <Link to={'/Details2'}>
+                  <button className="w-full cursor-pointer bg-[#E32B2B] text-white font-bold py-3 rounded-full hover:bg-[#C22424] transition-all">
+                    Complete Now
+                  </button>
+                </Link>
+              </div>
+
+              <div className="flex flex-col gap-1 px-2 mt-2">
+                {[
+                  { to: "/companyprofile", icon: <MdPersonOutline className="text-xl" />, label: "Company Profile" },
+                  { to: "/Dashboard", icon: <img src={Icon} className="text-xl" alt="" />, label: "Dashboard" },
+                  { to: "/JobManagement", icon: <img src={Icon2} className="text-xl" alt="" />, label: "Job Management" },
+                  { to: "/Accountsettings", icon: <MdSettings className="text-xl" />, label: "Account settings" },
+                ].map(({ to, icon, label }) => (
+                  <NavLink
+                    key={to}
+                    to={to}
+                    className={({ isActive }) =>
+                      `flex items-center gap-3 p-3 rounded-full font-medium transition-all ${
+                        isActive
+                          ? "bg-[#E6F3EF] text-[#00694B] font-bold border border-[#00694B]/10"
+                          : "text-[#8F8F8F]"
+                      }`
+                    }
+                  >
+                    {icon} {label}
+                  </NavLink>
+                ))}
               </div>
 
               <Link to={"/postjob"}>
-                <button className="bg-[#00694B] hover:bg-black text-white font-[600] text-[14px] py-[12px] px-[28px] rounded-full transition cursor-pointer">
+                <button className="mt-10 w-full cursor-pointer bg-[#00694B] text-white font-bold py-4 rounded-full flex items-center justify-center gap-2">
                   Post a Job
                 </button>
               </Link>
-            </div>
+            </aside>
 
-            {/* Jobs Grid */}
-            <div className="grid grid-cols-2 gap-[16px]">
-              {fetchjobss.map((job) => (
-                <JobCard
-                  key={job.id}
-                  job={job}
-                  handleStatusChange={handleStatusChange}
-                />
-              ))}
-            </div>
-
-            {/* Pagination */}
-            <div className="flex items-center justify-between mt-8 text-[13px] text-[#4D4D4D]">
-              <p>Show page {currentPage} of {totalPages}</p>
-              <div className="flex items-center gap-1">
-                <button
-                  onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
-                  disabled={currentPage === 1}
-                  className="w-8 h-8 flex items-center justify-center rounded-full border border-gray-200 hover:bg-gray-100 transition cursor-pointer disabled:opacity-40"
-                >
-                  ‹
-                </button>
-
-                {[...Array(Number(totalPages) > 0 ? Number(totalPages) : 1)].map((_, index) => {
-                  const n = index + 1;
-                  return (
+            {/* Main */}
+            <main className="w-full lg:flex-1 py-10 lg:py-[70px]">
+              <div className="profile-details px-4 sm:px-8 lg:px-[40px] py-6 sm:py-[32px] bg-[#F7FAF7] min-h-screen">
+                {/* Top Bar */}
+                <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3 mb-6">
+                  <div className="relative">
                     <button
-                      key={n}
-                      onClick={() => setCurrentPage(n)}
-                      className={`w-8 h-8 rounded-full flex items-center justify-center font-[500] transition cursor-pointer
-                        ${currentPage === n ? "bg-[#00694B] text-white" : "hover:bg-gray-100 text-[#4D4D4D]"}`}
+                      onClick={() => setStatusOpen(!statusOpen)}
+                      className="w-full sm:w-auto flex items-center justify-center sm:justify-start gap-2 bg-white border border-gray-200 text-[#0D0D0D] text-[14px] font-[500] py-[10px] px-[20px] rounded-full hover:border-[#00694B] transition cursor-pointer"
                     >
-                      {n}
+                      {selectedStatus} <MdKeyboardArrowDown size={18} />
                     </button>
-                  );
-                })}
 
-                <button
-                  onClick={() => setCurrentPage((prev) => Math.min(prev + 1, totalPages))}
-                  disabled={currentPage === totalPages}
-                  className="w-8 h-8 flex items-center justify-center rounded-full border border-gray-200 hover:bg-gray-100 transition cursor-pointer disabled:opacity-40"
-                >
-                  ›
-                </button>
+                    {statusOpen && (
+                      <div className="absolute top-[110%] left-0 bg-white border border-gray-100 rounded-[16px] shadow-lg py-[8px] w-full sm:w-[160px] z-50">
+                        {statuses.map((s) => (
+                          <div
+                            key={s}
+                            onClick={() => {
+                              setSelectedStatus(s);
+                              setStatusOpen(false);
+                              setCurrentPage(1);
+                            }}
+                            className="px-[16px] py-[10px] text-[14px] text-[#0D0D0D] hover:bg-[#F0F9F4] hover:text-[#00694B] cursor-pointer transition"
+                          >
+                            {s}
+                          </div>
+                        ))}
+                      </div>
+                    )}
+                  </div>
+
+                  <Link to={"/postjob"}>
+                    <button className="w-full sm:w-auto bg-[#00694B] hover:bg-black text-white font-[600] text-[14px] py-[12px] px-[28px] rounded-full transition cursor-pointer">
+                      Post a Job
+                    </button>
+                  </Link>
+                </div>
+
+                {/* Jobs Grid */}
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-[16px]">
+                  {fetchjobss.map((job) => (
+                    <JobCard
+                      key={job.id}
+                      job={job}
+                      handleStatusChange={handleStatusChange}
+                    />
+                  ))}
+                </div>
+
+                {/* Pagination */}
+                <div className="flex flex-col sm:flex-row items-center justify-between gap-3 mt-8 text-[13px] text-[#4D4D4D]">
+                  <p>Show page {currentPage} of {totalPages}</p>
+                  <div className="flex items-center gap-1 flex-wrap justify-center">
+                    <button
+                      onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
+                      disabled={currentPage === 1}
+                      className="w-8 h-8 flex items-center justify-center rounded-full border border-gray-200 hover:bg-gray-100 transition cursor-pointer disabled:opacity-40"
+                    >
+                      ‹
+                    </button>
+
+                    {[...Array(Number(totalPages) > 0 ? Number(totalPages) : 1)].map((_, index) => {
+                      const n = index + 1;
+                      return (
+                        <button
+                          key={n}
+                          onClick={() => setCurrentPage(n)}
+                          className={`w-8 h-8 rounded-full flex items-center justify-center font-[500] transition cursor-pointer
+                            ${currentPage === n ? "bg-[#00694B] text-white" : "hover:bg-gray-100 text-[#4D4D4D]"}`}
+                        >
+                          {n}
+                        </button>
+                      );
+                    })}
+
+                    <button
+                      onClick={() => setCurrentPage((prev) => Math.min(prev + 1, totalPages))}
+                      disabled={currentPage === totalPages}
+                      className="w-8 h-8 flex items-center justify-center rounded-full border border-gray-200 hover:bg-gray-100 transition cursor-pointer disabled:opacity-40"
+                    >
+                      ›
+                    </button>
+                  </div>
+                </div>
               </div>
-            </div>
+            </main>
           </div>
-        </main>
+        </div>
       </div>
     </div>
   );
