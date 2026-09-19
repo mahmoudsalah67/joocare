@@ -77,23 +77,23 @@ function Login2() {
         transition={{ duration: 1 }}
         viewport={{ once: true }}
       >
-        <div className="section-login">
-          <div className="contentt flex items-center justify-between gap-20 ">
+        <div className="section-login mt-6">
+          <div className="contentt flex flex-col lg:flex-row items-center justify-between gap-10 lg:gap-20 ">
             
-            <div className="left flex items-center justify-between w-[715px] gap-[10px] px-[115px] py-[411px]">
-              <div className="middle ">
+            <div className="left flex items-center justify-center lg:justify-between w-full lg:w-[715px] gap-[10px] px-[24px] sm:px-[60px] lg:px-[115px] py-[60px] sm:py-[100px] lg:py-[411px]">
+              <div className="middle w-full max-w-[513px] ">
                 <div className="title">
-                  <h2 className='text-[48px] mb-[24px] font-[600] '>Match Faster <br />work smarter</h2>
-                  <p className='text-[21px] font-[400]'>With smart tools and AI-powered insights, joocare <br />helps you find the right opportunity and land the job you deserve with confidence.</p>
+                  <h2 className='text-[28px] sm:text-[36px] lg:text-[48px] mb-[16px] lg:mb-[24px] font-[600] '>Match Faster <br className="hidden sm:block" />work smarter</h2>
+                  <p className='text-[16px] sm:text-[18px] lg:text-[21px] font-[400]'>With smart tools and AI-powered insights, joocare <br className="hidden lg:block" />helps you find the right opportunity and land the job you deserve with confidence.</p>
                 </div>
               </div>
             </div>
 
-            <div className="right w-[715px] gap-[10px]">
-              <div className="content w-[539px]">
+            <div className="right w-full lg:w-[715px] gap-[10px] px-[20px] sm:px-[32px] lg:px-0">
+              <div className="content w-full max-w-[539px] mx-auto">
                 <div className="title">
-                  <h2 className='text-[48px] font-[700] '>Welcome back</h2>
-                  <p className='text-[18px] font-[400]'>Find your next opportunity faster</p>
+                  <h2 className='text-[32px] sm:text-[40px] lg:text-[48px] font-[700] '>Welcome back</h2>
+                  <p className='text-[16px] sm:text-[18px] font-[400]'>Find your next opportunity faster</p>
                 </div>
                 <div className="form mt-[24px]" >
                   <form onSubmit={handleSubmit(onSubmit)}>
@@ -107,7 +107,7 @@ function Login2() {
                         type="email"
                         id="email"
                         placeholder="ex:mail@mail.com"
-                        className={`p-[16px] bg-[#0D0D0D0D] focus:border-[#00694B] outline-none transition duration-300 border rounded-[999px] mt-[4px] ${errors.email ? "border-red-500" : "border-[#0D0D0D14]"}`}
+                        className={`p-[16px] bg-[#0D0D0D0D] focus:border-[#00694B] outline-none transition duration-300 border rounded-[999px] mt-[4px] w-full ${errors.email ? "border-red-500" : "border-[#0D0D0D14]"}`}
                         {...register("email", {
                           required: "Email is required",
                           pattern: {
@@ -163,7 +163,7 @@ function Login2() {
 
                     <button 
                       type="submit"
-                      className="py-[16px] px-[32px] w-[223px] flex items-center justify-center mt-[32px] mx-auto bg-[#00694B] hover:bg-black transition duration-500 rounded-full text-white font-bold cursor-pointer"
+                      className="py-[16px] px-[32px] w-full sm:w-[223px] flex items-center justify-center mt-[32px] mx-auto bg-[#00694B] hover:bg-black transition duration-500 rounded-full text-white font-bold cursor-pointer"
                     >
                       Login
                     </button>
@@ -173,16 +173,16 @@ function Login2() {
                 
                 <div className="sochail mt-[24px]">
                   <div className="or flex items-center gap-[13px]">
-                    <div className="br border-[1px] w-[247px] border-[#0D0D0D14]"></div>
+                    <div className="br border-[1px] w-full border-[#0D0D0D14]"></div>
                     <div className="p">Or</div>
-                    <div className="br border-[1px] w-[247px] border-[#0D0D0D14]"></div>
+                    <div className="br border-[1px] w-full border-[#0D0D0D14]"></div>
                   </div>
-                  <div className="soch flex items-center justify-center mt-[12px] gap-24">
-                    <div className="linkedin flex justify-center gap-[12px] border-[1px] w-[263.5px] border-[#0D0D0D14] rounded-[12px] py-[11px] px-[12px]">
+                  <div className="soch flex flex-col sm:flex-row items-center justify-center mt-[12px] gap-4 sm:gap-24">
+                    <div className="linkedin flex justify-center gap-[12px] border-[1px] w-full sm:w-[263.5px] border-[#0D0D0D14] rounded-[12px] py-[11px] px-[12px]">
                       <p>Linkedin</p>
                       <img src={group} alt="" />
                     </div>
-                    <div className="google flex items-center justify-center gap-[12px] border-[1px] w-[263.5px] border-[#0D0D0D14] rounded-[12px] py-[11px] px-[12px] ">
+                    <div className="google flex items-center justify-center gap-[12px] border-[1px] w-full sm:w-[263.5px] border-[#0D0D0D14] rounded-[12px] py-[11px] px-[12px] ">
                       <p>Google</p>
                       <img src={google} alt="" />
                     </div>

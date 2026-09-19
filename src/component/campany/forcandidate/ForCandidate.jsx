@@ -105,15 +105,15 @@ fetchdatadomain()
         viewport={{ once: true }}
       >
         <div className="section-forcandidate bg-white transition-all duration-500 ">
-          <div className="contentt flex">
+          <div className="contentt flex flex-col lg:flex-row">
             {/* LEFT SECTION */}
-            <div className="left sticky top-0 flex items-center justify-center w-[715px] h-screen pl-[30px] bg-[#00422F] text-white">
-              <div className="middle w-[513px]">
+            <div className="left lg:sticky lg:top-0 flex items-center justify-center w-full lg:w-[715px] min-h-[320px] lg:h-screen px-[24px] py-[48px] lg:pl-[30px] lg:py-0 bg-[#00422F] text-white">
+              <div className="middle w-full max-w-[513px]">
                 <div className="title">
-                  <h2 className="text-[48px] mb-[24px] font-[600] leading-tight flex items-center">
+                  <h2 className="text-[28px] sm:text-[34px] lg:text-[48px] mb-[16px] lg:mb-[24px] font-[600] leading-tight flex items-center">
                     Let’s setup your operating Agreement
                   </h2>
-                  <p className="text-[21px] font-[400] text-justify opacity-90">
+                  <p className="text-[16px] sm:text-[18px] lg:text-[21px] font-[400] text-justify opacity-90">
                     With smart tools and AI-powered insights, joocare helps you
                     find the right opportunity and land the job you deserve with
                     confidence.
@@ -123,10 +123,10 @@ fetchdatadomain()
             </div>
 
             {/* RIGHT SECTION (FORM) */}
-            <div className="right px-[40px] pt-[120px] pb-[100px] w-[715px]">
-              <div className="content w-[539px] mx-auto">
+            <div className="right px-[20px] sm:px-[32px] lg:px-[40px] pt-[48px] sm:pt-[80px] lg:pt-[120px] pb-[60px] lg:pb-[100px] w-full lg:w-[715px]">
+              <div className="content w-full max-w-[539px] mx-auto">
                 <div className="title">
-                  <h2 className="text-[48px] font-[700]">
+                  <h2 className="text-[32px] sm:text-[40px] lg:text-[48px] font-[700]">
                     Start your business
                   </h2>
                 </div>
@@ -145,7 +145,7 @@ fetchdatadomain()
                         type="text"
                         id="name"
                         placeholder="ex:Nami"
-                        className={`p-[16px] focus:border-[#00694B] outline-none transition duration-300 bg-[#0D0D0D0D] border rounded-[999px] mt-[4px] ${errors.name ? "border-red-500" : "border-[#0D0D0D14]"}`}
+                        className={`p-[16px] focus:border-[#00694B] outline-none transition duration-300 bg-[#0D0D0D0D] border rounded-[999px] mt-[4px] w-full ${errors.name ? "border-red-500" : "border-[#0D0D0D14]"}`}
                         {...register("name", {
                           required: "company name is required",
                         })}
@@ -169,7 +169,7 @@ fetchdatadomain()
                         type="email"
                         id="email"
                         placeholder="ex:mail@mail.com"
-                        className={`p-[16px] bg-[#0D0D0D0D] focus:border-[#00694B] outline-none transition duration-300 border rounded-[999px] mt-[4px] ${errors.email ? "border-red-500" : "border-[#0D0D0D14]"}`}
+                        className={`p-[16px] bg-[#0D0D0D0D] focus:border-[#00694B] outline-none transition duration-300 border rounded-[999px] mt-[4px] w-full ${errors.email ? "border-red-500" : "border-[#0D0D0D14]"}`}
                         {...register("email", {
                           required: "email is required",
                           pattern: {
@@ -191,7 +191,7 @@ fetchdatadomain()
                         Domain
                       </label>
                       <div
-                        className={`flex justify-between items-center p-[16px] bg-[#0D0D0D0D] border rounded-[999px] focus-within:border-[#00694B] transition duration-300 ${errors.domain ? "border-red-500" : "border-[#0D0D0D14]"}`}
+                        className={`flex justify-between items-center p-[16px] bg-[#0D0D0D0D] border rounded-[999px] focus-within:border-[#00694B] transition duration-300 w-full ${errors.domain ? "border-red-500" : "border-[#0D0D0D14]"}`}
                       >
                        <select
   className="w-full bg-transparent outline-none cursor-pointer text-gray-500"
@@ -227,7 +227,7 @@ fetchdatadomain()
                         type="text"
                         id="person_name"
                         placeholder="ex:Nami"
-                        className={`p-[16px] focus:border-[#00694B] outline-none transition duration-300 bg-[#0D0D0D0D] border rounded-[999px] mt-[4px] ${errors.Contactperson ? "border-red-500" : "border-[#0D0D0D14]"}`}
+                        className={`p-[16px] focus:border-[#00694B] outline-none transition duration-300 bg-[#0D0D0D0D] border rounded-[999px] mt-[4px] w-full ${errors.Contactperson ? "border-red-500" : "border-[#0D0D0D14]"}`}
                         {...register("person_name", {
                           required: "Person full name is required",
                         })}
@@ -249,7 +249,7 @@ fetchdatadomain()
                       </label>
 
                       <div
-                        className={`phone-input-container flex items-center bg-[#F5F5F5] border rounded-full px-4 transition duration-300 ${
+                        className={`phone-input-container flex items-center bg-[#F5F5F5] border rounded-full px-4 transition duration-300 w-full ${
                           errors.person_phone
                             ? "border-red-500"
                             : "border-[#0D0D0D14]"
@@ -338,7 +338,7 @@ fetchdatadomain()
                               <polyline points="20 6 9 17 4 12"></polyline>
                             </svg>
                           </div>
-                          <p className="text-[#0D0D0D] text-[18px] leading-[1.3] font-[400]">
+                          <p className="text-[#0D0D0D] text-[15px] sm:text-[18px] leading-[1.3] font-[400]">
                             I confirm that I am an employee of the company and
                             that I am authorised to use JooCare services on its
                             behalf.
@@ -374,7 +374,7 @@ fetchdatadomain()
                               <polyline points="20 6 9 17 4 12"></polyline>
                             </svg>
                           </div>
-                          <p className="text-[#0D0D0D] text-[18px] leading-[1.3]">
+                          <p className="text-[#0D0D0D] text-[15px] sm:text-[18px] leading-[1.3]">
                             I agree to the{" "}
                             <span className="underline font-[500] cursor-pointer">
                               Terms & Conditions
@@ -396,7 +396,7 @@ fetchdatadomain()
 
                     <button 
                       type="submit"
-                      className="py-[16px] px-[32px] w-[223px] flex items-center justify-center mt-[32px] mx-auto bg-[#00694B] hover:bg-black transition duration-500 rounded-full text-white font-bold cursor-pointer"
+                      className="py-[16px] px-[32px] w-full sm:w-[223px] flex items-center justify-center mt-[32px] mx-auto bg-[#00694B] hover:bg-black transition duration-500 rounded-full text-white font-bold cursor-pointer"
                     >
                       Register
                     </button>
