@@ -49,113 +49,15 @@ function BusinessLogin() {
       });
   };
 
-<<<<<<< HEAD
   return (
     <div className="min-h-screen bg-white overflow-y-auto">
-=======
- return (
-    <>
->>>>>>> bded9f5aa94b8159c89f7c445cb1841d10855818
       <motion.div
         initial={{ opacity: 0, y: 30 }}
         whileInView={{ opacity: 1, y: 0 }}
         transition={{ duration: 1 }}
         viewport={{ once: true }}
       >
-<<<<<<< HEAD
         <div className="flex flex-col lg:flex-row min-h-screen">
-=======
-        <div className="section-login">
-          <div className="contentt flex flex-col lg:flex-row items-center justify-between gap-10 lg:gap-20 ">
-            
-            <div className="left flex items-center justify-center lg:justify-between w-full lg:w-[715px] gap-[10px] px-[24px] sm:px-[60px] lg:px-[115px] py-[60px] sm:py-[100px] lg:py-[411px]">
-              <div className="middle w-full max-w-[513px] ">
-                <div className="title">
-                  <h2 className='text-[28px] sm:text-[36px] lg:text-[48px] mb-[16px] lg:mb-[24px] font-[600] '>Match Faster <br className="hidden sm:block" />work smarter</h2>
-                  <p className='text-[16px] sm:text-[18px] lg:text-[21px] font-[400]'>With smart tools and AI-powered insights, joocare <br className="hidden lg:block" />helps you find the right opportunity and land the job you deserve with confidence.</p>
-                </div>
-              </div>
-            </div>
-
-            <div className="right w-full lg:w-[715px] gap-[10px] px-[20px] sm:px-[32px] lg:px-0">
-              <div className="content w-full max-w-[539px] mx-auto">
-                <div className="title">
-                  <h2 className='text-[32px] sm:text-[40px] lg:text-[48px] font-[700] '>Welcome back, business.</h2>
-                  <p className='text-[16px] sm:text-[18px] font-[400]'>Find your next opportunity faster</p>
-                </div>
-                <div className="form mt-[24px]" >
-                  <form onSubmit={handleSubmit(onSubmit)}>
-
-                    {/* EMAIL */}
-                    <div className="email flex flex-col mt-[24px]">
-                      <label htmlFor="email" className="text-[#0D0D0D] font-[600]">
-                        Business Email
-                      </label>
-                      <input
-                        type="email"
-                        id="email"
-                        placeholder="ex:mail@mail.com"
-                        className={`p-[16px] bg-[#0D0D0D0D] focus:border-[#00694B] outline-none transition duration-300 border rounded-[999px] mt-[4px] w-full ${errors.email ? "border-red-500" : "border-[#0D0D0D14]"}`}
-                        {...register("email", {
-                          required: "Email is required",
-                          pattern: {
-                            value: /^\S+@\S+\.\S+$/,
-                            message: "Email is not valid",
-                          },
-                        })}
-                      />
-                      {errors.email && (
-                        <p className="text-red-500 text-[14px] mt-[6px]">
-                          {errors.email.message}
-                        </p>
-                      )}
-                    </div>
-
-                    {/* PASSWORD */}
-                    <div className="password flex flex-col mt-[24px] relative">
-                      <label htmlFor="password" className="font-[600] text-[#111827]">
-                        Password
-                      </label>
-                      <div className="relative">
-                        <input
-                          type={showPassword ? "text" : "password"}
-                          id="password"
-                          placeholder="••••••••"
-                          className={`p-[16px] w-full bg-[#0D0D0D0D] focus:border-[#00694B] outline-none transition duration-300 border rounded-[999px] mt-[4px] ${errors.password ? "border-red-500" : "border-[#0D0D0D14]"}`}
-                          {...register("password", {
-                            required: "Password is required",
-                          })}
-                        />
-                        {showPassword ? (
-
-                          <IoEye
-                            className="absolute  right-5 top-1/2 -translate-y-1/2 mt-[2px] cursor-pointer"
-                            onClick={() => setShowPassword(false)}  
-                           size={'25px'}/>
-                        ) : (
-                          <IoEyeOff
-                            className="absolute  right-5 top-1/2 -translate-y-1/2 mt-[2px] cursor-pointer"
-                            onClick={() => setShowPassword(true)}  
-                           size={'25px'}/>
-                        )}
-                      </div>
-                      {errors.password && (
-                        <p className="text-red-500 text-[14px] mt-[6px]">
-                          {errors.password.message}
-                        </p>
-                      )}
-                      <div className="forget-password">
-                        <NavLink to={'/forgotpassword'} className='text-[#00694B] text-[14px] font-[600] mt-[6px]'>Forget Password?</NavLink>
-                      </div>
-                    </div>
-
-                    <button 
-                      type="submit"
-                      className="py-[16px] px-[32px] w-full sm:w-[223px] flex items-center justify-center mt-[32px] mx-auto bg-[#00694B] hover:bg-black transition duration-500 rounded-full text-white font-bold cursor-pointer"
-                    >
-                      Login
-                    </button>
->>>>>>> bded9f5aa94b8159c89f7c445cb1841d10855818
           
           {/* LEFT SIDE - Green Section */}
           <div className="left w-full lg:w-[50%] bg-[#00694B] text-white flex items-center justify-center p-8 lg:p-20 relative overflow-hidden">
@@ -202,7 +104,6 @@ function BusinessLogin() {
                     <p className="text-red-500 text-xs mt-1 ml-4">{errors.email.message}</p>
                   )}
                 </div>
-<<<<<<< HEAD
 
                 {/* PASSWORD */}
                 <div className="flex flex-col relative">
@@ -224,23 +125,6 @@ function BusinessLogin() {
                       onClick={() => setShowPassword(!showPassword)}
                     >
                       {showPassword ? <IoEye size={22} /> : <IoEyeOff size={22} />}
-=======
-                
-                <div className="sochail mt-[24px]">
-                  <div className="or flex items-center gap-[13px]">
-                    <div className="br border-[1px] w-full border-[#0D0D0D14]"></div>
-                    <div className="p">Or</div>
-                    <div className="br border-[1px] w-full border-[#0D0D0D14]"></div>
-                  </div>
-                  <div className="soch flex flex-col sm:flex-row items-center justify-center mt-[12px] gap-4 sm:gap-24">
-                    <div className="linkedin flex justify-center gap-[12px] border-[1px] w-full sm:w-[263.5px] border-[#0D0D0D14] rounded-[12px] py-[11px] px-[12px]">
-                      <p>Linkedin</p>
-                      <img src={group} alt="" />
-                    </div>
-                    <div className="google flex items-center justify-center gap-[12px] border-[1px] w-full sm:w-[263.5px] border-[#0D0D0D14] rounded-[12px] py-[11px] px-[12px] ">
-                      <p>Google</p>
-                      <img src={google} alt="" />
->>>>>>> bded9f5aa94b8159c89f7c445cb1841d10855818
                     </div>
                   </div>
                   {errors.password && (

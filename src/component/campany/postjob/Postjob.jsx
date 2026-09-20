@@ -83,10 +83,9 @@ function Postjob() {
     }
   }
 
-<<<<<<< HEAD
  
-=======
->>>>>>> bded9f5aa94b8159c89f7c445cb1841d10855818
+ 
+ 
   const {
     register,
     handleSubmit,
@@ -102,10 +101,7 @@ function Postjob() {
       has_salary: 1,
     },
   });
-<<<<<<< HEAD
-  
-=======
->>>>>>> bded9f5aa94b8159c89f7c445cb1841d10855818
+ 
   const selectedCountry = watch("country_id");
   const showSalary = watch("has_salary");
 

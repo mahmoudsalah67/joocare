@@ -170,7 +170,7 @@ const [registeredEmail, setRegisteredEmail] = useState("");
 
     {/* Right Panel */}
     <div className="right w-full lg:w-1/2 px-4 sm:px-10 py-10 lg:py-[60px] xl:py-[120px] flex justify-center items-center">
-      <div className="w-full max-w-[539px] mx-auto">
+      <div className="w-full max-w-[539px] mt-10 mx-auto">
         <div className="title">
           <h2 className="text-3xl sm:text-4xl xl:text-[48px] font-[700] text-[#0D0D0D]">Let's Get Started</h2>
         </div>
