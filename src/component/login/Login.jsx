@@ -12,17 +12,9 @@ function BusinessLogin() {
   const [showPassword, setShowPassword] = useState(false);
   const navigate = useNavigate();  
 
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm();
+  const {  register, handleSubmit, formState: { errors }} = useForm();
 
-  const onSubmit = (data) => {
-     const loginPayload = {
-      email: data.email,
-      password: data.password
-    };
+  const onSubmit = (data) => { const loginPayload = { email: data.email, password: data.password };
 
     axios
       .post("https://joocare.nami-tec.com/api/company/auth/login", loginPayload)  
@@ -50,7 +42,7 @@ function BusinessLogin() {
         });
 
         localStorage.setItem('company_token', token);
-        navigate("/companyprofile");
+        navigate("/companyprofilen");
       })
       .catch((err) => {
         toast.error(err.message || "Login failed. Please check your credentials.");
