@@ -86,7 +86,7 @@ function Faq() {
       <div className="section-faq mt-22">
         {/* Fake Nav */}
         <div className="fakenav bg-[#0D0D0D0D] py-5">
-          <div className="container px-30 flex items-center justify-between">
+          <div className="container px-30 mx-auto flex items-center justify-between">
             <h1 className="text-[18px] font-[600]">FAQ</h1>
             <div className="flex items-center text-[18px] font-[600]">
               <NavLink to="/" className="text-[18px] font-[600]">home</NavLink>
@@ -97,7 +97,7 @@ function Faq() {
         </div>
 
         {/* Content */}
-        <div className="container  py-[80px] px-[88px]">
+        <div className="container mx-auto py-[80px] px-[88px]">
           <div className="flex py-[80px] px-[50px] gap-[100px]">
             
             {/* Left - Image & Title */}

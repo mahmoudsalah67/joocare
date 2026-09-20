@@ -100,7 +100,7 @@ function Jobs() {
     categories = "",
   ) {
     try {
-      const url = `https://joocare.nami-tec.com/api/user/jobs?pagination=on&limit_per_page=10&page=${page}&search=${search}${country ? `&country=${country}` : ""}&professional_license=${professional}&domain=${dom}&role_categories=${role}&seniority_levels=${senior}&experiences=${exp}&availabilities=${avail}&employment_types=${employ}&categories=${categories}`;
+      const url = `https://joocare.nami-tec.com/api/user/jobs?pagination=on&limit_per_page=4&page=${page}&search=${search}${country ? `&country=${country}` : ""}&professional_license=${professional}&domain=${dom}&role_categories=${role}&seniority_levels=${senior}&experiences=${exp}&availabilities=${avail}&employment_types=${employ}&categories=${categories}`;
 
       const response = await fetch(url, {
         headers: { Accept: "application/json", "Accept-Language": "en" },
@@ -695,8 +695,7 @@ setter(data)
             </div>
           </div>
         </div>
-        <Footer />
-      </motion.div>
+       </motion.div>
     </>
   );
 }

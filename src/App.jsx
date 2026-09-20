@@ -91,7 +91,11 @@ const router = createBrowserRouter([
       { path: "details3", element: <Details3 /> },
       { path: "Companyprofile", element: <Companyprofile /> },
       { path: "Dashboard", element: <Dashboard /> },
+<<<<<<< HEAD
       { path: "postjob", element: <Postjob /> },
+=======
+      { path: "postjob/:id?", element: <Postjob /> },
+>>>>>>> bded9f5aa94b8159c89f7c445cb1841d10855818
       { path: "JobDescriptionRequirements/:id", element: <JobDescriptionRequirements /> },
       { path: "JobPreview/:id", element: <JobPreview /> },
       { path: "jobManagement", element: <JobManagement /> },

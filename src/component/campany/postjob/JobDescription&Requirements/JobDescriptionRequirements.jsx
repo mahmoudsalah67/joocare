@@ -105,17 +105,20 @@ const onSubmit = (data) => {
     });
 };
 
-  return (
+
+ 
+
+return (
     <>
-      <div className="bg-[#F8F9FA] min-h-screen py-[40px] px-[20px] font-sans">
+      <div className="bg-[#F8F9FA] min-h-screen py-6 sm:py-[40px] px-3 sm:px-[20px] font-sans">
         
         {/* Main Card */}
-        <div className="max-w-[1000px] mx-auto bg-white rounded-[24px] border border-[#F0F0F0] p-[40px] shadow-sm relative">
+        <div className="max-w-[1000px] mx-auto bg-white rounded-[16px] sm:rounded-[24px] border border-[#F0F0F0] p-4 sm:p-[40px] shadow-sm relative">
           
           {/* Top Header Section with Progress and Save as draft */}
-          <div className="flex items-start justify-between mb-[80px] w-full bg-white gap-6">
+          <div className="flex flex-col sm:flex-row items-center sm:items-start justify-between mb-[60px] sm:mb-[80px] w-full bg-white gap-6">
             
-            <div className="flex items-center justify-between relative flex-1  bg-white">
+            <div className="flex items-center justify-between relative w-full flex-1 bg-white">
               {/* Base Gray Line */}
               <div
                 className="absolute top-[16px] left-[20px] right-[20px] h-[5px] bg-[#EAEAEA] rounded-full z-0"
@@ -124,7 +127,7 @@ const onSubmit = (data) => {
 
               {/* Active Green Line */}
               <div
-                className="absolute top-[16px] h-[5px] bg-[#00694B] rounded-full z-0 transition-all duration-500 ease-in-out"
+                className="absolute top-[16px] left-[20px] h-[5px] bg-[#00694B] rounded-full z-0 transition-all duration-500 ease-in-out"
                 style={{
                   transform: "translateY(-50%)",
                   width:
@@ -139,13 +142,13 @@ const onSubmit = (data) => {
               {/* Step 1 */}
               <div className="flex flex-col items-center relative z-10">
                 <div
-                  className={`w-[34px] h-[34px] rounded-full flex items-center justify-center text-[13px] font-bold border-[4px] border-white transition-colors duration-300 shadow-sm
+                  className={`w-[32px] h-[32px] sm:w-[34px] sm:h-[34px] rounded-full flex items-center justify-center text-[12px] sm:text-[13px] font-bold border-[3px] sm:border-[4px] border-white transition-colors duration-300 shadow-sm
                     ${currentStep >= 1 ? "bg-[#00694B] text-white" : "bg-[#EAEAEA] text-[#9E9E9E]"}`}
                 >
                   1
                 </div>
                 <p
-                  className={`text-[13px] mt-4 absolute top-8 whitespace-nowrap tracking-wide transition-all duration-300 
+                  className={`text-[11px] sm:text-[13px] mt-4 absolute top-8 whitespace-nowrap tracking-wide transition-all duration-300 
                     ${currentStep >= 1 ? "font-semibold text-[#111111]" : "font-medium text-[#B0B0B0]"}`}
                 >
                   Basic Details
@@ -155,13 +158,13 @@ const onSubmit = (data) => {
               {/* Step 2 */}
               <div className="flex flex-col items-center relative z-10">
                 <div
-                  className={`w-[34px] h-[34px] rounded-full flex items-center justify-center text-[13px] font-bold border-[4px] border-white transition-colors duration-300 shadow-sm
+                  className={`w-[32px] h-[32px] sm:w-[34px] sm:h-[34px] rounded-full flex items-center justify-center text-[12px] sm:text-[13px] font-bold border-[3px] sm:border-[4px] border-white transition-colors duration-300 shadow-sm
                     ${currentStep >= 2 ? "bg-[#00694B] text-white" : "bg-[#EAEAEA] text-[#9E9E9E]"}`}
                 >
                   2
                 </div>
                 <p
-                  className={`text-[13px] mt-4 absolute top-8 whitespace-nowrap tracking-wide transition-all duration-300 
+                  className={`text-[11px] sm:text-[13px] mt-4 absolute top-8 whitespace-nowrap tracking-wide transition-all duration-300 
                     ${currentStep >= 2 ? "font-semibold text-[#111111]" : "font-medium text-[#B0B0B0]"}`}
                 >
                   Requirements & Content
@@ -171,13 +174,13 @@ const onSubmit = (data) => {
               {/* Step 3 */}
               <div className="flex flex-col items-center relative z-10">
                 <div
-                  className={`w-[34px] h-[34px] rounded-full flex items-center justify-center text-[13px] font-bold border-[4px] border-white transition-colors duration-300 shadow-sm
+                  className={`w-[32px] h-[32px] sm:w-[34px] sm:h-[34px] rounded-full flex items-center justify-center text-[12px] sm:text-[13px] font-bold border-[3px] sm:border-[4px] border-white transition-colors duration-300 shadow-sm
                     ${currentStep >= 3 ? "bg-[#00694B] text-white" : "bg-[#EAEAEA] text-[#9E9E9E]"}`}
                 >
                   3
                 </div>
                 <p
-                  className={`text-[13px] mt-4 absolute top-8 whitespace-nowrap tracking-wide transition-all duration-300 
+                  className={`text-[11px] sm:text-[13px] mt-4 absolute top-8 whitespace-nowrap tracking-wide transition-all duration-300 
                     ${currentStep >= 3 ? "font-semibold text-[#111111]" : "font-medium text-[#B0B0B0]"}`}
                 >
                   Preview
@@ -188,7 +191,7 @@ const onSubmit = (data) => {
             {/* Save as draft Button */}
             <button 
               type="button" 
-              className="h-[44px] px-6 rounded-full border cursor-pointer border-[#152126] text-[#152126] text-[13px] font-semibold bg-white hover:bg-gray-50 transition-all whitespace-nowrap shadow-sm"
+              className="h-[40px] sm:h-[44px] px-5 sm:px-6 rounded-full border cursor-pointer border-[#152126] text-[#152126] text-[12px] sm:text-[13px] font-semibold bg-white hover:bg-gray-50 transition-all whitespace-nowrap shadow-sm self-end sm:self-auto mt-2 sm:mt-0"
             >
               Save as draft
             </button>
@@ -277,18 +280,18 @@ const onSubmit = (data) => {
           </div>
 
           {/* Bottom Action Buttons */}
-          <div className="flex items-center justify-center gap-4 mt-[40px]">
+          <div className="flex flex-col-reverse sm:flex-row items-center justify-center gap-3 sm:gap-4 mt-[32px] sm:mt-[40px]">
             <button
               type="button"
               onClick={() => navigate("/postjob")}
-              className="w-[180px] h-[50px] rounded-full border cursor-pointer border-[#EAEAEA] bg-white text-[#152126] text-[15px] font-bold hover:bg-gray-50 transition-all shadow-sm"
+              className="w-full sm:w-[180px] h-[48px] sm:h-[50px] rounded-full border cursor-pointer border-[#EAEAEA] bg-white text-[#152126] text-[15px] font-bold hover:bg-gray-50 transition-all shadow-sm"
             >
               Prev
             </button>
             <button
               type="button"
               onClick={handleSubmit(onSubmit)}
-              className="w-[180px] h-[50px] rounded-full cursor-pointer bg-[#1C2427] text-white text-[15px] font-bold hover:bg-[#253034] transition-all shadow-sm"
+              className="w-full sm:w-[180px] h-[48px] sm:h-[50px] rounded-full cursor-pointer bg-[#1C2427] text-white text-[15px] font-bold hover:bg-[#253034] transition-all shadow-sm"
             >
               Next
             </button>
@@ -303,29 +306,45 @@ const onSubmit = (data) => {
             background-color: #FAFAFA !important;
             border: none !important;
             border-bottom: 1px solid #EBEBEB !important;
-            padding: 12px 16px !important;
+            padding: 10px 12px !important;
             display: flex;
             flex-wrap: wrap;
-            gap: 6px;
+            gap: 4px;
             align-items: center;
           }
           .custom-quill-container .ql-container.ql-snow {
             background-color: #FFFFFF !important;
             border: none !important;
-            min-height: 340px;
+            min-height: 220px;
+          }
+          @media (min-width: 640px) {
+            .custom-quill-container .ql-container.ql-snow {
+              min-height: 340px;
+            }
           }
           .custom-quill-container .ql-editor {
-            min-height: 340px;
+            min-height: 220px;
             font-size: 14px;
             color: #333333;
             line-height: 1.7;
-            padding: 24px !important;
+            padding: 16px !important;
+          }
+          @media (min-width: 640px) {
+            .custom-quill-container .ql-editor {
+              min-height: 340px;
+              padding: 24px !important;
+            }
           }
           .custom-quill-container .ql-editor.ql-blank::before {
             color: #B8B8B8;
             font-style: normal;
-            left: 24px;
+            left: 16px;
             font-size: 14px;
+          }
+          @media (min-width: 640px) {
+            .custom-quill-container .ql-editor.ql-blank::before {
+              left: 24px;
+            }
           }
           .ql-snow .ql-stroke {
             stroke: #555555 !important;
