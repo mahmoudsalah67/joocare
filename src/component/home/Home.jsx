@@ -183,17 +183,17 @@ return (
         transition={{ duration: 1 }}
         viewport={{ once: true }}
       >
-        <div className="section-home mt-50 pb-20">
+        <div className="section-home mt-16 md:mt-32  lg:mt-50 pb-20">
           <div className="container mx-auto px-4 lg:px-30">
-            <div className="content text-center">
+            <div className="content overflow-x: hidden; text-center">
               {/*  w-[780px] → w-full max-w-[780px] */}
-              <h1 className="w-full max-w-[780px] mx-auto">
-                {homeData?.data.home_section?.title}
-                <span> Powered by AI</span>
-              </h1>
-              <p className="mt-6 w-full max-w-[780px] mx-auto">
-                {homeData?.data.home_section?.description}
-              </p>
+             <h1 className="w-full max-w-[780px] mx-auto text-[28px] sm:text-[36px] md:text-[48px] lg:text-[56px] font-bold leading-tight break-words">
+  {homeData?.data.home_section?.title}
+  <span> Powered by AI</span>
+</h1>
+<p className="mt-6 w-full max-w-[780px] mx-auto text-[14px] sm:text-[16px] md:text-[18px]">
+  {homeData?.data.home_section?.description}
+</p>
             </div>
 
             {/* Search Bar Section */}
@@ -347,7 +347,7 @@ return (
         </div>
 
         {/* How It Works */}
-        <div className="section-about pt-32 pb-20">
+        <div className="section-about pt-16 md:pt-24 lg:pt-32 pb-20">
           <div className="container mx-auto px-4 lg:px-30">
             <div className="content">
               <div className="title-1 flex items-center justify-center mx-auto gap-2 mb-6 border-[1px] border-[#2E90A61A] rounded-[12px] py-[8px] px-[16px] w-fit bg-[#12121205]">
@@ -355,7 +355,7 @@ return (
                 <p className="text-[#1C2628] text-[16px] font-[400]">How It Works</p>
               </div>
               <div className="title-2 text-center pt-5">
-                <h1>A Structured, AI-Driven Hiring <br /> Process in 3 Clear Steps</h1>
+                <h1>A Structured, AI-Driven Hiring <br className="hidden lg:block" /> Process in 3 Clear Steps</h1>
               </div>
 
               {/*  flex-col on mobile */}
@@ -395,7 +395,7 @@ return (
           {/* Why Joocare */}
           <div className="frame ">
             
-            <div className="content  pt-32 pb-20">
+            <div className="content  pt-16 md:pt-24 lg:pt-32 pb-20">
               <div className="title-1 flex justify-center items-center gap-2 border border-[#2E90A61A] mx-auto w-fit bg-[#12121205] px-4 py-1 rounded-full">
                 <img src={star2} alt="" />
                 <p className="text-[#1C2628] font-medium text-sm">Why Joocare?</p>
@@ -404,15 +404,15 @@ return (
 
               {/*  flex-col on mobile */}
               <div className="whycontainer  relative flex flex-col md:flex-row w-full overflow-hidden">
-                <div className="w-full md:w-1/2 bg-[#E6EAED] p-8 md:p-20 flex justify-end items-center">
+                <div className="w-full md:w-1/2 bg-[#E6EAED] p-6 sm:p-8 md:p-20 flex justify-end items-center">
                   <div className="max-w-[560px]  w-full">
                     <div className="mb-8">
                       <span className="text-[#00694B] font-bold text-sm flex items-center gap-2 border border-[#2E90A61A] w-fit bg-[#00694B]/5 rounded-full px-4 py-2">
                         <FaStar size={12} className="text-[#00694B]" /> The Legacy Model
                       </span>
                     </div>
-                    <h2 className="text-[21px] font-bold text-[#0D0D0D] mb-[24px] leading-tight">{homeData?.data?.why_joocare?.legacy_model_title}</h2>
-                    <p className="text-[gray] mb-[100px] font-[400]">{homeData?.data?.why_joocare?.legacy_model_description}</p>
+                    <h2 className="text-[18px] sm:text-[21px] font-bold text-[#0D0D0D] mb-[24px] leading-tight">{homeData?.data?.why_joocare?.legacy_model_title}</h2>
+                    <p className="text-[gray] mb-16 md:mb-[100px] font-[400]">{homeData?.data?.why_joocare?.legacy_model_description}</p>
 
                     <div className="space-y-10">
                       {[0, 1, 2].map((i) => (
@@ -421,7 +421,7 @@ return (
                             <img src={homeData?.data?.why_joocare?.legacy_models?.[i]?.icon} alt="" />
                           </div>
                           <div>
-                            <h4 className="text-[21px] font-bold text-[#0D0D0D] ml-[24px] mb-2 leading-tight">{homeData?.data?.why_joocare?.legacy_models?.[i]?.title}</h4>
+                            <h4 className="text-[18px] sm:text-[21px] font-bold text-[#0D0D0D] ml-[24px] mb-2 leading-tight">{homeData?.data?.why_joocare?.legacy_models?.[i]?.title}</h4>
                             <p className="text-sm text-[#0D0D0D]/60 font-[400] leading-relaxed ml-[24px]">{homeData?.data?.why_joocare?.legacy_models?.[i]?.description}</p>
                           </div>
                         </div>
@@ -430,14 +430,14 @@ return (
                   </div>
                 </div>
 
-                <div className="w-full md:w-1/2 bg-[#00694B] p-10 md:p-20 flex justify-start items-center text-white relative">
+                <div className="w-full md:w-1/2 bg-[#00694B] p-6 sm:p-10 md:p-20 flex justify-start items-center text-white relative">
                   <div className="ml-0 lg:ml-15">
                     <div className="mb-6">
                       <span className="text-white font-medium text-sm flex items-center gap-2 border border-white/20 w-fit bg-white/10 rounded-full px-4 py-1.5 backdrop-blur-sm">
                         <FaStar size={10} className="text-white" /> The Joocare Model
                       </span>
                     </div>
-                    <h2 className="text-3xl font-bold mb-6 leading-tight">{homeData?.data?.why_joocare?.joocare_model_title}</h2>
+                    <h2 className="text-2xl sm:text-3xl font-bold mb-6 leading-tight">{homeData?.data?.why_joocare?.joocare_model_title}</h2>
                     <p className="text-white/80 text-base mb-12 leading-relaxed max-w-[550px]">{homeData?.data?.why_joocare?.joocare_model_description}</p>
 
                     <div className="relative space-y-10">
@@ -446,7 +446,7 @@ return (
                         <div key={i} className="relative flex items-start gap-8 z-10">
                           <div className="flex items-center justify-center w-[48px] h-[48px] rounded-full bg-[#1DA31E4D] border border-[#1DA31E4D] text-white font-bold shrink-0 shadow-lg">{i + 1}</div>
                           <div>
-                            <h4 className="text-xl font-bold mb-2">{homeData?.data?.why_joocare?.joocare_models?.[i]?.title}</h4>
+                            <h4 className="text-lg sm:text-xl font-bold mb-2">{homeData?.data?.why_joocare?.joocare_models?.[i]?.title}</h4>
                             <p className="text-sm text-white/70 leading-relaxed max-w-md">{homeData?.data?.why_joocare?.joocare_models?.[i]?.description}</p>
                           </div>
                         </div>
@@ -486,7 +486,7 @@ return (
               </div>
               {/*  grid-cols-2 on mobile */}
               <div className="logos">
-                <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-8 gap-6 mb-[80px]">
+                <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-8 gap-6 mb-12 md:mb-16 lg:mb-[80px]">
                   {homeData?.data?.top_employers?.top_employers?.map((employer) => (
                     <img key={employer.id} className="pl-[12px] pb-[12px] h-[60px] object-contain" src={employer.image} alt={`Employer ${employer.id}`} />
                   ))}
@@ -497,7 +497,7 @@ return (
         </div>
 
         {/* Proven Hiring Impact */}
-        <div className="Proven bg-[#F8FAFA] py-20">
+        <div className="Proven bg-[#F8FAFA] py-12 md:py-16 lg:py-20">
           <div className="container mx-auto px-4 lg:px-30">
             {/*  flex-col on mobile */}
             <div className="content flex flex-col lg:flex-row items-center justify-between gap-12">
@@ -506,8 +506,8 @@ return (
                   <FaStar className="text-[#00694B] text-[16px]" />
                   <p className="text-[#1C2628] text-[16px] font-[400]">Proven Hiring Impact</p>
                 </div>
-                <h1 className="text-[40px] font-bold text-[#1C2628] leading-[1.2] mb-6">{homeData?.data?.proven_hiring_impact?.title}</h1>
-                <p className="text-[#667085] text-[18px] leading-relaxed mb-10">{homeData?.data?.proven_hiring_impact?.description}</p>
+                <h1 className="text-[28px] sm:text-[32px] lg:text-[40px] font-bold text-[#1C2628] leading-[1.2] mb-6">{homeData?.data?.proven_hiring_impact?.title}</h1>
+                <p className="text-[#667085] text-[16px] sm:text-[18px] leading-relaxed mb-10">{homeData?.data?.proven_hiring_impact?.description}</p>
                 <button className="flex items-center gap-3 bg-[#00694B] hover:bg-black transition-all duration-300 cursor-pointer px-8 py-4 rounded-full text-white font-semibold">
                   <img src={explor} alt="" className="w-5" />
                   <span>let's get started</span>
@@ -522,13 +522,13 @@ return (
                   { num: "+500", label: "Healthcare Specializations Covered" },
                   { num: "98%", label: "Hiring Success Rate" },
                 ].map(({ num, label }) => (
-                  <div key={label} className="bg-[#EBEEF0] border border-[#DDE2E5] rounded-[16px] p-8 flex flex-col items-center justify-center">
-                    <h2 className="text-[32px] font-extrabold text-[#1C2628] mb-2">
+                  <div key={label} className="bg-[#EBEEF0] border border-[#DDE2E5] rounded-[16px] p-4 sm:p-6 lg:p-8 flex flex-col items-center justify-center">
+                    <h2 className="text-[22px] sm:text-[26px] lg:text-[32px] font-extrabold text-[#1C2628] mb-2 text-center">
                       <span className="text-[#00694B]">{num.startsWith("+") ? "+" : ""}</span>
                       {num.replace("+", "").replace("%", "")}
                       {num.endsWith("%") ? <span className="text-[#00694B]">%</span> : ""}
                     </h2>
-                    <p className="text-[#667085] text-[14px] font-medium text-center">{label}</p>
+                    <p className="text-[#667085] text-[13px] sm:text-[14px] font-medium text-center">{label}</p>
                   </div>
                 ))}
               </div>
@@ -537,7 +537,7 @@ return (
         </div>
 
         {/* Recent Jobs */}
-        <div className="recent mt-[80px] mb-[80px]">
+        <div className="recent mt-12 md:mt-16 lg:mt-[80px] mb-12 md:mb-16 lg:mb-[80px]">
           <div className="container mx-auto px-4 lg:px-30">
             <div className="content">
               <div className="title flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
@@ -547,7 +547,7 @@ return (
                     <p className="text-[#1C2628] text-[16px] font-[400]">Recent Jobs</p>
                   </div>
                   {/*  w-[433px] → w-full max-w-[433px] */}
-                  <h1 className="font-[600] text-[28px] mb-[21px] w-full max-w-[433px]">{homeData?.data?.recent_jobs?.title}</h1>
+                  <h1 className="font-[600] text-[22px] sm:text-[28px] mb-[21px] w-full max-w-[433px]">{homeData?.data?.recent_jobs?.title}</h1>
                 </div>
                 <div className="right">
                   <div className="flex items-center gap-2 ml-4 cursor-pointer shrink-0">
@@ -559,7 +559,7 @@ return (
                 </div>
               </div>
 
-              <div className="register mb-[80px]">
+              <div className="register mb-12 md:mb-16 lg:mb-[80px]">
                 <div className="content flex">
                   {/*  grid-cols-1 on mobile → 2 → 4 */}
                   <div className="contanier grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-[16px] w-full">
@@ -570,7 +570,7 @@ return (
                             <img src={job.company?.image || logo} alt={job.company?.name} className="w-[48px] h-[48px] rounded-full object-cover" />
                           </div>
                           <div className="details ml-[8px] overflow-hidden">
-                            <h2 className="text-[18px] font-[600] line-clamp-1">{job.title || job.job_title?.title}</h2>
+                            <h2 className="text-[16px] sm:text-[18px] font-[600] line-clamp-1">{job.title || job.job_title?.title}</h2>
                             <p className="font-[600] text-[14px]">
                               {job.company?.name}{" "}
                               <span className="text-[gray] font-[400] text-[13px]">{job.city?.name}, {job.country?.name}</span>
@@ -591,21 +591,21 @@ return (
         </div>
 
         {/* Testimonials */}
-        <div className="Professionals mt-[80px] mb-[80px] bg-[#00694B0A]">
+        <div className="Professionals mt-12 md:mt-16 lg:mt-[80px] mb-12 md:mb-16 lg:mb-[80px] bg-[#00694B0A]">
           <div className="container mx-auto px-4 lg:px-30">
-            <div className="title flex flex-col sm:flex-row justify-between items-start sm:items-center pt-[132px] mb-[50px] gap-4">
+            <div className="title flex flex-col sm:flex-row justify-between items-start sm:items-center pt-16 md:pt-24 lg:pt-[132px] mb-[50px] gap-4">
               <div className="title-left">
                 <div className="title-1 flex items-center gap-2 mb-6 border-[1px] border-[#2E90A61A] rounded-[12px] py-[8px] px-[16px] w-fit bg-[#12121205]">
                   <img src={star2} alt="" />
                   <p className="text-[#1C2628] text-[16px] font-[400]">What Professionals Say</p>
                 </div>
                 {/*  w-[526px] → w-full max-w-[526px] */}
-                <h1 className="font-[600] text-[28px] w-full max-w-[526px] mb-[21px]">{homeData?.data?.rates?.title}</h1>
+                <h1 className="font-[600] text-[22px] sm:text-[28px] w-full max-w-[526px] mb-[21px]">{homeData?.data?.rates?.title}</h1>
               </div>
               <div className="right">
                 <div className="flex gap-[8px]">
-                  <button onClick={() => swiperRef.current?.slidePrev()} className="w-[48px] h-[48px] text-[24px] cursor-pointer rounded-full border border-[#0D0D0DA6] hover:bg-gray-100 transition">‹</button>
-                  <button onClick={() => swiperRef.current?.slideNext()} className="w-[48px] h-[48px] text-[24px] cursor-pointer rounded-full border border-[#0D0D0DA6] hover:bg-gray-100 transition">›</button>
+                  <button onClick={() => swiperRef.current?.slidePrev()} className="w-[40px] h-[40px] sm:w-[48px] sm:h-[48px] text-[24px] cursor-pointer rounded-full border border-[#0D0D0DA6] hover:bg-gray-100 transition">‹</button>
+                  <button onClick={() => swiperRef.current?.slideNext()} className="w-[40px] h-[40px] sm:w-[48px] sm:h-[48px] text-[24px] cursor-pointer rounded-full border border-[#0D0D0DA6] hover:bg-gray-100 transition">›</button>
                 </div>
               </div>
             </div>
@@ -613,9 +613,9 @@ return (
             <Swiper onSwiper={(swiper) => (swiperRef.current = swiper)} slidesPerView={1} spaceBetween={30} breakpoints={{ 1024: { slidesPerView: 3 }, 768: { slidesPerView: 2 } }}>
               {homeData?.data?.rates?.rates?.map((testimonial) => (
                 <SwiperSlide key={testimonial.id}>
-                  <div className="bg-white p-6 rounded-tl-[30px] rounded-br-[30px] shadow-sm border border-gray-100 mb-[132px]">
+                  <div className="bg-white p-6 rounded-tl-[30px] rounded-br-[30px] shadow-sm border border-gray-100 mb-16 md:mb-24 lg:mb-[132px]">
                     <div className="flex items-center justify-between mb-1">
-                      <h2 className="text-[21px] font-semibold text-[#1C2628]">{testimonial.name}</h2>
+                      <h2 className="text-[18px] sm:text-[21px] font-semibold text-[#1C2628]">{testimonial.name}</h2>
                       <div className="flex gap-1 text-lg">
                         {Array.from({ length: 5 }, (_, i) => (
                           <span key={i} className={i < Number(testimonial.rate) ? "text-yellow-400" : "text-gray-300"}>★</span>
@@ -632,14 +632,14 @@ return (
         </div>
 
         {/* FAQ */}
-        <div className="faq mb-[165px]">
+        <div className="faq mb-20 md:mb-28 lg:mb-[165px]">
           <div className="container mx-auto px-4 lg:px-30">
             <div>
               <div className="title-1 flex items-center justify-center mx-auto gap-2 border-[1px] border-[#2E90A61A] rounded-[12px] py-[8px] px-[16px] w-fit bg-[#12121205]">
                 <img src={star2} alt="" />
                 <p className="text-[#1C2628] text-[16px] font-[400]">FAQ</p>
               </div>
-              <div className="title-2 font-[600] text-center text-[28px] mt-[16px] mb-[32px]">
+              <div className="title-2 font-[600] text-center text-[22px] sm:text-[28px] mt-[16px] mb-[32px]">
                 <h1>{homeData?.data?.faq?.title}</h1>
               </div>
             </div>
